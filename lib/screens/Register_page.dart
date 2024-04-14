@@ -13,7 +13,7 @@ class RegisterPage extends StatelessWidget {
       ),
       body: const Center(
         child: Text(
-          "Register",
+          "Register To ortho",
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
