@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/screens/Login_page.dart';
-import 'package:ortho/screens/Register_page.dart'; // Import BtnWidget correctly
+import 'package:ortho/screens/Virification_Page.dart'; // Import BtnWidget correctly
 
 class OnBoarding extends StatelessWidget {
   const OnBoarding({super.key}); // Correct constructor syntax
@@ -68,7 +67,7 @@ class OnBoarding extends StatelessWidget {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return RegisterPage();
+                    return const VerificationPage();
                   },
                 ));
               },
@@ -107,7 +106,7 @@ class OnBoarding extends StatelessWidget {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return LoginPage();
+                          return const LoginPage();
                         },
                       ));
                     },
