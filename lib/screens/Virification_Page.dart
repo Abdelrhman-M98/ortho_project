@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
@@ -17,7 +18,7 @@ class VerificationPage extends StatefulWidget {
 
 class _VerificationPageState extends State<VerificationPage> {
   late Timer _timer;
-  int _start = 3;
+  int _start = 60;
   bool isPinCorrect = false;
 
   @override
@@ -61,7 +62,7 @@ class _VerificationPageState extends State<VerificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(
         titleText: 'Back', // Pass the title text here
         onTap: () {
@@ -73,165 +74,167 @@ class _VerificationPageState extends State<VerificationPage> {
           color: AppColors.btn_background,
         ),
       ),
-      body: SingleChildScrollView(
-        reverse: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 60,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 60.h,
+          ),
+          Text(
+            "Check verification code ",
+            style: TextStyle(
+              fontFamily: "Nunito",
+              fontSize: 27.sp,
+              fontWeight: FontWeight.w800,
             ),
-            const Text(
-              "Check verification code ",
-              style: TextStyle(
-                fontFamily: "Nunito",
-                fontSize: 27,
-                fontWeight: FontWeight.w800,
-              ),
+          ),
+          SizedBox(
+            height: 14.h,
+          ),
+          Text(
+            "Enter the verification code we sent to your email",
+            style: TextStyle(
+              fontFamily: "Nunito",
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
             ),
-            const SizedBox(
-              height: 14,
-            ),
-            const Text(
-              "Enter the verification code we sent to your email",
-              style: TextStyle(
-                fontFamily: "Nunito",
-                fontSize: 16,
+          ),
+          SizedBox(
+            height: 24.h,
+          ),
+          Center(
+            child: Pinput(
+              showCursor: false,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              length: 5,
+              onCompleted: (pin) {
+                if (pin == '12345') {
+                  isPinCorrect = true;
+                  return;
+                }
+              },
+              validator: (pin) {
+                if (pin == '12345') {
+                  return null;
+                } else {
+                  return "error";
+                }
+              },
+              errorText:
+                  "The verification code that you entered is incorrect , Try again ",
+              errorTextStyle: TextStyle(
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
+                fontFamily: "Nunito",
+                color: AppColors.Pin_error_color,
               ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Center(
-              child: Pinput(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                length: 5,
-                onCompleted: (pin) {
-                  if (pin == '12345') {
-                    isPinCorrect = true;
-                    return;
-                  }
-                },
-                validator: (pin) {
-                  if (pin == '12345') {
-                    return null;
-                  } else {
-                    return "error";
-                  }
-                },
-                errorText:
-                    "The verification code that you entered is incorrect , Try again ",
-                errorTextStyle: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: "Nunito",
-                    color: AppColors.Pin_error_color),
-                defaultPinTheme: PinTheme(
-                  width: 50,
-                  height: 67,
-                  textStyle: const TextStyle(
-                      fontSize: 26,
-                      color: AppColors.dark_text,
-                      fontWeight: FontWeight.w500),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.Pin_Empty_color),
-                    borderRadius: BorderRadius.circular(72),
-                  ),
+              defaultPinTheme: PinTheme(
+                width: 50.w,
+                height: 67.h,
+                textStyle: TextStyle(
+                  fontSize: 26.sp,
+                  color: AppColors.dark_text,
+                  fontWeight: FontWeight.w500,
                 ),
-                focusedPinTheme: PinTheme(
-                  width: 50,
-                  height: 67,
-                  textStyle: const TextStyle(
-                      fontSize: 26,
-                      color: AppColors.dark_text,
-                      fontWeight: FontWeight.w500),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.Pin_full_color),
-                    borderRadius: BorderRadius.circular(72),
-                  ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.Pin_Empty_color),
+                  borderRadius: BorderRadius.circular(72),
                 ),
-                errorPinTheme: PinTheme(
-                  width: 50,
-                  height: 67,
-                  textStyle: const TextStyle(
-                      fontSize: 26,
-                      color: AppColors.dark_text,
-                      fontWeight: FontWeight.w500),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.Pin_error_color),
-                    borderRadius: BorderRadius.circular(72),
-                  ),
+              ),
+              focusedPinTheme: PinTheme(
+                width: 50.w,
+                height: 67.h,
+                textStyle: TextStyle(
+                    fontSize: 26.sp,
+                    color: AppColors.dark_text,
+                    fontWeight: FontWeight.w500),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.Pin_full_color),
+                  borderRadius: BorderRadius.circular(72),
+                ),
+              ),
+              errorPinTheme: PinTheme(
+                width: 50.w,
+                height: 67.h,
+                textStyle: TextStyle(
+                    fontSize: 26.sp,
+                    color: AppColors.dark_text,
+                    fontWeight: FontWeight.w500),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.Pin_error_color),
+                  borderRadius: BorderRadius.circular(72),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 25,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Resend verification code",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "Nunito",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
+          ),
+          SizedBox(
+            height: 25.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Resend verification code",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "Nunito",
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
                 ),
-                const SizedBox(
-                  width: 8,
-                ),
-                _start != 0
-                    ? Text(
-                        "(0: $_start)",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
+              ),
+              SizedBox(
+                width: 8.w,
+              ),
+              _start != 0
+                  ? Text(
+                      "(0: $_start)",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        restartTimer(); // Call restartTimer function
+                      },
+                      child: Text(
+                        "Resend",
+                        style: TextStyle(
                           fontFamily: "Nunito",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )
-                    : InkWell(
-                        onTap: () {
-                          restartTimer(); // Call restartTimer function
-                        },
-                        child: const Text(
-                          "Resend",
-                          style: TextStyle(
-                            fontFamily: "Nunito",
-                            fontSize: 16,
-                            color: AppColors.btn_background,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          fontSize: 16.sp,
+                          color: AppColors.btn_background,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-              ],
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).viewInsets.bottom > 0 ? 190 : 350,
-            ),
-            Center(
-              child: SizedBox(
-                width: 360,
-                height: 60,
-                child: BtnWidget(
-                  btnText: "Verify OTP",
-                  onTap: () {
-                    if (isPinCorrect == true) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                      );
-                    }
-                  },
-                ),
+                    ),
+            ],
+          ),
+          const Spacer(),
+          Center(
+            child: SizedBox(
+              width: 360.w,
+              height: 60.h,
+              child: BtnWidget(
+                btnText: "Verify OTP",
+                onTap: () {
+                  if (isPinCorrect == true) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                    );
+                  }
+                },
               ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+        ],
       ),
     );
   }
