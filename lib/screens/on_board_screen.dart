@@ -12,6 +12,7 @@ class OnBoarding extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        
         body: Column(
           children: [
             const SizedBox(
