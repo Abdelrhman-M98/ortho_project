@@ -1,26 +1,27 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ortho/components/Btn_widget.dart';
+import 'package:ortho/screens/Virification_Page.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton(onPressed: () {},
-           child: Text('Login')
-           
-           ),
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              'Login',
+            ),
+          ),
         ],
-        //leading :Container(child: Image.asset('assets/images/icons/'),)
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: () {},
@@ -29,37 +30,32 @@ class RegisterPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 15),
-          //const SizedBox(
-          // height: 14,
-          //),
-          const Text(
+          SizedBox(height: 15.h),
+          Text(
             "Hi there, welcome to Ortho AI ",
             textAlign: TextAlign.start,
             style: TextStyle(
               fontFamily: 'Nunito',
               fontWeight: FontWeight.bold,
-              fontSize: 28,
+              fontSize: 28.sp,
               color: Color(0xff15331b),
             ),
           ),
-          const Text(
+          Text(
             "creating your account will take only few minutes to ensure to you a better experience ",
             textAlign: TextAlign.start,
             style: TextStyle(
               fontFamily: 'Nunito',
               fontWeight: FontWeight.normal,
-              fontSize: 20,
+              fontSize: 20.sp,
               color: Color(0xffa0cca9),
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: TextField(
               decoration: InputDecoration(
-                //suffixIcon: Icon(Icons.c),
-
                 hintText: 'Sama Hany mo',
                 labelText: 'Name',
                 border: OutlineInputBorder(
@@ -73,14 +69,10 @@ class RegisterPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 15),
-          //padding: const EdgeInsets.symmetric(horizontal: 10),
+          SizedBox(height: 15.h),
           TextField(
             decoration: InputDecoration(
-              //suffixIcon: Icon(Icons.c),
-
               hintText: 'Email address',
-
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(510),
@@ -88,33 +80,23 @@ class RegisterPage extends StatelessWidget {
                   topLeft: Radius.circular(510),
                   topRight: Radius.circular(510),
                 ),
-                  borderSide: BorderSide(color: Color(0xff60aa6f))
+                borderSide: BorderSide(color: Color(0xff60aa6f)),
               ),
             ),
           ),
-
-          SizedBox(height: 80),
-
-          TextField(
-            decoration: InputDecoration(
-              //suffixIcon: Icon(Icons.c),
-
-              hintText: 'Continue',
-              fillColor: Color(0XFF019B97),
-
-              border: OutlineInputBorder(
-                
-                borderRadius: BorderRadius.only(
-                  
-                  bottomLeft: Radius.circular(410),
-                  bottomRight: Radius.circular(410),
-                  topLeft: Radius.circular(410),
-                  topRight: Radius.circular(410),
-                  
+          SizedBox(height: 80.h),
+          BtnWidget(
+            btnText: "Get started",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const VerificationPage();
+                  },
                 ),
-              
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),

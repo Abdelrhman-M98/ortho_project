@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/screens/Login_page.dart';
-import 'package:ortho/screens/Register_page.dart'; // Import BtnWidget correctly
+import 'package:ortho/screens/Upload.dart';
+import 'package:ortho/screens/Virification_Page.dart';
 
 class OnBoarding extends StatelessWidget {
-  const OnBoarding({super.key}); // Correct constructor syntax
+  const OnBoarding({Key? key}); // Use 'Key?' instead of 'super.key'
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        
         body: Column(
           children: [
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: 36.h,
             ),
-            const Center(
+            Center(
               child: Image(
-                image: AssetImage("assets/images/icons/ortho_Logo.png"),
-                height: 50,
-                width: 50,
+                image: const AssetImage("assets/images/icons/ortho_Logo.png"),   
+                height: 50.h,
+                width: 50.w,
               ),
             ),
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: 12.h,
             ),
             const Center(
               child: Image(
@@ -35,87 +35,92 @@ class OnBoarding extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 60,
+            SizedBox(
+              height: 36.h,
             ),
-            const Text(
+            Text(
               "Welcome to Ortho AI",
               style: TextStyle(
                 fontFamily: 'Nunito',
                 fontWeight: FontWeight.w800,
-                fontSize: 28,
+                fontSize: 28.sp,
               ),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: 20.h,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 36),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 36,
+              ),
               child: Text(
                 "Revolutionize your smile assessment with Ortho ai. AI-powered insights, personalized for you. Start now!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
                 ),
               ),
             ),
-            const SizedBox(
-              height: 36,
+            SizedBox(
+              height: 24.h,
             ),
             BtnWidget(
               btnText: "Get started",
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return RegisterPage();
+                    return const VerificationPage();
                   },
                 ));
               },
             ),
-            const SizedBox(
-              height: 25,
+            SizedBox(
+              height: 25.h,
             ),
             SizedBox(
-              width: 360,
+              width: 360.w,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "Already have an account ?",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Nunito',
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16.sp,
                     ),
                   ),
-                  const SizedBox(
-                    width: 3,
+                  SizedBox(
+                    width: 3.w,
                   ),
                   GestureDetector(
-                    child: const Text(
+                    child: Text(
                       "Login",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Nunito',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17.sp,
                       ),
                     ),
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return LoginPage();
+                          return  Upload(); // Navigate to Upload page
                         },
                       ));
                     },
                   ),
+                  SizedBox(
+                    height: 20.h,
+                  )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
