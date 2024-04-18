@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/screens/Login_page.dart';
+<<<<<<< HEAD
 import 'package:ortho/screens/Upload.dart';
 import 'package:ortho/screens/Virification_Page.dart';
+=======
+import 'package:ortho/screens/Register_page.dart';
+// Import BtnWidget correctly
+>>>>>>> 8abd388de96dbdc767ca057c6333557bd1185ee1
 
 class OnBoarding extends StatelessWidget {
   const OnBoarding({Key? key}); // Use 'Key?' instead of 'super.key'
@@ -71,7 +76,7 @@ class OnBoarding extends StatelessWidget {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return const VerificationPage();
+                    return const RegisterPage();
                   },
                 ));
               },

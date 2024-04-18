@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(393, 852), // Iphone 15 plus
+      designSize: const Size(393, 852),
       minTextAdapt: true,
       builder: (_, child) => const MaterialApp(
         debugShowCheckedModeBanner: false,
