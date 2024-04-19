@@ -5,17 +5,13 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color btn_background = Color(0XFF019B97);
+  static const Color Primary_color = Color(0XFF019B97);
 
   static const Color White_text = Color(0xFFFFFFFF);
 
   static const Color dark_text = Color(0xFF0A2F33);
 
-  static const Color Pin_full_color = Color(0xFF019B97);
-
   static const Color Pin_Empty_color = Color(0xFF6E8F8E);
-
-  static const Color cursorColor = Color(0xFF019B97);
 
   static const Color Pin_Text = Color.fromARGB(255, 0, 0, 0);
 
@@ -27,11 +23,9 @@ class AppColors {
 
   static const Color FormNonFouceColor = Color(0xff6E8F8E);
 
+  static const Color SubHeadText = Color(0xff507372);
 
-  static const Color FormFouceColor = Color(0xff019B97);
+  static const Color Verified_Text = Color(0xff358044);
 
-static const Color SubHeadText = Color(0xff507372);
-
-  
-  
+  static const Color Fail_Text = Color(0xffBA1136);
 }

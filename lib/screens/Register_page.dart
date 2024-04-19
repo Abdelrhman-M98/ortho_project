@@ -1,90 +1,23 @@
-import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ortho/components/Btn_widget.dart';
-import 'package:ortho/screens/Virification_Page.dart';
+// ignore_for_file: file_names, use_key_in_widget_constructors
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key});
-=======
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/Custom_Text_Form_Field.dart';
 import 'package:ortho/screens/Login_page.dart';
-import 'package:ortho/screens/Virification_Page.dart'; // Fixed import statement
+import 'package:ortho/screens/Password_page.dart';
+import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({
-    super.key,
-  });
->>>>>>> 8abd388de96dbdc767ca057c6333557bd1185ee1
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-<<<<<<< HEAD
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              'Login',
-            ),
-          ),
-        ],
-        leading: IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {},
-        ),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(height: 15.h),
-          Text(
-            "Hi there, welcome to Ortho AI ",
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.bold,
-              fontSize: 28.sp,
-              color: Color(0xff15331b),
-            ),
-          ),
-          Text(
-            "creating your account will take only few minutes to ensure to you a better experience ",
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.normal,
-              fontSize: 20.sp,
-              color: Color(0xffa0cca9),
-            ),
-          ),
-          SizedBox(height: 10.h),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Sama Hany mo',
-                labelText: 'Name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(400),
-                    bottomRight: Radius.circular(510),
-                    topLeft: Radius.circular(100),
-                    topRight: Radius.circular(510),
-                  ),
-=======
         leading: Padding(
           padding: const EdgeInsets.only(
-            top: 20,
+            top: 15,
           ),
           child: IconButton(
             icon: const Icon(
@@ -117,31 +50,10 @@ class RegisterPage extends StatelessWidget {
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,
                   color: AppColors.dark_text,
->>>>>>> 8abd388de96dbdc767ca057c6333557bd1185ee1
                 ),
               ),
             ),
           ),
-<<<<<<< HEAD
-          SizedBox(height: 15.h),
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Email address',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(510),
-                  bottomRight: Radius.circular(510),
-                  topLeft: Radius.circular(510),
-                  topRight: Radius.circular(510),
-                ),
-                borderSide: BorderSide(color: Color(0xff60aa6f)),
-              ),
-            ),
-          ),
-          SizedBox(height: 80.h),
-          BtnWidget(
-            btnText: "Get started",
-=======
         ],
         flexibleSpace: Padding(
           padding: const EdgeInsets.only(
@@ -196,41 +108,51 @@ class RegisterPage extends StatelessWidget {
             height: 40.h,
           ),
           const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: CustomFormField(
-                fieldHint: "User Name",
-                fieldLabel: "User Name",
-              )),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: CustomFormField(
+              fieldHint: "User Name",
+              fieldLabel: "User Name",
+            ),
+          ),
           SizedBox(
             height: 15.h,
           ),
           const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: CustomFormField(
-                fieldHint: "Email address",
-                fieldLabel: "Email address",
-              )),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: CustomFormField(
+              fieldHint: "Email address",
+              fieldLabel: "Email address",
+            ),
+          ),
+          const Spacer(
+            flex: 50,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: const Padding(
+              padding: EdgeInsets.only(
+                left: 16.0,
+              ),
+              child: TermsOfUse(),
+            ),
+          ),
           const Spacer(),
           BtnWidget(
             btnText: "Continue",
->>>>>>> 8abd388de96dbdc767ca057c6333557bd1185ee1
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return const VerificationPage();
+                    return const PasswordPage();
                   },
                 ),
               );
             },
           ),
-<<<<<<< HEAD
-=======
           SizedBox(
             height: 20.h,
           ),
->>>>>>> 8abd388de96dbdc767ca057c6333557bd1185ee1
         ],
       ),
     );

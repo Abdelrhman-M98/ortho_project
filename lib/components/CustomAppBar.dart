@@ -1,14 +1,11 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:ortho/components/AppColors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar(
-      {super.key,
-      required this.titleText,
-      required this.onTap,
-      required this.barIcon});
+      {required this.titleText, required this.onTap, required this.barIcon});
 
   final String titleText;
   final Function()? onTap;
@@ -26,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         titleText,
         style: const TextStyle(
-          color: AppColors.btn_background,
+          color: AppColors.Primary_color,
           fontFamily: "Nunito",
           fontWeight: FontWeight.w500,
           fontSize: 20,

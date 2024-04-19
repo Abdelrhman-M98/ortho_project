@@ -1,17 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api, file_names, use_key_in_widget_constructors, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/Btn_widget.dart';
-import 'package:ortho/screens/Login_page.dart';
-<<<<<<< HEAD
-import 'package:ortho/screens/Upload.dart';
-import 'package:ortho/screens/Virification_Page.dart';
-=======
 import 'package:ortho/screens/Register_page.dart';
-// Import BtnWidget correctly
->>>>>>> 8abd388de96dbdc767ca057c6333557bd1185ee1
-
+import 'package:ortho/screens/Upload_Page.dart';
 class OnBoarding extends StatelessWidget {
-  const OnBoarding({Key? key}); // Use 'Key?' instead of 'super.key'
+  const OnBoarding(); // Use 'Key?' instead of 'super.key'
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +71,7 @@ class OnBoarding extends StatelessWidget {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return const RegisterPage();
+                    return  RegisterPage();
                   },
                 ));
               },
@@ -115,7 +110,7 @@ class OnBoarding extends StatelessWidget {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return  Upload(); // Navigate to Upload page
+                          return  UploadPage(); // Navigate to Upload page
                         },
                       ));
                     },

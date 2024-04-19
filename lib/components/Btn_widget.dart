@@ -18,7 +18,7 @@ class BtnWidget extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.btn_background,
+          backgroundColor: AppColors.Primary_color,
         ),
         child: Text(
           btnText,

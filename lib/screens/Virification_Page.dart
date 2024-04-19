@@ -71,13 +71,12 @@ class _VerificationPageState extends State<VerificationPage> {
         },
         barIcon: const Icon(
           Icons.arrow_back_ios_new_rounded,
-          color: AppColors.btn_background,
+          color: AppColors.Primary_color,
         ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          
           SizedBox(
             height: 60.h,
           ),
@@ -151,7 +150,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     color: AppColors.dark_text,
                     fontWeight: FontWeight.w500),
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.Pin_full_color),
+                  border: Border.all(color: AppColors.Primary_color),
                   borderRadius: BorderRadius.circular(72),
                 ),
               ),
@@ -165,6 +164,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.Pin_error_color),
                   borderRadius: BorderRadius.circular(72),
+
                 ),
               ),
             ),
@@ -206,7 +206,7 @@ class _VerificationPageState extends State<VerificationPage> {
                         style: TextStyle(
                           fontFamily: "Nunito",
                           fontSize: 16.sp,
-                          color: AppColors.btn_background,
+                          color: AppColors.Primary_color,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -227,7 +227,6 @@ class _VerificationPageState extends State<VerificationPage> {
                         builder: (context) => const LoginPage(),
                       ),
                     );
-                    
                   }
                 },
               ),
