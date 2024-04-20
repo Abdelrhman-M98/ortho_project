@@ -3,35 +3,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
+import 'package:ortho/data/data.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
+
   static const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
-  
+  static List<ListItem> items = [
+    ListItem(
+      date_of_scan: DateTime.now(),
+      beforeImage: 'assets/images/photos/uploaded.jpg',
+      afterImage: 'assets/images/photos/uploaded.jpg',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 45.h,
-          ),
+          SizedBox(height: 45.h),
           Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                    ),
+                    padding: const EdgeInsets.only(left: 16),
                     child: Text(
-                      'Welcome , islam',
+                      'Welcome, Islam',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: AppColors.dark_text,
@@ -42,11 +44,9 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                    ),
+                    padding: const EdgeInsets.only(left: 16),
                     child: Text(
-                      'let’s check your dental health',
+                      'Let’s check your dental health',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: AppColors.SubHeadText,
@@ -55,112 +55,122 @@ class HomePage extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    //let’s check your dental health
                   ),
                 ],
               ),
-              const Spacer(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: Container(
-                      width: 40.w,
-                      height: 40.h,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.asset(
-                        'assets/images/photos/onBording.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Container(
+                  width: 40.w,
+                  height: 40.h,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
                   ),
-                ],
+                  child: Image.asset(
+                    'assets/images/photos/onBording.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ],
           ),
-          SizedBox(
-            height: 34.h,
-          ),
-          ListView(
-            padding: EdgeInsets.all(16),
+          SizedBox(height: 34.h),
+          ListView.builder(
             shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            children: [
-              SearchAnchor(
-                  builder: (BuildContext context, SearchController controller) {
-                String dropdownValue = list.first;
-
-                return SearchBar(
-                  controller: controller,
-                  padding: const MaterialStatePropertyAll<EdgeInsets>(
-                      EdgeInsets.symmetric(horizontal: 18.0)),
-                  onTap: () {
-                    controller.openView();
-                  },
-                  onChanged: (_) {
-                    controller.openView();
-                  },
-                  leading: Image.asset("assets/images/icons/Search.png"),
-                  trailing: <Widget>[
-                    Tooltip(
-                      message: 'All',
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: Image.asset("assets/images/icons/Filter.png"),
-                            selectedIcon:
-                                const Icon(Icons.brightness_2_outlined),
-                          ),
-                          DropdownButton<String>(
-                            value: dropdownValue,
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            elevation: 16,
-                            style: const TextStyle(color: Colors.deepPurple),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.deepPurpleAccent,
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return Container(
+                width: double.infinity,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  elevation: 4,
+                  margin: EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 253.h, // Specify the height of the images
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 253.h,
+                              width: 189.w,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(8), // Rounded border
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10)),
+                                child: Image.asset(
+                                  item.beforeImage,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                            onChanged: (String? value) {
-                              // This is called when the user selects an item.
-                              // setState(() {
-                              //   dropdownValue = value!;
-                              // });
-                            },
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ],
+                            SizedBox(width: 1.w),
+                            Container(
+                              height: 253.h,
+                              width: 189.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    10.0), // Rounded border
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10)),
+                                child: Image.asset(
+                                  item.afterImage,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    )
-                  ],
-                );
-              }, suggestionsBuilder:
-                      (BuildContext context, SearchController controller) {
-                return List<ListTile>.generate(5, (int index) {
-                  final String item = 'item $index';
-                  return ListTile(
-                    title: Text(item),
-                    // onTap: () {
-                    //   setState(() {
-                    //     controller.closeView(item);
-                    //   });
-                    // },
-                  );
-                });
-              }),
-            ],
+                      Text(
+                        'Item ${index + 1}',
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Text(
+                        'Date: ${item.date_of_scan.toString()}',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

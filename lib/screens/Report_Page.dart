@@ -1,10 +1,9 @@
 // ignore: file_names
-// ignore_for_file: file_names, duplicate_ignore
+// ignore_for_file: file_names, duplicate_ignore, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/screens/Login_page.dart';
 
 class ReportPage extends StatelessWidget {
   const ReportPage({super.key});

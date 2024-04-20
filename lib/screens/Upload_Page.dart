@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
+import 'package:ortho/screens/Home_Page.dart';
 import 'package:ortho/screens/Report_Page.dart';
-import 'package:ortho/screens/Virification_Page.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key}) : super(key: key);
@@ -180,7 +180,7 @@ class _UploadPageState extends State<UploadPage> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return const ReportPage();
+                        return const HomePage();
                       },
                     ),
                   );
