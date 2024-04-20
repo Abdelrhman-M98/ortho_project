@@ -1,10 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors, file_names
+// ignore_for_file: use_key_in_widget_constructors, file_names, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 
-class PasswordField extends StatelessWidget implements PreferredSizeWidget {
+class PasswordField extends StatefulWidget implements PreferredSizeWidget {
   const PasswordField({
     required this.fieldHint,
     required this.fieldLabel,
@@ -13,13 +13,23 @@ class PasswordField extends StatelessWidget implements PreferredSizeWidget {
   final String fieldHint, fieldLabel;
 
   @override
+  _PasswordFieldState createState() => _PasswordFieldState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _PasswordFieldState extends State<PasswordField> {
+  bool _obscureText = true;
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
       // Field to input password
-      obscureText: true, // Hide or show password text
+      obscureText: _obscureText, // Hide or show password text
       decoration: InputDecoration(
-        hintText: "Password",
-        labelText: "Password",
+        hintText: widget.fieldHint,
+        labelText: widget.fieldLabel,
         labelStyle: TextStyle(
           color: AppColors.FormHintsTextColor,
           fontFamily: 'Nunito',
@@ -56,6 +66,20 @@ class PasswordField extends StatelessWidget implements PreferredSizeWidget {
             topRight: Radius.circular(36),
           ),
         ),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: IconButton(
+            icon: Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
+          ),
+        ),
       ),
       style: TextStyle(
         fontFamily: 'Nunito',
@@ -65,7 +89,4 @@ class PasswordField extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

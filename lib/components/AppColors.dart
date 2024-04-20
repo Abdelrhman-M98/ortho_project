@@ -28,4 +28,10 @@ class AppColors {
   static const Color Verified_Text = Color(0xff358044);
 
   static const Color Fail_Text = Color(0xffBA1136);
+
+  static const Color card_background = Color(0xffFFFFFF);
+
+  static const Color searchbar_text = Color(0xff6E8F8E);
+
+  static const Color searchbar_background = Color(0xffDAF2F1);
 }

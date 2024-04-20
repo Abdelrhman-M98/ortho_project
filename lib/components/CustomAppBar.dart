@@ -20,13 +20,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           onTap?.call();
         },
       ),
-      title: Text(
-        titleText,
-        style: const TextStyle(
-          color: AppColors.Primary_color,
-          fontFamily: "Nunito",
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
+      title: GestureDetector(
+        onTap: () {
+          onTap?.call();
+        },
+        child: Text(
+          titleText,
+          style: const TextStyle(
+            color: AppColors.Primary_color,
+            fontFamily: "Nunito",
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+          ),
         ),
       ),
     );
