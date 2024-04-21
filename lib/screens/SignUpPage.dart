@@ -5,11 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/Custom_Text_Form_Field.dart';
+import 'package:ortho/components/NameField.dart';
 import 'package:ortho/screens/Login_page.dart';
 import 'package:ortho/screens/Password_page.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
 
-class RegisterPage extends StatelessWidget {
+class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +110,7 @@ class RegisterPage extends StatelessWidget {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
-            child: CustomFormField(
+            child: NameField(
               fieldHint: "User Name",
               fieldLabel: "User Name",
             ),

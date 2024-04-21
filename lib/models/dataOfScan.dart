@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, file_names
 
 class ListItem {
   int scan_num = 0;
@@ -14,3 +14,6 @@ class ListItem {
     required this.afterImage,
   });
 }
+
+
+

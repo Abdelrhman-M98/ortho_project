@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/HomeCard.dart';
-import 'package:ortho/models/data.dart';
+import 'package:ortho/models/dataOfScan.dart';
 import 'package:ortho/screens/Guid_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -122,24 +122,24 @@ class _HomePageState extends State<HomePage> {
                 ),
                 border: Border.all(
                   color: AppColors.searchbar_background,
-                  width: 1,
+                  width: 1.w,
                 ),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: 'Search...',
                         hintStyle: TextStyle(
                           color: AppColors.searchbar_text,
                           fontFamily: "Nunito",
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
                         ),
                         border: InputBorder.none,
-                        icon: Icon(Icons.search),
+                        icon: const Icon(Icons.search),
                       ),
                     ),
                   ),
@@ -150,10 +150,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Text(
                     _selectedFilter,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       color: AppColors.searchbar_text,
                       fontFamily: "Nunito",
-                      fontSize: 12,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ), // Display selected filter
@@ -221,8 +221,8 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => const GuidPage()),
           );
         },
-        shape: const CircleBorder(
-          side: BorderSide(color: AppColors.Primary_color, width: 2),
+        shape: CircleBorder(
+          side: BorderSide(color: AppColors.Primary_color, width: 2.w),
         ),
         child: const Image(image: AssetImage("assets/images/icons/scan.png")),
       ),

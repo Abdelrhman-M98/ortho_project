@@ -1,11 +1,11 @@
-// ignore_for_file: use_super_parameters, library_private_types_in_public_api, file_names, unnecessary_import, non_constant_identifier_names, prefer_final_fields, avoid_unnecessary_containers
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api, file_names, unnecessary_import, non_constant_identifier_names, prefer_final_fields, avoid_unnecessary_containers, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
-import 'package:ortho/screens/Home_Page.dart';
+import 'package:ortho/screens/Report_Page.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({Key? key}) : super(key: key);
@@ -179,7 +179,7 @@ class _UploadPageState extends State<UploadPage> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return const HomePage();
+                        return const ReportPage();
                       },
                     ),
                   );

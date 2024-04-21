@@ -22,10 +22,10 @@ class BtnWidget extends StatelessWidget {
         ),
         child: Text(
           btnText,
-          style: const TextStyle(
+          style:  TextStyle(
             color: AppColors.White_text,
             fontFamily: "Nunito",
-            fontSize: 20,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w500,
           ),
         ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/Report_Page.dart';
+import 'package:ortho/screens/HowTo_Page.dart';
 
 class GuidPage extends StatelessWidget {
   const GuidPage();
@@ -72,7 +72,7 @@ class GuidPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ReportPage()),
+                MaterialPageRoute(builder: (context) => const GuidHowTo()),
               );
             },
             child: const Image(

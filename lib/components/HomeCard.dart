@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/models/data.dart';
+import 'package:ortho/models/dataOfScan.dart';
 import 'package:intl/intl.dart';
 import 'package:ortho/screens/Report_Page.dart';
 
@@ -39,7 +39,7 @@ class HomeCard extends StatelessWidget {
               children: [
                 Container(
                   height: 253.h,
-                  width: 188.w,
+                  width: 187.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8), // Rounded border
                     boxShadow: [
@@ -63,7 +63,7 @@ class HomeCard extends StatelessWidget {
                 SizedBox(width: 1.w),
                 Container(
                   height: 253.h,
-                  width: 188.w,
+                  width: 187.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0), // Rounded border
                     boxShadow: [
@@ -191,9 +191,9 @@ class HomeCard extends StatelessWidget {
                   },
                 ),
                 GestureDetector(
-                  child: const Icon(
+                  child: Icon(
                     Icons.arrow_forward_ios_rounded,
-                    size: 14,
+                    size: 14.sp,
                     color: AppColors.Primary_color,
                   ),
                   onTap: () {
@@ -216,6 +216,5 @@ class HomeCard extends StatelessWidget {
         ],
       ),
     );
-    
   }
 }

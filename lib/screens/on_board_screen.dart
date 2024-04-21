@@ -3,8 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/Btn_widget.dart';
-import 'package:ortho/screens/Register_page.dart';
-import 'package:ortho/screens/Upload_Page.dart';
+import 'package:ortho/screens/Login_page.dart';
+import 'package:ortho/screens/SignUpPage.dart';
+
 class OnBoarding extends StatelessWidget {
   const OnBoarding(); // Use 'Key?' instead of 'super.key'
 
@@ -20,7 +21,7 @@ class OnBoarding extends StatelessWidget {
             ),
             Center(
               child: Image(
-                image: const AssetImage("assets/images/icons/ortho_Logo.png"),   
+                image: const AssetImage("assets/images/icons/ortho_Logo.png"),
                 height: 50.h,
                 width: 50.w,
               ),
@@ -71,7 +72,7 @@ class OnBoarding extends StatelessWidget {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return  RegisterPage();
+                    return SignUpPage();
                   },
                 ));
               },
@@ -110,7 +111,7 @@ class OnBoarding extends StatelessWidget {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return  UploadPage(); // Navigate to Upload page
+                          return LoginPage(); // Navigate to Upload page
                         },
                       ));
                     },
