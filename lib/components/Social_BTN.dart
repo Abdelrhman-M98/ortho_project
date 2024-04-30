@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names
+// ignore_for_file: file_names, non_constant_identifier_names, use_key_in_widget_constructors, empty_constructor_bodies
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,12 +10,12 @@ class SocialBTN extends StatelessWidget {
   final Color BtnColor;
   final String BtnIcon;
 
-  const SocialBTN(
-      {super.key,
-      required this.btnText,
-      required this.onTap,
-      required this.BtnColor,
-      required this.BtnIcon});
+  const SocialBTN({
+    required this.btnText,
+    required this.onTap,
+    required this.BtnColor,
+    required this.BtnIcon, // Accept border color as a parameter
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +25,18 @@ class SocialBTN extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: BtnColor,
+          backgroundColor: AppColors.White,
+          // Set border color
+          side: const BorderSide(
+            color: AppColors.Google_Color,
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image(
+              width: 21.w,
+              height: 21.h,
               image: AssetImage(BtnIcon),
             ),
             SizedBox(
@@ -38,10 +44,10 @@ class SocialBTN extends StatelessWidget {
             ),
             Text(
               btnText,
-              style: const TextStyle(
-                color: AppColors.White_text,
+              style: TextStyle(
+                color: AppColors.dark_text,
                 fontFamily: "Nunito",
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w500,
               ),
             ),

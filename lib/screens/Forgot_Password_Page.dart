@@ -62,9 +62,13 @@ class ForgetPassPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20.h), // Adjusted the height to 20.h
+          SizedBox(
+            height: 50.h,
+          ), // Adjusted the height to 20.h
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
             child: CustomFormField(
               fieldHint: "Email address",
               fieldLabel: "Email address",

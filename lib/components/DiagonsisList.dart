@@ -38,7 +38,7 @@ class DiagonsisList extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Nunito',
             fontWeight: FontWeight.w500,
-            color: AppColors.Report_Head_Text,
+            color: AppColors.Head_Text,
             fontSize: 23.sp,
           ),
         ),

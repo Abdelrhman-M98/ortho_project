@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   static const Color Primary_color = Color(0XFF019B97);
 
-  static const Color White_text = Color(0xFFFFFFFF);
+  static const Color White = Color(0xFFFFFFFF);
 
   static const Color dark_text = Color(0xFF0A2F33);
 
@@ -35,11 +35,13 @@ class AppColors {
 
   static const Color searchbar_background = Color(0xffDAF2F1);
 
-  static const Color Report_Head_Text = Color(0xff0A3332);
+  static const Color Head_Text = Color(0xff0A3332);
 
   static const Color Report_checkbox_Text = Color(0xff507372);
 
   static const Color divider_color = Color(0xff6F8D90);
 
   static const Color Google_Color = Color(0xFF6E8F8E);
+
+  static const Color Label_Fouce_Color = Color(0xFF019B97);
 }

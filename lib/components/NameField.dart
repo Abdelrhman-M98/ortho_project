@@ -1,6 +1,3 @@
-// ignore: file_names
-// ignore_for_file: use_key_in_widget_constructors, file_names, duplicate_ignore, prefer_const_constructors, library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
@@ -18,25 +15,37 @@ class NameField extends StatefulWidget {
 }
 
 class _NameFieldState extends State<NameField> {
-  bool isValeid = true;
+  bool isValid = true;
+  final TextEditingController _nameController = TextEditingController();
+  final FocusNode _nameFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _nameFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      // controller: _model.textController1,
-      // focusNode: _model.textFieldFocusNode1,
+      controller: _nameController,
+      focusNode: _nameFocusNode,
       autofocus: true,
       obscureText: false,
       decoration: InputDecoration(
         labelText: widget.fieldLabel,
         labelStyle: TextStyle(
-          color: AppColors.FormHintsTextColor,
+          color: AppColors.FormNonFouceColor,
           fontFamily: 'Nunito',
           fontSize: 17.sp,
           fontWeight: FontWeight.w500,
         ),
-        hintText: widget.fieldHint,
+        hintText: _nameFocusNode.hasFocus ? '' : widget.fieldHint,
         hintStyle: TextStyle(
+          color: _nameFocusNode.hasFocus
+              ? AppColors.FormHintsTextColor
+              : Colors.transparent,
           fontSize: 17.sp,
           fontFamily: 'Nunito',
           fontWeight: FontWeight.w500,
@@ -44,21 +53,22 @@ class _NameFieldState extends State<NameField> {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: isValeid
-                ? AppColors.Primary_color
+            color: _nameFocusNode.hasFocus
+                ? isValid
+                    ? AppColors.Primary_color
+                    : AppColors.Pin_error_color
                 : AppColors.FormNonFouceColor,
             width: 0.8.w,
           ),
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(24),
-            bottomRight: Radius.circular(36),
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(36),
+          borderRadius: const BorderRadius.horizontal(
+            left: Radius.circular(36),
+            right: Radius.circular(36),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.Primary_color,
+            color:
+                isValid ? AppColors.Primary_color : AppColors.Pin_error_color,
             width: 1.1.w,
           ),
           borderRadius: const BorderRadius.only(
@@ -68,45 +78,43 @@ class _NameFieldState extends State<NameField> {
             topRight: Radius.circular(36),
           ),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColors.Pin_error_color,
             width: 2,
           ),
-          borderRadius: const BorderRadius.only(
+          borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(24),
             bottomRight: Radius.circular(36),
             topLeft: Radius.circular(8),
             topRight: Radius.circular(36),
           ),
         ),
-        focusedErrorBorder: OutlineInputBorder(
+        focusedErrorBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColors.Pin_error_color,
             width: 2,
           ),
-          borderRadius: const BorderRadius.only(
+          borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(60),
             bottomRight: Radius.circular(80),
             topLeft: Radius.circular(0),
             topRight: Radius.circular(80),
           ),
         ),
-        suffixIcon: isValeid
-            ? Image(
-                width: 16.w,
-                height: 16.h,
-                image: const AssetImage(
-                  "assets/images/icons/vailedName.png",
-                ),
-              )
-            : Image(
-                width: 16.w,
-                height: 16.h,
-                image: const AssetImage(
-                  "assets/images/icons/NotVailedName.png",
-                ),
-              ),
+        suffixIcon: _nameController.text.isNotEmpty
+            ? isValid
+                ? Image.asset(
+                    "assets/images/icons/vailedName.png",
+                    width: 16.w,
+                    height: 16.h,
+                  )
+                : Image.asset(
+                    "assets/images/icons/NotVailedName.png",
+                    width: 16.w,
+                    height: 16.h,
+                  )
+            : null,
       ),
       style: TextStyle(
         fontFamily: 'Nunito',
@@ -116,14 +124,15 @@ class _NameFieldState extends State<NameField> {
       ),
       onChanged: (value) {
         setState(() {
-          isValeid = value == 'tt';
+          isValid = value != 'tt';
         });
       },
       validator: (value) {
-        value = null;
+        if (value == null || value.isEmpty) {
+          return 'Name is required'; // Return error message when validation fails
+        }
         return null;
       },
-      //validator: _model.textController1Validator.asValidator(context),
     );
   }
 }

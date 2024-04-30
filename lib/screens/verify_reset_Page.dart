@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/Resrt_Pass_page.dart';
+import 'package:ortho/screens/Reset_Pass_page.dart';
 import 'package:pinput/pinput.dart'; // Import PinCodeTextField
 
 class VerificationForgetPass extends StatefulWidget {
@@ -139,6 +139,20 @@ class _VerificationPageState extends State<VerificationForgetPass> {
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.Pin_Empty_color),
+                  borderRadius: BorderRadius.circular(72),
+                ),
+              ),
+               submittedPinTheme: PinTheme(
+                width: 50.w,
+                height: 67.h,
+                textStyle: TextStyle(
+                    fontSize: 26.sp,
+                    color: AppColors.dark_text,
+                    fontWeight: FontWeight.w500),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColors.Primary_color,
+                  ),
                   borderRadius: BorderRadius.circular(72),
                 ),
               ),

@@ -46,7 +46,7 @@ class _PasswordPageState extends State<PasswordPage> {
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.w800,
                   fontSize: 20.sp,
-                  color: const Color(0xff15331b),
+                  color: AppColors.Head_Text,
                 ),
               ),
             ),
@@ -163,7 +163,7 @@ class _PasswordPageState extends State<PasswordPage> {
           ),
           const Spacer(),
           BtnWidget(
-            btnText: "Continue",
+            btnText: "Get OTP",
             onTap: () {
               Navigator.push(
                 context,

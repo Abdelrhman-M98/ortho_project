@@ -22,8 +22,8 @@ class BtnWidget extends StatelessWidget {
         ),
         child: Text(
           btnText,
-          style:  TextStyle(
-            color: AppColors.White_text,
+          style: TextStyle(
+            color: AppColors.White,
             fontFamily: "Nunito",
             fontSize: 20.sp,
             fontWeight: FontWeight.w500,

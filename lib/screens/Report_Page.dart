@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/DiagonsisList.dart';
+import 'package:ortho/screens/Home_Page.dart';
 
 import '../components/ReportCard.dart';
 import '../models/Diagnosis.dart';
@@ -153,7 +154,7 @@ class _ReportPageState extends State<ReportPage> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return const ReportPage();
+                        return const HomePage();
                       },
                     ),
                   );
