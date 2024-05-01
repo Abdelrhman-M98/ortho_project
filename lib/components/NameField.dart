@@ -100,11 +100,9 @@ class NameFieldState extends State<NameField> {
             color: AppColors.Pin_error_color,
             width: 2,
           ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(24),
-            bottomRight: Radius.circular(36),
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(36),
+          borderRadius: BorderRadius.horizontal(
+            left: Radius.circular(36),
+            right: Radius.circular(36),
           ),
         ),
         focusedErrorBorder: const OutlineInputBorder(

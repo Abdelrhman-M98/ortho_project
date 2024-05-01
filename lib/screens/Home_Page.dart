@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
+import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/HomeCard.dart';
 import 'package:ortho/models/dataOfScan.dart';
 import 'package:ortho/screens/Guid_page.dart';
@@ -17,7 +18,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _selectedFilter = 'All'; // Added variable to store selected filter
 
-  static const List<String> list = <String>['All', 'Curved', 'Three', 'Four'];
+  static const List<String> list = <String>[
+    'All',
+    'Curved',
+    'Date',
+    'Num Of Scan'
+  ];
   static List<ListItem> items = [
     ListItem(
       date_of_scan: DateTime.now(),
@@ -42,6 +48,12 @@ class _HomePageState extends State<HomePage> {
       beforeImage: 'assets/images/photos/uploaded.jpg',
       afterImage: 'assets/images/photos/uploaded.jpg',
       IsimageVailed: 1,
+    ),
+    ListItem(
+      date_of_scan: DateTime.now(),
+      beforeImage: 'assets/images/photos/uploaded.jpg',
+      afterImage: 'assets/images/photos/uploaded.jpg',
+      IsimageVailed: 0,
     ),
   ];
 
@@ -150,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Text(
                     _selectedFilter,
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: AppColors.searchbar_text,
                       fontFamily: "Nunito",
                       fontSize: 12.sp,
@@ -185,47 +197,106 @@ class _HomePageState extends State<HomePage> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Text(
-                  "Recent (${items.length})",
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: items.isNotEmpty
+                      ? Text(
+                          "Recent (${items.length})",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      : SizedBox(
+                          height: 30.h,
+                        )),
             ],
           ),
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final item = items[index];
-                return HomeCard(
-                  Card_item: item,
-                  List_index: index,
-                  imageVailed: item.IsimageVailed,
-                );
-              },
-            ),
-          ),
+          items.isNotEmpty
+              ? Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      return HomeCard(
+                        Card_item: item,
+                        List_index: index,
+                        imageVailed: item.IsimageVailed,
+                      );
+                    },
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image:
+                            const AssetImage("assets/images/photos/Frame.png"),
+                        width: 280.w,
+                        height: 280.h,
+                      ),
+                      SizedBox(
+                        height: 27.h,
+                      ),
+                      Text(
+                        "Let's Get Started with Your Smile Journey",
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.dark_text),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Text(
+                        "Smile Analysis with AI! Get insights for a\n confident you",
+                        textAlign: TextAlign.center,
+                        softWrap: false,
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.SubHeadText),
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      BtnWidget(
+                        btnText: "Start Smile Analysis",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const GuidPage()),
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.Primary_color,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const GuidPage()),
-          );
-        },
-        shape: CircleBorder(
-          side: BorderSide(color: AppColors.Primary_color, width: 2.w),
-        ),
-        child: const Image(image: AssetImage("assets/images/icons/scan.png")),
-      ),
+      floatingActionButton: items
+              .isNotEmpty // Show FloatingActionButton only if items are not empty
+          ? FloatingActionButton(
+              backgroundColor: AppColors.Primary_color,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GuidPage()),
+                );
+              },
+              shape: CircleBorder(
+                side: BorderSide(color: AppColors.Primary_color, width: 2.w),
+              ),
+              child: const Image(
+                  image: AssetImage("assets/images/icons/scan.png")),
+            )
+          : null, // If items are empty, don't show FloatingActionButton
     );
   }
 }

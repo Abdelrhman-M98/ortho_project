@@ -22,11 +22,13 @@ class _ReportPageState extends State<ReportPage> {
     Diagnosis('Tooth Type', ['Tapering', 'Ovoid', 'Square']),
     Diagnosis('Smile Curve', ['Convex', 'Reverse']),
     Diagnosis('White Tooth Color', ['B1', 'B2', 'B3']),
+    Diagnosis('Destima', ['Has Destima', 'Not Has Destima']),
   ];
   List<Diagnosis> realDiagnosisList = [
-    Diagnosis('Tooth Type', ['Square']),
+    Diagnosis('Tooth Type', ['Ovoid']),
     Diagnosis('Smile Curve', ['Reverse']),
     Diagnosis('White Tooth Color', ['B1']),
+    Diagnosis('Destima', ['Has Destima']),
   ];
 
   @override
@@ -123,10 +125,15 @@ class _ReportPageState extends State<ReportPage> {
               beforeImage: 'assets/images/photos/uploaded.jpg',
               afterImage: 'assets/images/photos/uploaded.jpg',
             ),
-            SizedBox(height: 20.h),
+            SizedBox(
+              height: 20.h,
+            ),
             DiagonsisList(
               categories: diagnosisList,
               diagnosis: realDiagnosisList,
+            ),
+            SizedBox(
+              height: 20.h,
             ),
             BtnWidget(
               btnText: "Download full report",
