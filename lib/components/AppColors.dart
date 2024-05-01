@@ -43,5 +43,4 @@ class AppColors {
 
   static const Color Google_Color = Color(0xFF6E8F8E);
 
-  static const Color Label_Fouce_Color = Color(0xFF019B97);
 }

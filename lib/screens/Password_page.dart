@@ -72,7 +72,6 @@ class _PasswordPageState extends State<PasswordPage> {
               // Field to input password
               obscureText: !_isVisible, // Hide or show password text
               decoration: InputDecoration(
-                hintText: "Password",
                 labelText: "Password",
                 labelStyle: TextStyle(
                   color: AppColors.FormHintsTextColor,
@@ -91,11 +90,9 @@ class _PasswordPageState extends State<PasswordPage> {
                     color: AppColors.FormNonFouceColor,
                     width: 0.8.w,
                   ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(24),
-                    bottomRight: Radius.circular(36),
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(36),
+                  borderRadius: const BorderRadius.horizontal(
+                    left: Radius.circular(36),
+                    right: Radius.circular(36),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(

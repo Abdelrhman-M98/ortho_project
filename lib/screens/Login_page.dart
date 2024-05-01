@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/components/Custom_Text_Form_Field.dart';
+import 'package:ortho/components/Email_Field.dart';
 import 'package:ortho/components/PassFormField.dart';
 import 'package:ortho/components/Social_BTN.dart';
 import 'package:ortho/screens/Forgot_Password_Page.dart';
@@ -54,8 +54,7 @@ class LoginPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
-                child: CustomFormField(
-                  fieldHint: "Email address",
+                child: EmailField(
                   fieldLabel: "Email address",
                 ),
               ),

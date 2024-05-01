@@ -4,13 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
-import 'package:ortho/components/Custom_Text_Form_Field.dart';
+import 'package:ortho/components/Email_Field.dart';
 import 'package:ortho/components/NameField.dart';
 import 'package:ortho/screens/Login_page.dart';
 import 'package:ortho/screens/Password_page.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final GlobalKey<FormState> formNameKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,94 +74,97 @@ class SignUpPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 40.h,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
-              alignment: Alignment.centerLeft,
+      body: Form(
+        key: formNameKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 40.h,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Hi there, welcome to Ortho AI ",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20.sp,
+                    color: const Color(0xff15331b),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Hi there, welcome to Ortho AI ",
+                "creating your account will take only few minutes to ensure to you a better experience ",
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w800,
-                  fontSize: 20.sp,
-                  color: const Color(0xff15331b),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                  color: AppColors.SubHeadText,
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              "creating your account will take only few minutes to ensure to you a better experience ",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w500,
-                fontSize: 16.sp,
-                color: AppColors.SubHeadText,
+            SizedBox(
+              height: 40.h,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: NameField(
+                fieldLabel: "User Name",
               ),
             ),
-          ),
-          SizedBox(
-            height: 40.h,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: NameField(
-              fieldHint: "User Name",
-              fieldLabel: "User Name",
+            SizedBox(
+              height: 15.h,
             ),
-          ),
-          SizedBox(
-            height: 15.h,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: CustomFormField(
-              fieldHint: "Email address",
-              fieldLabel: "Email address",
-            ),
-          ),
-          const Spacer(
-            flex: 50,
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: const Padding(
-              padding: EdgeInsets.only(
-                left: 16.0,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: EmailField(
+                fieldLabel: "Email address",
               ),
-              child: TermsOfUse(),
             ),
-          ),
-          const Spacer(),
-          BtnWidget(
-            btnText: "Continue",
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return const PasswordPage();
-                  },
+            const Spacer(
+              flex: 50,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: const Padding(
+                padding: EdgeInsets.only(
+                  left: 16.0,
                 ),
-              );
-            },
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-        ],
+                child: TermsOfUse(),
+              ),
+            ),
+            const Spacer(),
+            BtnWidget(
+              btnText: "Continue",
+              onTap: () {
+                if (formNameKey.currentState!.validate()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return const PasswordPage();
+                      },
+                    ),
+                  );
+                }
+              },
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+          ],
+        ),
       ),
     );
   }

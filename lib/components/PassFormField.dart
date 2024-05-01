@@ -47,11 +47,9 @@ class _PasswordFieldState extends State<PasswordField> {
             color: AppColors.FormNonFouceColor,
             width: 0.8.w,
           ),
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(24),
-            bottomRight: Radius.circular(36),
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(36),
+          borderRadius: const BorderRadius.horizontal(
+            left: Radius.circular(36),
+            right: Radius.circular(36),
           ),
         ),
         focusedBorder: OutlineInputBorder(

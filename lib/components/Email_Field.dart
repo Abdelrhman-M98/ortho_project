@@ -1,64 +1,74 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, file_names, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 
-class CustomFormField extends StatefulWidget implements PreferredSizeWidget {
-  const CustomFormField({
-    required this.fieldHint,
+class EmailField extends StatefulWidget implements PreferredSizeWidget {
+  const EmailField({
     required this.fieldLabel,
   });
 
-  final String fieldHint, fieldLabel;
+  final String fieldLabel;
 
   @override
-  _CustomFormFieldState createState() => _CustomFormFieldState();
+  _EmailFieldState createState() => _EmailFieldState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _CustomFormFieldState extends State<CustomFormField> {
-  late FocusNode _focusNode;
+class _EmailFieldState extends State<EmailField> {
+  final formEmailKey = GlobalKey<FormState>();
+  GlobalKey<FormState> getFormKey() => formEmailKey;
+  bool isFocused = false;
+  bool isValid = true;
+  bool isTyping = false; // Track whether the user is typing
+  final TextEditingController emailController = TextEditingController();
+  final FocusNode emailFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
   }
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    emailController.dispose();
+    emailFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      focusNode: _focusNode,
-      autofocus: true,
+      focusNode: emailFocusNode,
+      autofocus: false,
       obscureText: false,
       decoration: InputDecoration(
-        labelText: widget.fieldLabel,
+        //floatingLabelBehavior: FloatingLabelBehavior.auto,
+        labelText: !emailFocusNode.hasFocus
+            ? emailController.text.isNotEmpty
+                ? ''
+                : widget.fieldLabel
+            : widget.fieldLabel,
         labelStyle: TextStyle(
-          color: _focusNode.hasFocus
-              ? AppColors.FormHintsTextColor
-              : AppColors.Primary_color, // Change label color here
+          color: emailFocusNode.hasFocus || isTyping
+              ? isValid
+                  ? AppColors.Primary_color // When focused/typing and valid
+                  : AppColors.Fail_Text // When focused/typing and not valid
+              : AppColors.FormNonFouceColor, // When not focused and not typing
           fontFamily: 'Nunito',
           fontSize: 17.sp,
           fontWeight: FontWeight.w500,
-        ),
-        hintText: widget.fieldHint,
-        hintStyle: TextStyle(
-          color: AppColors.FormHintsTextColor, // Set the hint color here
-          fontSize: 17.sp,
-          fontFamily: 'Nunito',
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.FormNonFouceColor,
+            color: isFocused || isTyping
+                ? isValid
+                    ? AppColors.Primary_color // When focused/typing and valid
+                    : AppColors.Fail_Text // When focused/typing and not valid
+                : AppColors.FormNonFouceColor,
             width: 0.8.w,
           ),
           borderRadius: const BorderRadius.horizontal(
@@ -68,7 +78,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.Primary_color,
+            color:
+                isValid ? AppColors.Primary_color : AppColors.Pin_error_color,
             width: 1.1.w,
           ),
           borderRadius: const BorderRadius.only(
