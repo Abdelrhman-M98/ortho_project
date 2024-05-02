@@ -46,4 +46,6 @@ class AppColors {
   static const Color Primary_color_shade = Color.fromRGBO(1, 155, 151, 0.2);
 
   static const Color Type_container_color = Color(0XFFFF7795);
+
+  static const Color Profile_Container_color = Color(0XFFFAFEFD);
 }

@@ -7,11 +7,15 @@ import 'package:ortho/components/AppColors.dart';
 class navBar extends StatefulWidget {
   final BuildContext context;
   final PageController homeController;
+  final int selectedIndex;
+  final Function(int) onIndexChanged;
 
   const navBar({
     super.key,
     required this.context,
     required this.homeController,
+    required this.selectedIndex,
+    required this.onIndexChanged,
   });
 
   @override
@@ -19,8 +23,6 @@ class navBar extends StatefulWidget {
 }
 
 class _navBarState extends State<navBar> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,17 +36,15 @@ class _navBarState extends State<navBar> {
           surfaceTintColor: Colors.transparent,
           indicatorColor: AppColors.Primary_color_shade,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-          selectedIndex: _selectedIndex,
+          selectedIndex: widget.selectedIndex,
           height: 70.h,
           onDestinationSelected: (int index) {
-            setState(() {
-              _selectedIndex = index;
-            });
             widget.homeController.animateToPage(
               index,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeIn,
             );
+            widget.onIndexChanged(index);
           },
           destinations: <Widget>[
             NavigationDestination(

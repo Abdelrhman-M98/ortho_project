@@ -29,7 +29,7 @@ class _UserHomePageState extends State<UserHomePage> {
         controller: _homeController,
         onPageChanged: (index) {
           setState(() {
-            _selectedIndex = index;
+            _selectedIndex = index; // Update _selectedIndex when page changes
           });
         },
         children: const [
@@ -40,6 +40,12 @@ class _UserHomePageState extends State<UserHomePage> {
       bottomNavigationBar: navBar(
         context: context,
         homeController: _homeController,
+        selectedIndex: _selectedIndex,
+        onIndexChanged: (index) {
+          setState(() {
+            _selectedIndex = index; // Update _selectedIndex when page changes
+          });
+        },
       ),
     );
   }
