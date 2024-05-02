@@ -9,8 +9,8 @@ import 'package:ortho/components/Email_Field.dart';
 import 'package:ortho/components/PassFormField.dart';
 import 'package:ortho/components/Social_BTN.dart';
 import 'package:ortho/screens/Forgot_Password_Page.dart';
-import 'package:ortho/screens/Home_Page.dart';
 import 'package:ortho/screens/SignUPPage.dart';
+import 'package:ortho/screens/User_Home_Page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key});
@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
                     fontFamily: 'Nunito',
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
-                    color: AppColors.SubHeadText,
+                    color: AppColors.SecondaryColor,
                   ),
                 ),
               ),
@@ -76,7 +76,7 @@ class LoginPage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return const HomePage();
+                      return const UserHomePage();
                     },
                   ));
                 },

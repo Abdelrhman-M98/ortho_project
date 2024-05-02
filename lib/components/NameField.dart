@@ -141,7 +141,6 @@ class NameFieldState extends State<NameField> {
         setState(() {
           isTyping = true; // User is typing
           isValid = value.trim().isNotEmpty;
-          print(nameFocusNode.hasFocus);
           // Check if the written text is similar to any name in the list
           if (nameList.contains(value.trim())) {
             isValid = false;

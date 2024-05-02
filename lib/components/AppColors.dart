@@ -23,7 +23,7 @@ class AppColors {
 
   static const Color FormNonFouceColor = Color(0xff6E8F8E);
 
-  static const Color SubHeadText = Color(0xff507372);
+  static const Color SecondaryColor = Color(0xff507372);
 
   static const Color Verified_Text = Color(0xff358044);
 
@@ -43,4 +43,7 @@ class AppColors {
 
   static const Color Google_Color = Color(0xFF6E8F8E);
 
+  static const Color Primary_color_shade = Color.fromRGBO(1, 155, 151, 0.2);
+
+  static const Color Type_container_color = Color(0XFFFF7795);
 }

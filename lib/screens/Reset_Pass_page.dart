@@ -51,7 +51,7 @@ class ResetPassPage extends StatelessWidget {
                 fontFamily: 'Nunito',
                 fontWeight: FontWeight.w500,
                 fontSize: 16.sp,
-                color: AppColors.SubHeadText,
+                color: AppColors.SecondaryColor,
               ),
             ),
             SizedBox(

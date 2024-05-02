@@ -24,6 +24,10 @@ class HomeCard extends StatelessWidget {
       color: AppColors.card_background,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
+        side: const BorderSide(
+          color: AppColors.SecondaryColor, // Set the border color here
+          width: 0.5, // Set the border width here
+        ),
       ),
       elevation: 4,
       margin: const EdgeInsets.all(
@@ -39,7 +43,7 @@ class HomeCard extends StatelessWidget {
               children: [
                 Container(
                   height: 253.h,
-                  width: 187.w,
+                  width: 188.5.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8), // Rounded border
                     boxShadow: [
@@ -63,9 +67,9 @@ class HomeCard extends StatelessWidget {
                 SizedBox(width: 1.w),
                 Container(
                   height: 253.h,
-                  width: 187.w,
+                  width: 188.5.w,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0), // Rounded border
+                    borderRadius: BorderRadius.circular(10), // Rounded border
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.0),
@@ -76,8 +80,9 @@ class HomeCard extends StatelessWidget {
                     ],
                   ),
                   child: ClipRRect(
-                    borderRadius:
-                        const BorderRadius.only(topRight: Radius.circular(10)),
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                    ),
                     child: Image.asset(
                       Card_item.afterImage,
                       fit: BoxFit.cover,
@@ -152,7 +157,7 @@ class HomeCard extends StatelessWidget {
                 Text(
                   'Date: ${DateFormat('MMM d, y hh:mm a').format(Card_item.date_of_scan)}',
                   style: TextStyle(
-                    color: AppColors.SubHeadText,
+                    color: AppColors.SecondaryColor,
                     fontFamily: "Nunito",
                     fontSize: 13.sp,
                   ),

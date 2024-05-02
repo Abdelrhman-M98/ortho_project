@@ -110,7 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.w500,
                   fontSize: 16.sp,
-                  color: AppColors.SubHeadText,
+                  color: AppColors.SecondaryColor,
                 ),
               ),
             ),
