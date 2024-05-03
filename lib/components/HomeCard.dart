@@ -43,7 +43,7 @@ class HomeCard extends StatelessWidget {
               children: [
                 Container(
                   height: 253.h,
-                  width: 188.5.w,
+                  width: 187.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8), // Rounded border
                     boxShadow: [
@@ -64,7 +64,9 @@ class HomeCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 1.w),
+                SizedBox(
+                  width: 0.5.w,
+                ),
                 Container(
                   height: 253.h,
                   width: 188.5.w,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
+import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/Email_Field.dart';
 import 'package:ortho/screens/verify_reset_Page.dart';
 
@@ -14,24 +15,15 @@ class ForgetPassPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        titleSpacing: -10, // Adjust the title spacing to reduce space
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: AppColors.Primary_color,
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+      appBar: CustomAppBar(
+        titleText: 'Back',
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        barIcon: const Icon(
+          Icons.arrow_back_ios_new_rounded,
+          color: AppColors.Primary_color,
         ),
-        title: const Text(
-          'Back',
-          style: TextStyle(
-            color: AppColors.Primary_color,
-          ),
-        ),
-        // backgroundColor: Colors.white, // Change the background color of AppBar
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

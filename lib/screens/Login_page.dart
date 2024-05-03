@@ -209,7 +209,7 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 5.h,
+                height: 25.h,
               ),
               SocialBTN(
                 btnText: 'Login with Google',

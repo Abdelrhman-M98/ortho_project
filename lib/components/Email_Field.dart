@@ -23,17 +23,34 @@ class _EmailFieldState extends State<EmailField> {
   GlobalKey<FormState> getFormKey() => formEmailKey;
   bool isFocused = false;
   bool isValid = true;
-  bool isTyping = false; // Track whether the user is typing
+  bool isValidName = true;
+  bool isTyping = false;
   final TextEditingController emailController = TextEditingController();
   final FocusNode emailFocusNode = FocusNode();
+
+  List<String> nameList = [
+    'John',
+    'Alice',
+    'Bob',
+    'Charlie',
+    'Eva',
+  ];
 
   @override
   void initState() {
     super.initState();
+    emailController.addListener(_onFocusChanged);
+  }
+
+  void _onFocusChanged() {
+    setState(() {
+      isFocused = emailFocusNode.hasFocus;
+    });
   }
 
   @override
   void dispose() {
+    emailFocusNode.removeListener(_onFocusChanged);
     emailController.dispose();
     emailFocusNode.dispose();
     super.dispose();
@@ -42,19 +59,17 @@ class _EmailFieldState extends State<EmailField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: formEmailKey,
       focusNode: emailFocusNode,
+      controller: emailController,
       autofocus: false,
       obscureText: false,
       decoration: InputDecoration(
         //floatingLabelBehavior: FloatingLabelBehavior.auto,
-        labelText: !emailFocusNode.hasFocus
-            ? emailController.text.isNotEmpty
-                ? ''
-                : widget.fieldLabel
-            : widget.fieldLabel,
+        labelText: widget.fieldLabel,
         labelStyle: TextStyle(
-          color: emailFocusNode.hasFocus || isTyping
-              ? isValid
+          color: isFocused
+              ? isValidName
                   ? AppColors.Primary_color // When focused/typing and valid
                   : AppColors.Fail_Text // When focused/typing and not valid
               : AppColors.FormNonFouceColor, // When not focused and not typing
@@ -64,11 +79,7 @@ class _EmailFieldState extends State<EmailField> {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: isFocused || isTyping
-                ? isValid
-                    ? AppColors.Primary_color // When focused/typing and valid
-                    : AppColors.Fail_Text // When focused/typing and not valid
-                : AppColors.FormNonFouceColor,
+            color: AppColors.FormNonFouceColor,
             width: 0.8.w,
           ),
           borderRadius: const BorderRadius.horizontal(
@@ -78,8 +89,7 @@ class _EmailFieldState extends State<EmailField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color:
-                isValid ? AppColors.Primary_color : AppColors.Pin_error_color,
+            color: AppColors.Primary_color,
             width: 1.1.w,
           ),
           borderRadius: const BorderRadius.only(
@@ -120,6 +130,53 @@ class _EmailFieldState extends State<EmailField> {
         fontWeight: FontWeight.w600,
         letterSpacing: 0,
       ),
+      onChanged: (value) {
+        setState(() {
+          isTyping = true; // User is typing
+          isValid = value.trim().isNotEmpty;
+          // Check if the written text is similar to any name in the list
+          if (nameList.contains(value.trim())) {
+            isValid = false;
+          }
+        });
+      },
+      onTap: () {
+        setState(() {
+          isFocused = true;
+        });
+      },
+      onEditingComplete: () {
+        setState(() {
+          // Reset typing state when editing is complete
+          if (emailController.text.isEmpty) {
+            isValid = true;
+          }
+        });
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          setState(() {
+            isValidName = false;
+          });
+          return 'Must Fill The Name Field'; // Return error message when validation fails
+        } else if (!RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+          setState(() {
+            isValidName = false;
+          });
+          return 'The name Shoulb be [a-z A-Z]';
+        } else if (nameList.contains(value.trim())) {
+          setState(() {
+            isValidName = false;
+          });
+          return 'This Name is used Before';
+        } else {
+          setState(() {
+            isValidName = true;
+          });
+
+          return null;
+        }
+      },
     );
   }
 }

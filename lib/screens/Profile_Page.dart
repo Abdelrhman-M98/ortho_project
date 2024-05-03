@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Pie_Chart.dart';
 import 'package:ortho/models/dataOfScan.dart';
+import 'package:ortho/screens/Account_Details_Page.dart';
 import 'package:ortho/screens/Login_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -154,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Container(
               width: 351.w,
-              height: 108.h,
+              height: 125.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.Primary_color),
@@ -163,7 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                      top: 16,
+                      top: 10,
                       right: 16,
                       left: 16,
                     ),
@@ -180,7 +181,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AccDetailsPage(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "Edit",
                             style: TextStyle(
