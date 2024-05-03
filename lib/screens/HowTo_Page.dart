@@ -269,7 +269,7 @@ class GuidHowTo extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 50.h,
+              height: 85.h,
             ),
             BtnWidget(
               btnText: "Start Scan",

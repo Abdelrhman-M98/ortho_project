@@ -17,6 +17,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> formNameKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formEmailKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -74,81 +75,89 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
       ),
-      body: Form(
-        key: formNameKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 40.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Hi there, welcome to Ortho AI ",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w800,
-                    fontSize: 20.sp,
-                    color: const Color(0xff15331b),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 40.h,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              alignment: Alignment.centerLeft,
               child: Text(
-                "creating your account will take only few minutes to ensure to you a better experience ",
+                "Hi there, welcome to Ortho AI ",
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.sp,
-                  color: AppColors.SecondaryColor,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20.sp,
+                  color: const Color(0xff15331b),
                 ),
               ),
             ),
-            SizedBox(
-              height: 40.h,
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              "creating your account will take only few minutes to ensure to you a better experience ",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontFamily: 'Nunito',
+                fontWeight: FontWeight.w500,
+                fontSize: 16.sp,
+                color: AppColors.SecondaryColor,
+              ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: NameField(
+          ),
+          SizedBox(
+            height: 40.h,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Form(
+              key: formNameKey,
+              child: const NameField(
                 fieldLabel: "User Name",
               ),
             ),
-            SizedBox(
-              height: 15.h,
+          ),
+          SizedBox(
+            height: 15.h,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: EmailField(
+            child: Form(
+              key: formEmailKey,
+              child: const EmailField(
                 fieldLabel: "Email address",
               ),
             ),
-            const Spacer(
-              flex: 50,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: const Padding(
-                padding: EdgeInsets.only(
-                  left: 16.0,
-                ),
-                child: TermsOfUse(),
+          ),
+          const Spacer(
+            flex: 50,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: const Padding(
+              padding: EdgeInsets.only(
+                left: 16.0,
               ),
+              child: TermsOfUse(),
             ),
-            const Spacer(),
-            BtnWidget(
-              btnText: "Continue",
-              onTap: () {
-                if (formNameKey.currentState!.validate()) {
+          ),
+          const Spacer(),
+          BtnWidget(
+            btnText: "Continue",
+            onTap: () {
+              setState(() {
+                if (formNameKey.currentState!.validate() &&
+                    formEmailKey.currentState!.validate()) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -158,13 +167,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   );
                 }
-              },
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-          ],
-        ),
+              });
+            },
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+        ],
       ),
     );
   }

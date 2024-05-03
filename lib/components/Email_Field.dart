@@ -6,6 +6,7 @@ import 'package:ortho/components/AppColors.dart';
 
 class EmailField extends StatefulWidget implements PreferredSizeWidget {
   const EmailField({
+    
     required this.fieldLabel,
   });
 
@@ -60,8 +61,8 @@ class _EmailFieldState extends State<EmailField> {
   Widget build(BuildContext context) {
     return TextFormField(
       key: formEmailKey,
+      controller: emailController, 
       focusNode: emailFocusNode,
-      controller: emailController,
       autofocus: false,
       obscureText: false,
       decoration: InputDecoration(

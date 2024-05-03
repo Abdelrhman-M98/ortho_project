@@ -62,7 +62,9 @@ class LoginPage extends StatelessWidget {
                 height: 25.h,
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
                 child: PasswordField(
                   fieldHint: "Password",
                   fieldLabel: "Password",

@@ -170,7 +170,9 @@ class _UploadPageState extends State<UploadPage> {
                 ),
               ),
 
-              SizedBox(height: 50.h), // Add spacing between text and button
+              SizedBox(
+                height: 85.h,
+              ),
               BtnWidget(
                 // Add BtnWidget here
                 btnText: "Save & Continue",

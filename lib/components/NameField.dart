@@ -66,9 +66,9 @@ class NameFieldState extends State<NameField> {
         labelStyle: TextStyle(
           color: isFocused
               ? isValidName
-                  ? AppColors.Primary_color // When focused/typing and valid
-                  : AppColors.Fail_Text // When focused/typing and not valid
-              : AppColors.FormNonFouceColor, // When not focused and not typing
+                  ? AppColors.Primary_color 
+                  : AppColors.Fail_Text 
+              : AppColors.FormNonFouceColor, 
           fontFamily: 'Nunito',
           fontSize: 17.sp,
           fontWeight: FontWeight.w500,
