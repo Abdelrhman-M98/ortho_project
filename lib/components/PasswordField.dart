@@ -4,35 +4,44 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 
-class InputFeild extends HookWidget {
-  InputFeild({
-    super.key,
+class PasswordFeild extends HookWidget {
+  PasswordFeild({
+    Key? key,
     required this.titel,
     required this.controller,
     required this.validator,
     required this.showSuffixIcon,
-  });
+    required this.obscureText,
+  }) : super(key: key);
 
   final String titel;
   final TextEditingController controller;
   final String? Function(String?) validator;
-  final inputFocusNode = useMemoized(() => FocusNode());
-  final showSuffixIcon;
+  final bool showSuffixIcon;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
     final isFocused = useState(false);
     final isValid = useState(true);
+    final obscureTextState = useState(obscureText);
 
-    inputFocusNode.addListener(() {
-      isFocused.value = inputFocusNode.hasFocus;
-    });
+    final inputFocusNode = useFocusNode();
+
+    useEffect(() {
+      inputFocusNode.addListener(() {
+        isFocused.value = inputFocusNode.hasFocus;
+      });
+      return () {
+        inputFocusNode.dispose();
+      };
+    }, []);
 
     return TextFormField(
       controller: controller,
       focusNode: inputFocusNode,
       autofocus: false,
-      obscureText: false,
+      obscureText: obscureTextState.value,
       decoration: InputDecoration(
         labelText: titel,
         labelStyle: TextStyle(
@@ -89,19 +98,21 @@ class InputFeild extends HookWidget {
             topRight: Radius.circular(80),
           ),
         ),
-        suffixIcon: showSuffixIcon && controller.text.isNotEmpty
-            ? isValid.value
-                ? Image.asset(
-                    "assets/images/icons/vailedName.png",
-                    width: 16.w,
-                    height: 16.h,
-                  )
-                : Image.asset(
-                    "assets/images/icons/NotVailedName.png",
-                    width: 16.w,
-                    height: 16.h,
-                  )
-            : null,
+        suffixIcon: IconButton(
+          icon: Icon(
+            showSuffixIcon
+                ? obscureTextState.value
+                    ? Icons.visibility_off
+                    : Icons.visibility
+                : null,
+            color: obscureTextState.value
+                ? AppColors.SecondaryColor
+                : AppColors.Primary_color,
+          ),
+          onPressed: () {
+            obscureTextState.value = !obscureTextState.value;
+          },
+        ),
       ),
       style: TextStyle(
         fontFamily: 'Nunito',

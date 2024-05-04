@@ -1,17 +1,20 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors, annotate_overrides
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/components/PassFormField.dart';
+import 'package:ortho/components/PasswordField.dart';
 import 'package:ortho/screens/Login_page.dart';
 
-class ResetPassPage extends StatelessWidget {
+class ResetPassPage extends HookWidget {
   const ResetPassPage();
 
   Widget build(BuildContext context) {
+    final passwordController = useTextEditingController();
+    final ConfirmPasswordController = useTextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(
@@ -57,21 +60,35 @@ class ResetPassPage extends StatelessWidget {
             SizedBox(
               height: 40.h,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 0),
-              child: PasswordField(
-                fieldHint: "Password",
-                fieldLabel: "Password",
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 0,
+              ),
+              child: PasswordFeild(
+                controller: passwordController,
+                obscureText: true,
+                showSuffixIcon: true,
+                titel: "Password",
+                validator: (value) {
+                  return null;
+                },
               ),
             ),
             SizedBox(
               height: 25.h,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 0),
-              child: PasswordField(
-                fieldHint: "Confirm password",
-                fieldLabel: "Confirm password",
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 0,
+              ),
+              child: PasswordFeild(
+                controller: ConfirmPasswordController,
+                obscureText: true,
+                showSuffixIcon: true,
+                titel: "Password",
+                validator: (value) {
+                  return null;
+                },
               ),
             ),
             const Spacer(),

@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/InputField.dart';
-import 'package:ortho/components/NameField.dart';
 import 'package:ortho/screens/Login_page.dart';
 import 'package:ortho/screens/Password_page.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
@@ -117,9 +116,12 @@ class SignUpPage extends HookWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: InputFeild(
+                showSuffixIcon: true,
                 titel: 'User Name',
                 controller: nameField,
-                validator: (value) {},
+                validator: (value) {
+                  return null;
+                },
               ),
             ),
             SizedBox(
@@ -130,10 +132,11 @@ class SignUpPage extends HookWidget {
                 horizontal: 10,
               ),
               child: InputFeild(
+                showSuffixIcon: true,
                 titel: 'Eamil Adderss',
                 controller: emailController,
                 validator: (value) {
-                  return 'get';
+                  return null;
                 },
               ),
             ),
