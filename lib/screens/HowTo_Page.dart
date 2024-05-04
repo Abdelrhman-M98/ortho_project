@@ -1,26 +1,33 @@
-// ignore_for_file: file_names, use_key_in_widget_constructors
+// ignore_for_file: file_names, use_key_in_widget_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
+import 'package:ortho/screens/Camera_Page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class GuidHowTo extends StatelessWidget {
   const GuidHowTo();
+
   Future<void> checkPermission(
       Permission permission, BuildContext context) async {
     final status = await permission.request();
 
     if (status.isGranted) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Permission is Granted")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Permission is Granted"),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Permission is not Granted")));
+        const SnackBar(
+          content: Text("Permission is not Granted"),
+        ),
+      );
       if (await Permission.camera.request().isGranted) {
-        // Either the permission was already granted before or the user just granted it.
         print("Permission was granted");
       }
     }
@@ -41,13 +48,15 @@ class GuidHowTo extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 18,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 36.h,
+              height: 10.h,
             ),
             Text(
               "Taking the perfect picture",
@@ -72,36 +81,46 @@ class GuidHowTo extends StatelessWidget {
             SizedBox(
               height: 31.h,
             ),
-            Row(
-              children: [
-                const Image(
-                  image: AssetImage(
-                    "assets/images/icons/Do_icon.png",
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8.0,
+              ),
+              child: Row(
+                children: [
+                  const Image(
+                    image: AssetImage(
+                      "assets/images/icons/Do_icon.png",
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(
-                  "Do's",
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w800,
-                    fontSize: 24.sp,
-                    color: AppColors.Primary_color,
+                  SizedBox(
+                    width: 5.w,
                   ),
-                ),
-              ],
+                  Text(
+                    "Do's",
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w800,
+                      fontSize: 24.sp,
+                      color: AppColors.Primary_color,
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 20.h,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                  ),
                   child: Image(
-                    image: AssetImage(
+                    width: 48.w,
+                    height: 48.h,
+                    image: const AssetImage(
                       "assets/images/icons/Positioning.png",
                     ),
                   ),
@@ -138,11 +157,16 @@ class GuidHowTo extends StatelessWidget {
               ],
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                  ),
                   child: Image(
-                    image: AssetImage(
+                    width: 48.w,
+                    height: 48.h,
+                    image: const AssetImage(
                       "assets/images/icons/Lighting.png",
                     ),
                   ),
@@ -181,36 +205,46 @@ class GuidHowTo extends StatelessWidget {
             SizedBox(
               height: 30.h,
             ),
-            Row(
-              children: [
-                const Image(
-                  image: AssetImage(
-                    "assets/images/icons/Doesn't_icon.png",
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
+              child: Row(
+                children: [
+                  const Image(
+                    image: AssetImage(
+                      "assets/images/icons/Doesn't_icon.png",
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(
-                  "Don'ts",
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w800,
-                    fontSize: 24.sp,
-                    color: AppColors.Primary_color,
+                  SizedBox(
+                    width: 5.w,
                   ),
-                ),
-              ],
+                  Text(
+                    "Don'ts",
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w800,
+                      fontSize: 24.sp,
+                      color: AppColors.Primary_color,
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 20.h,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                  ),
                   child: Image(
-                    image: AssetImage(
+                    width: 48.w,
+                    height: 48.h,
+                    image: const AssetImage(
                       "assets/images/icons/Accessories.png",
                     ),
                   ),
@@ -247,11 +281,16 @@ class GuidHowTo extends StatelessWidget {
               height: 20.h,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                  ),
                   child: Image(
-                    image: AssetImage(
+                    width: 48.w,
+                    height: 48.h,
+                    image: const AssetImage(
                       "assets/images/icons/Expression.png",
                     ),
                   ),
@@ -293,6 +332,12 @@ class GuidHowTo extends StatelessWidget {
                 checkPermission(
                   Permission.camera,
                   context,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CameraScreen(),
+                  ),
                 );
               },
             ),

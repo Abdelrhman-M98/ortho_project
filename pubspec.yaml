@@ -55,6 +55,7 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.9.0
   permission_handler: ^10.2.0
+  camera: ^0.10.5+3
   
 
 dev_dependencies:

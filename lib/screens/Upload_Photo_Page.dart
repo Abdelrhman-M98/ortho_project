@@ -1,5 +1,7 @@
 // ignore_for_file: use_super_parameters, library_private_types_in_public_api, file_names, unnecessary_import, non_constant_identifier_names, prefer_final_fields, avoid_unnecessary_containers, unused_import
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +10,11 @@ import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/screens/Report_Page.dart';
 
 class UploadPage extends StatefulWidget {
-  const UploadPage({Key? key}) : super(key: key);
+  const UploadPage({
+    Key? key,
+    required this.imagepath,
+  }) : super(key: key);
+  final String imagepath;
 
   @override
   _UploadPageState createState() => _UploadPageState();
@@ -72,7 +78,6 @@ class _UploadPageState extends State<UploadPage> {
                 softWrap: true, // Enable wrapping
                 maxLines: 2, // Set maximum lines
               ),
-
               SizedBox(
                 height: 30.h,
               ),
@@ -92,20 +97,17 @@ class _UploadPageState extends State<UploadPage> {
                     ],
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: const Image(
-                      image: AssetImage(
-                        "assets/images/photos/uploaded.jpg",
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.file(
+                        File(widget
+                            .imagepath), // Change imaepath to widget.imagepath
+                        fit: BoxFit.cover,
+                      )),
                 ),
               ),
               SizedBox(
                 height: 30.h,
               ),
-
               Visibility(
                 visible: _IsVailed != 0, // Check if _IsVailed is not equal to 0
                 child: Row(
@@ -138,7 +140,6 @@ class _UploadPageState extends State<UploadPage> {
                   ],
                 ),
               ),
-
               Visibility(
                 visible: _IsVailed == 0, // Check if _IsVailed is not equal to 0
                 child: Row(
@@ -169,7 +170,6 @@ class _UploadPageState extends State<UploadPage> {
                   ],
                 ),
               ),
-
               SizedBox(
                 height: 85.h,
               ),
