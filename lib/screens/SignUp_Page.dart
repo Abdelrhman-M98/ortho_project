@@ -156,8 +156,7 @@ class SignUpPage extends HookWidget {
             BtnWidget(
               btnText: "Continue",
               onTap: () {
-                if (formKey.currentState!.validate() &&
-                    formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(

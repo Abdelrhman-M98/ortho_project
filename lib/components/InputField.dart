@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports, unnecessary_import, file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,7 +19,7 @@ class InputFeild extends HookWidget {
   final TextEditingController controller;
   final String? Function(String?) validator;
   final inputFocusNode = useMemoized(() => FocusNode());
-  final showSuffixIcon;
+  final bool showSuffixIcon;
 
   @override
   Widget build(BuildContext context) {

@@ -14,10 +14,10 @@ class VerificationPage extends StatefulWidget {
   const VerificationPage();
 
   @override
-  _VerificationPageState createState() => _VerificationPageState();
+  VerificationPageState createState() => VerificationPageState();
 }
 
-class _VerificationPageState extends State<VerificationPage> {
+class VerificationPageState extends State<VerificationPage> {
   bool isLoading = false;
   late Timer _timer;
   int _start = 60;

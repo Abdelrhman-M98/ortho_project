@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/Upload_Page.dart';
+import 'package:ortho/screens/Upload_Photo_Page.dart';
 
 class GuidHowTo extends StatelessWidget {
   const GuidHowTo();

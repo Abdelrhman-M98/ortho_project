@@ -1,3 +1,4 @@
+// ignore_for_file: implementation_imports, unnecessary_import, file_names
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -5,14 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 
 class PasswordFeild extends HookWidget {
-  PasswordFeild({
-    Key? key,
+  const PasswordFeild({
+    super.key,
     required this.titel,
     required this.controller,
     required this.validator,
     required this.showSuffixIcon,
     required this.obscureText,
-  }) : super(key: key);
+  });
 
   final String titel;
   final TextEditingController controller;

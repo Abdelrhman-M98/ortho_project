@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ortho/screens/on_board_screen.dart';
+import 'package:ortho/screens/OnBoard_Page.dart';
 
 void main() {
   runApp(const MyApp());

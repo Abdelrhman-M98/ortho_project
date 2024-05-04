@@ -14,7 +14,9 @@ class ResetPassPage extends HookWidget {
 
   Widget build(BuildContext context) {
     final passwordController = useTextEditingController();
-    final ConfirmPasswordController = useTextEditingController();
+    final confirmPasswordController = useTextEditingController();
+    late final formKey = useMemoized(() => GlobalKey<FormState>());
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(
@@ -30,85 +32,90 @@ class ResetPassPage extends HookWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 25.h,
-            ),
-            Text(
-              "Reset Password",
-              style: TextStyle(
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w800,
-                fontSize: 22.sp,
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 25.h,
               ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              "the password should be different then the previous one ",
-              style: TextStyle(
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w500,
-                fontSize: 16.sp,
-                color: AppColors.SecondaryColor,
+              Text(
+                "Reset Password",
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 22.sp,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 40.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 0,
+              SizedBox(
+                height: 10.h,
               ),
-              child: PasswordFeild(
-                controller: passwordController,
-                obscureText: true,
-                showSuffixIcon: true,
-                titel: "Password",
-                validator: (value) {
-                  return null;
+              Text(
+                "the password should be different then the previous one ",
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                  color: AppColors.SecondaryColor,
+                ),
+              ),
+              SizedBox(
+                height: 40.h,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 0,
+                ),
+                child: PasswordFeild(
+                  controller: passwordController,
+                  obscureText: true,
+                  showSuffixIcon: true,
+                  titel: "Password",
+                  validator: (value) {
+                    return null;
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 25.h,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 0,
+                ),
+                child: PasswordFeild(
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                  showSuffixIcon: true,
+                  titel: "Confirm Password",
+                  validator: (value) {
+                    return null;
+                  },
+                ),
+              ),
+              const Spacer(),
+              BtnWidget(
+                btnText: "Reset password",
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const LoginPage();
+                        },
+                      ),
+                    );
+                  }
                 },
               ),
-            ),
-            SizedBox(
-              height: 25.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 0,
+              SizedBox(
+                height: 20.h,
               ),
-              child: PasswordFeild(
-                controller: ConfirmPasswordController,
-                obscureText: true,
-                showSuffixIcon: true,
-                titel: "Password",
-                validator: (value) {
-                  return null;
-                },
-              ),
-            ),
-            const Spacer(),
-            BtnWidget(
-              btnText: "Reset password",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const LoginPage();
-                    },
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

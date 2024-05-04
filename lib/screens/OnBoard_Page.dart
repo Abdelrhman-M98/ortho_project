@@ -1,8 +1,9 @@
+// ignore_for_file: implementation_imports, unnecessary_import, file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/screens/Login_page.dart';
-import 'package:ortho/screens/SignUpPage.dart';
+import 'package:ortho/screens/SignUp_Page.dart';
 
 class OnBoarding extends StatelessWidget {
   const OnBoarding({super.key}); // Use 'Key?' instead of 'super.key'

@@ -10,7 +10,7 @@ import 'package:ortho/components/InputField.dart';
 import 'package:ortho/components/PasswordField.dart';
 import 'package:ortho/components/Social_BTN.dart';
 import 'package:ortho/screens/Forgot_Password_Page.dart';
-import 'package:ortho/screens/SignUPPage.dart';
+import 'package:ortho/screens/SignUp_Page.dart';
 import 'package:ortho/screens/User_Home_Page.dart';
 
 class LoginPage extends HookWidget {
@@ -64,7 +64,7 @@ class LoginPage extends HookWidget {
                     horizontal: 16,
                   ),
                   child: InputFeild(
-                    showSuffixIcon: true,
+                    showSuffixIcon: false,
                     titel: 'Eamil Adderss',
                     controller: emailController,
                     validator: (value) {
@@ -95,11 +95,13 @@ class LoginPage extends HookWidget {
                 BtnWidget(
                   btnText: "Login",
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const UserHomePage();
-                      },
-                    ));
+                    if (formKey.currentState!.validate()) {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const UserHomePage();
+                        },
+                      ));
+                    }
                   },
                 ),
                 SizedBox(

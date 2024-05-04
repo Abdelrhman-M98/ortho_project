@@ -8,7 +8,7 @@ import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/InputField.dart';
 
-import 'package:ortho/screens/verify_reset_Page.dart';
+import 'package:ortho/screens/Verification_Reset_Pass_PageState.dart';
 
 class ForgetPassPage extends HookWidget {
   const ForgetPassPage({Key? key}) : super(key: key);
@@ -73,7 +73,7 @@ class ForgetPassPage extends HookWidget {
                 titel: 'Eamil Adderss',
                 controller: emailController,
                 validator: (value) {
-                  return null;
+                  ;
                 },
               ),
             ),
@@ -82,14 +82,16 @@ class ForgetPassPage extends HookWidget {
             BtnWidget(
               btnText: "Submit",
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const VerificationForgetPass();
-                    },
-                  ),
-                );
+                if (formKey.currentState!.validate()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return const VerificationForgetPass();
+                      },
+                    ),
+                  );
+                }
               },
             ),
             SizedBox(height: 20.h),
