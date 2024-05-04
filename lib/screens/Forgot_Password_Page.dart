@@ -73,7 +73,7 @@ class ForgetPassPage extends HookWidget {
                 titel: 'Eamil Adderss',
                 controller: emailController,
                 validator: (value) {
-                  ;
+                  return null;
                 },
               ),
             ),

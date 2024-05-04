@@ -5,10 +5,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/Upload_Photo_Page.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class GuidHowTo extends StatelessWidget {
   const GuidHowTo();
+  Future<void> checkPermission(
+      Permission permission, BuildContext context) async {
+    final status = await permission.request();
+
+    if (status.isGranted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Permission is Granted")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Permission is not Granted")));
+      if (await Permission.camera.request().isGranted) {
+        // Either the permission was already granted before or the user just granted it.
+        print("Permission was granted");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -274,13 +290,9 @@ class GuidHowTo extends StatelessWidget {
             BtnWidget(
               btnText: "Start Scan",
               onTap: () {
-                Navigator.push(
+                checkPermission(
+                  Permission.camera,
                   context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const UploadPage();
-                    },
-                  ),
                 );
               },
             ),

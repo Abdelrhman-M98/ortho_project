@@ -7,7 +7,9 @@ import 'package:ortho/components/AppColors.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpWidget extends HookWidget {
-  const OtpWidget({Key? key});
+  const OtpWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
