@@ -66,9 +66,9 @@ class NameFieldState extends State<NameField> {
         labelStyle: TextStyle(
           color: isFocused
               ? isValidName
-                  ? AppColors.Primary_color 
-                  : AppColors.Fail_Text 
-              : AppColors.FormNonFouceColor, 
+                  ? AppColors.Primary_color
+                  : AppColors.Fail_Text
+              : AppColors.FormNonFouceColor,
           fontFamily: 'Nunito',
           fontSize: 17.sp,
           fontWeight: FontWeight.w500,
@@ -170,7 +170,7 @@ class NameFieldState extends State<NameField> {
           setState(() {
             isValidName = false;
           });
-          return 'The name Shoulb be [a-z A-Z]';
+          return 'The name Shoulb be [a-zA-Z]';
         } else if (nameList.contains(value.trim())) {
           setState(() {
             isValidName = false;

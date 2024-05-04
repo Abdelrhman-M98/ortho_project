@@ -136,9 +136,7 @@ class _EmailFieldState extends State<EmailField> {
           isTyping = true; // User is typing
           isValid = value.trim().isNotEmpty;
           // Check if the written text is similar to any name in the list
-          if (nameList.contains(value.trim())) {
-            isValid = false;
-          }
+
         });
       },
       onTap: () {
@@ -160,7 +158,7 @@ class _EmailFieldState extends State<EmailField> {
             isValidName = false;
           });
           return 'Must Fill The Name Field'; // Return error message when validation fails
-        } else if (!RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+        } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
           setState(() {
             isValidName = false;
           });
