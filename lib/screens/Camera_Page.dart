@@ -1,14 +1,19 @@
 // ignore_for_file: file_names, use_build_context_synchronously, empty_catches
 
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_editor/image_editor.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/screens/Upload_Photo_Page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 late List<CameraDescription> cameras;
 int currentCameraIndex = 0;
+bool isFrontCamera = false;
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -177,12 +182,29 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void takePic(BuildContext context) async {
-    final image = await cameraController.takePicture();
+    final imageFile = await cameraController.takePicture();
+    var file = File(imageFile.path);
+    if (cameras[currentCameraIndex].lensDirection ==
+        CameraLensDirection.front) {
+      Uint8List? imageBytes = await file.readAsBytes();
+
+      // 2. flip image on the X axis
+      final ImageEditorOption option = ImageEditorOption();
+      option.addOption(
+        const FlipOption(horizontal: true),
+      );
+      imageBytes = await ImageEditor.editImage(
+          image: imageBytes, imageEditorOption: option);
+
+      // 3. write the image back to disk
+      await file.delete();
+      await file.writeAsBytes(imageBytes!);
+    }
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => UploadPage(
-          imagepath: image.path,
+          imagepath: file.path,
         ),
       ),
     );
