@@ -1,0 +1,172 @@
+[33mcommit 4ec01b170482414252d195ad769e0029406b589a[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/After-camera-add[m[33m)[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sun May 5 03:10:46 2024 +0300
+
+    Camera on and take photo 100% [Adawy]
+
+[33mcommit fcf64ace9eff3acf8f5452d2dad9e8483e1ab780[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sun May 5 01:49:07 2024 +0300
+
+    finish camera page and view
+
+[33mcommit e094166a88a392d0046e004110b3cba387994b39[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sat May 4 22:33:54 2024 +0300
+
+    Add Camera Permissions
+
+[33mcommit 164dac6a02d2207db2f5f8e6f540c1efe534c292[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sat May 4 21:24:18 2024 +0300
+
+    before camera 2
+
+[33mcommit c3f4c32ed2d8b09674d0940881629e42c5655c5a[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sat May 4 19:22:47 2024 +0300
+
+    Done All Fields Ui
+
+[33mcommit 66433ca0bc6b0b10813b92d1d0b2d461c2b663da[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sat May 4 17:35:42 2024 +0300
+
+    create input field for any field with validator
+
+[33mcommit f6338267afda41262b8793dadfab2cae6967d1e3[m[33m ([m[1;32mmain[m[33m)[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sat May 4 02:03:42 2024 +0300
+
+    BeforeCamera Add
+
+[33mcommit 633e9289f9aae5566bee3108e84c11b8a271f331[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Fri May 3 16:04:49 2024 +0300
+
+    Add EditProfile Page, edit Bugs in Email Field
+
+[33mcommit 49fc4ccd25420a20fc18ac2f2ca4569b5ae25592[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Fri May 3 02:05:39 2024 +0300
+
+    Add NavBar , Navigate between Profile and Home , Create Full Profile Page
+
+[33mcommit 1d4a992561b2f69286f59d288f01c54c9024d2dc[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Thu May 2 19:31:11 2024 +0300
+
+    Add Nav Bar with view Pager Between Home and Profile
+
+[33mcommit 952d71876fb7522bd99339be8d9bc0ca7a38d224[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Thu May 2 00:03:24 2024 +0300
+
+    Fix Name Field componant
+
+[33mcommit 706940dacdb68f7bc09d48f512c1ed71ab75936b[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Wed May 1 17:48:24 2024 +0300
+
+    Register Bugs
+
+[33mcommit e4c91d2ef9174ad7c6d762e52449938a8cdcabc6[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Tue Apr 30 19:08:33 2024 +0300
+
+    Edite AppColor,Btn Widget,CustomTextField,Name Field ,password Page,Report Page,Forgot Pass Page , Reset Pass Page
+    
+    Add BTN With Spinner Widget
+
+[33mcommit c7d43de4bd2fdd7366f409e86c003351dd56e0e5[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sun Apr 21 06:22:27 2024 +0200
+
+    Last Version of Full Project [Beta]
+
+[33mcommit 7befe6aadf6f4325ee9f498128c2f4d12998298f[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sun Apr 21 01:18:24 2024 +0200
+
+    Add Guid Page , HomePage
+
+[33mcommit 5039a6181e3b7a7d0627f3468ee984a6b8493a29[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sat Apr 20 20:44:28 2024 +0200
+
+    Add Login need some edites
+
+[33mcommit 1c027b441be0ba8f731ced03d8829f34042c8da6[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Fri Apr 19 02:44:15 2024 +0200
+
+    - Finsh all Screens (onBoard,Register,Verification,Password,UploadPicture) .
+    - Add Terms&policy .
+    -Issue in splash screen , App icon
+    - all screens with out controllers
+
+[33mcommit f12a0f017f8062b8b84c54f9834333bf59dd7db8[m
+Merge: 43087dd 8abd388
+Author: ammar <ammar_y10720@cic-cairo.com>
+Date:   Thu Apr 18 09:31:16 2024 -0700
+
+    add upload image page with some issue
+
+[33mcommit 43087dd7dcf752bbb0b3ba812c4bf2b7e24d28af[m
+Merge: 5e39bb2 3530574
+Author: ammar <ammar_y10720@cic-cairo.com>
+Date:   Thu Apr 18 09:22:37 2024 -0700
+
+    add upload image page with some issue
+
+[33mcommit 8abd388de96dbdc767ca057c6333557bd1185ee1[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Wed Apr 17 21:05:24 2024 +0200
+
+    Add Register screen and the form field dosen't contain icon
+    , dosen't contain controlrs
+
+[33mcommit 5e39bb23559020f76bf64e8635aacdaad547a8fc[m
+Author: ammar <ammar_y10720@cic-cairo.com>
+Date:   Wed Apr 17 09:16:50 2024 -0700
+
+    befor screen util
+
+[33mcommit 353057418c262d6ff748f3b5b0ebb778672f31cc[m
+Merge: 2f6ab18 467d3ed
+Author: Abdelrahman Mahmoud <99971451+Abdelrhman-M98@users.noreply.github.com>
+Date:   Wed Apr 17 02:17:34 2024 +0200
+
+    Merge pull request #2 from Abdelrhman-M98/flutter_screen
+    
+    Add Responsive screen , ui of (front,verification) is done
+
+[33mcommit 467d3ed6e6ee08a5df32ebb7d61041275bb49cde[m[33m ([m[1;31morigin/flutter_screen[m[33m)[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Wed Apr 17 02:09:54 2024 +0200
+
+    Add Responsive screen , ui of (front,verification) is done
+
+[33mcommit 2f6ab18d4579c323a33cc7befa53de99aa0f79ac[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Wed Apr 17 00:07:22 2024 +0200
+
+    add verification screen without any controllers
+
+[33mcommit b7e94b7d65f239655239d51b9a90cc4f146bb0d3[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Mon Apr 15 01:53:25 2024 +0200
+
+    Add Verification with some issue
+
+[33mcommit 36514241f0806e797d3497bdec24f2f4abee5c75[m
+Author: Abdelrahman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sun Apr 14 17:30:51 2024 +0200
+
+    Add Splash with issue ,  Add OnBording screen , Add Empty Register and login screen , Add assets
+
+[33mcommit fceebb206e0f9e64a70b9c4acd41c0118be97976[m
+Author: Abdelrhman Mahmoud <abdelrhmanmahmo0ud@gmail>
+Date:   Sat Apr 13 14:07:38 2024 +0200
+
+    Empty project
