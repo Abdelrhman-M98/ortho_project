@@ -6,31 +6,15 @@ import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/screens/Camera_Page.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-class GuidHowTo extends StatelessWidget {
+class GuidHowTo extends StatefulWidget {
   const GuidHowTo();
 
-  Future<void> checkPermission(
-      Permission permission, BuildContext context) async {
-    final status = await permission.request();
+  @override
+  State<GuidHowTo> createState() => _GuidHowToState();
+}
 
-    if (status.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Permission is Granted"),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Permission is not Granted"),
-        ),
-      );
-      if (await Permission.camera.request().isGranted) {}
-    }
-  }
-
+class _GuidHowToState extends State<GuidHowTo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -324,11 +308,7 @@ class GuidHowTo extends StatelessWidget {
             const Spacer(),
             BtnWidget(
               btnText: "Start Scan",
-              onTap: () {
-                checkPermission(
-                  Permission.camera,
-                  context,
-                );
+              onTap: () async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(

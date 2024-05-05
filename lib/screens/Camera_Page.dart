@@ -1,25 +1,28 @@
-// ignore_for_file: file_names, use_build_context_synchronously
+// ignore_for_file: file_names, use_build_context_synchronously, empty_catches
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/screens/Upload_Photo_Page.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 late List<CameraDescription> cameras;
+int currentCameraIndex = 0;
 
 class CameraScreen extends StatefulWidget {
-  const CameraScreen({Key? key}) : super(key: key);
+  const CameraScreen({super.key});
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
 }
 
-class _CameraScreenState extends State<CameraScreen> {
-  late CameraController cameraController;
-  late Future<void> cameraValue = Future.value(); // Provide a default value
-  bool isCameraInitialized = false;
+bool isCameraInitialized = false;
+bool isMicrophoneGranted = false;
+bool isFlashOn = false;
+late CameraController cameraController;
 
+class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
@@ -30,17 +33,62 @@ class _CameraScreenState extends State<CameraScreen> {
     try {
       cameras = await availableCameras();
       cameraController = CameraController(
-        cameras[0],
+        cameras[currentCameraIndex],
         ResolutionPreset.max,
       );
       await cameraController.initialize();
       setState(() {
         isCameraInitialized = true;
       });
-    } catch (e) {
-      print('Error initializing camera: $e');
+
+      // Check microphone permission after camera is initialized
+      await checkMicrophonePermission();
+    } catch (e) {}
+  }
+
+  Future<void> checkMicrophonePermission() async {
+    final microphoneStatus = await Permission.microphone.request();
+    setState(() {
+      isMicrophoneGranted = microphoneStatus.isGranted;
+    });
+  }
+
+  Future<void> checkPermission(
+      Permission permission, BuildContext context) async {
+    final status = await permission.request();
+
+    if (status.isGranted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Permission is Granted"),
+        ),
+      );
+
+      if (permission == Permission.camera) {
+        // Check microphone permission if camera permission is granted
+        await checkMicrophonePermission();
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Permission is not Granted"),
+        ),
+      );
     }
   }
+
+  void updateFlash() async {
+    try {
+      if (isFlashOn) {
+        await cameraController.setFlashMode(FlashMode.torch);
+      } else {
+        await cameraController.setFlashMode(FlashMode.off);
+      }
+    } catch (e) {}
+  }
+
+  late Future<void> cameraValue = Future.value(); // Provide a default value
+  bool isCameraInitialized = false;
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +132,14 @@ class _CameraScreenState extends State<CameraScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              isFlashOn = !isFlashOn;
+                            });
+                            updateFlash();
+                          },
                           icon: Icon(
-                            Icons.flash_off,
+                            isFlashOn ? Icons.flash_on : Icons.flash_off,
                             color: AppColors.White,
                             size: 30.sp,
                           ),
@@ -102,7 +155,9 @@ class _CameraScreenState extends State<CameraScreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            switchCamera();
+                          },
                           icon: Icon(
                             Icons.flip_camera_android_outlined,
                             color: AppColors.White,
@@ -137,5 +192,18 @@ class _CameraScreenState extends State<CameraScreen> {
   void dispose() {
     cameraController.dispose();
     super.dispose();
+  }
+
+  void switchCamera() async {
+    currentCameraIndex = (currentCameraIndex + 1) % cameras.length;
+    try {
+      await cameraController.dispose();
+      cameraController = CameraController(
+        cameras[currentCameraIndex],
+        ResolutionPreset.max,
+      );
+      await cameraController.initialize();
+    } catch (e) {}
+    setState(() {});
   }
 }
