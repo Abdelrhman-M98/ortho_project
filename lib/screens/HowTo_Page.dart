@@ -27,9 +27,7 @@ class GuidHowTo extends StatelessWidget {
           content: Text("Permission is not Granted"),
         ),
       );
-      if (await Permission.camera.request().isGranted) {
-        print("Permission was granted");
-      }
+      if (await Permission.camera.request().isGranted) {}
     }
   }
 
@@ -323,9 +321,7 @@ class GuidHowTo extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
-              height: 85.h,
-            ),
+            const Spacer(),
             BtnWidget(
               btnText: "Start Scan",
               onTap: () {
@@ -341,6 +337,9 @@ class GuidHowTo extends StatelessWidget {
                 );
               },
             ),
+            SizedBox(
+              height: 20.h,
+            )
           ],
         ),
       ),

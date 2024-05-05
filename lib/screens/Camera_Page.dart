@@ -4,7 +4,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/screens/Upload_Photo_Page.dart';
 
 late List<CameraDescription> cameras;
@@ -19,6 +18,7 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController cameraController;
   late Future<void> cameraValue = Future.value(); // Provide a default value
+  bool isCameraInitialized = false;
 
   @override
   void initState() {
@@ -33,7 +33,10 @@ class _CameraScreenState extends State<CameraScreen> {
         cameras[0],
         ResolutionPreset.max,
       );
-      cameraValue = cameraController.initialize();
+      await cameraController.initialize();
+      setState(() {
+        isCameraInitialized = true;
+      });
     } catch (e) {
       print('Error initializing camera: $e');
     }
@@ -57,28 +60,15 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
       body: Stack(
         children: [
-          FutureBuilder<void>(
-            future: cameraValue,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                // Camera controller is initialized, show CameraPreview
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: CameraPreview(cameraController),
-                );
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                // Camera controller is being initialized, show CircularProgressIndicator
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-                ;
-              }
-            },
-          ),
+          if (isCameraInitialized)
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: CameraPreview(cameraController),
+            )
+          else
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
           Positioned(
             bottom: 0.0,
             child: SizedBox(

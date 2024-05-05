@@ -69,31 +69,31 @@ dev_dependencies:
   json_serializable: ^6.8.0
   
   
-#   flutter_native_splash: ^2.3.2
+  flutter_native_splash: ^2.3.2
 
-# flutter_launcher_icons:
-#   android: "launcher_icon"
-#   ios: true
-#   image_path: "assets/images/icons/ortho_Logo_splash.png"
-#   adaptive_iconn_background: "#019B97"
-#   adaptive_icon_foreground: "assets/images/icons/ortho_Logo_splash.png"
-#   min_sdk_android: 21
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icons/ortho_Logo.png"
+  adaptive_iconn_background: "#019B97"
+  adaptive_icon_foreground: "assets/images/icons/ortho_Logo.png"
+  min_sdk_android: 21
 
-# flutter_native_splash:
+flutter_native_splash:
  
-#   color: "#FFFBFE"
-#   color_dark: "#FFFBFE"
-#   image: assets/images/icons/ortho_Logo_splash.png
-#   image_dark: assets/images/icons/ortho_Logo_splash.png
+  color: "#FFFBFE"
+  color_dark: "#FFFBFE"
+  image: assets/images/icons/ortho_Logo.png
+  image_dark: assets/images/icons/ortho_Logo.png
 
-#   android_12:
+  android_12:
 
-#     color: "#FFFBFE"
-#     color_dark: "#FFFBFE"
-#     image: assets/images/icons/ortho_Logo_splash.png
-#     image_dark: assets/images/icons/ortho_Logo_splash.png
+    color: "#FFFBFE"
+    color_dark: "#FFFBFE"
+    image: assets/images/icons/ortho_Logo_splash.png
+    image_dark: assets/images/icons/ortho_Logo_splash.png
 
-#   web: false
+  web: false
 
   
 
