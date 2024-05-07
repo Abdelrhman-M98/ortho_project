@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/InputField.dart';
-import 'package:ortho/screens/Login_page.dart';
-import 'package:ortho/screens/Password_page.dart';
+import 'package:ortho/screens/Login/Login_page.dart';
+import 'package:ortho/screens/SignUp/Password_page.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
 
 class SignUpPage extends HookWidget {

@@ -7,7 +7,7 @@ import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/PasswordField.dart';
-import 'package:ortho/screens/Verification_Page_State.dart';
+import 'package:ortho/screens/SignUp/Verification_Page_State.dart';
 
 class PasswordPage extends HookWidget {
   const PasswordPage({super.key});
@@ -87,7 +87,7 @@ class PasswordPage extends HookWidget {
               ),
             ),
             SizedBox(
-              height: 40.h,
+              height: 15.h,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

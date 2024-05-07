@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/Camera_Page.dart';
+import 'package:ortho/screens/UploadImage/Camera_Page.dart';
 
 class GuidHowTo extends StatefulWidget {
   const GuidHowTo();

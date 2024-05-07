@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/models/dataOfScan.dart';
 import 'package:intl/intl.dart';
-import 'package:ortho/screens/Report_Page.dart';
+import 'package:ortho/screens/Report/Report_Page.dart';
 
 class HomeCard extends StatelessWidget {
   const HomeCard(

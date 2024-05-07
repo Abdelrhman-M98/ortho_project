@@ -2,24 +2,27 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/components/Btn_widget.dart';
+import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/Reset_Pass_page.dart';
+import 'package:ortho/screens/Login/Login_page.dart';
 import 'package:pinput/pinput.dart'; // Import PinCodeTextField
 
-class VerificationForgetPass extends StatefulWidget {
-  const VerificationForgetPass();
+class VerificationPage extends StatefulWidget {
+  const VerificationPage();
 
   @override
-  _VerificationPageState createState() => _VerificationPageState();
+  VerificationPageState createState() => VerificationPageState();
 }
 
-class _VerificationPageState extends State<VerificationForgetPass> {
+class VerificationPageState extends State<VerificationPage> {
+  bool isLoading = false;
   late Timer _timer;
   int _start = 60;
   bool isPinCorrect = false;
+  final FocusNode _pinFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -81,18 +84,19 @@ class _VerificationPageState extends State<VerificationForgetPass> {
             height: 60.h,
           ),
           Text(
-            "Verify Account",
+            "Check verification code ",
             style: TextStyle(
               fontFamily: "Nunito",
               fontSize: 27.sp,
               fontWeight: FontWeight.w800,
+              color: AppColors.Head_Text,
             ),
           ),
           SizedBox(
             height: 14.h,
           ),
           Text(
-            "Code has been send to adawy22@gmail.com",
+            "Enter the verification code we sent to your email",
             style: TextStyle(
               fontFamily: "Nunito",
               fontSize: 16.sp,
@@ -113,6 +117,10 @@ class _VerificationPageState extends State<VerificationForgetPass> {
                   isPinCorrect = true;
                   return;
                 }
+                // Unfocus the pin input field after completion
+                _pinFocusNode.unfocus();
+                // Hide the keyboard
+                SystemChannels.textInput.invokeMethod('TextInput.hide');
               },
               validator: (pin) {
                 if (pin == '12345') {
@@ -121,28 +129,7 @@ class _VerificationPageState extends State<VerificationForgetPass> {
                   return "error";
                 }
               },
-              errorText:
-                  "The verification code that you entered is incorrect , Try again ",
-              errorTextStyle: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
-                fontFamily: "Nunito",
-                color: AppColors.Pin_error_color,
-              ),
-              defaultPinTheme: PinTheme(
-                width: 50.w,
-                height: 67.h,
-                textStyle: TextStyle(
-                  fontSize: 26.sp,
-                  color: AppColors.dark_text,
-                  fontWeight: FontWeight.w500,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.Pin_Empty_color),
-                  borderRadius: BorderRadius.circular(72),
-                ),
-              ),
-               submittedPinTheme: PinTheme(
+              submittedPinTheme: PinTheme(
                 width: 50.w,
                 height: 67.h,
                 textStyle: TextStyle(
@@ -156,6 +143,21 @@ class _VerificationPageState extends State<VerificationForgetPass> {
                   borderRadius: BorderRadius.circular(72),
                 ),
               ),
+
+              defaultPinTheme: PinTheme(
+                width: 50.w,
+                height: 67.h,
+                textStyle: TextStyle(
+                  fontSize: 26.sp,
+                  color: AppColors.dark_text,
+                  fontWeight: FontWeight.w500,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.Pin_Empty_color),
+                  borderRadius: BorderRadius.circular(72),
+                ),
+              ),
+
               focusedPinTheme: PinTheme(
                 width: 50.w,
                 height: 67.h,
@@ -164,10 +166,13 @@ class _VerificationPageState extends State<VerificationForgetPass> {
                     color: AppColors.dark_text,
                     fontWeight: FontWeight.w500),
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.Primary_color),
+                  border: Border.all(
+                    color: AppColors.Primary_color,
+                  ),
                   borderRadius: BorderRadius.circular(72),
                 ),
               ),
+
               errorPinTheme: PinTheme(
                 width: 50.w,
                 height: 67.h,
@@ -176,9 +181,20 @@ class _VerificationPageState extends State<VerificationForgetPass> {
                     color: AppColors.dark_text,
                     fontWeight: FontWeight.w500),
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.Pin_error_color),
+                  border: Border.all(
+                    color: AppColors.Pin_error_color,
+                  ),
                   borderRadius: BorderRadius.circular(72),
                 ),
+              ),
+
+              errorText:
+                  "The verification code that you entered is incorrect , Try again ",
+              errorTextStyle: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
+                fontFamily: "Nunito",
+                color: AppColors.Pin_error_color,
               ),
             ),
           ),
@@ -231,17 +247,27 @@ class _VerificationPageState extends State<VerificationForgetPass> {
             child: SizedBox(
               width: 360.w,
               height: 60.h,
-              child: BtnWidget(
-                btnText: "Verify",
+              child: Spinner_BTN(
+                btnText: "Verify OTP",
                 onTap: () {
-                  if (isPinCorrect == true) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const ResetPassPage(),
-                      ),
-                    );
-                  }
+                  setState(() {
+                    isLoading = true;
+                  });
+                  // Simulate verification process (you should replace this with your actual verification logic)
+                  Future.delayed(const Duration(seconds: 3), () {
+                    if (isPinCorrect) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                    }
+                    setState(() {
+                      isLoading = false;
+                    });
+                  });
                 },
+                isLoading: isLoading,
               ),
             ),
           ),

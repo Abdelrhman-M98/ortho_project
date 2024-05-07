@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:ortho/components/NavBar.dart';
-import 'package:ortho/screens/Home_Page.dart';
-import 'package:ortho/screens/Profile_Page.dart';
+import 'package:ortho/screens/Home/Home_Page.dart';
+import 'package:ortho/screens/Profile/Profile_Page.dart';
 
 class UserHomePage extends StatefulWidget {
   const UserHomePage({super.key});

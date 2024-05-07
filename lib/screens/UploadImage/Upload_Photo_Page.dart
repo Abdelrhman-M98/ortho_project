@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
-import 'package:ortho/screens/Report_Page.dart';
+import 'package:ortho/screens/Report/Report_Page.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({

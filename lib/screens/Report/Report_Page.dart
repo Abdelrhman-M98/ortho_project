@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/DiagonsisList.dart';
-import 'package:ortho/screens/User_Home_Page.dart';
+import 'package:ortho/screens/UserHomePage/User_Home_Page.dart';
 
-import '../components/ReportCard.dart';
-import '../models/Diagnosis.dart';
+import '../../components/ReportCard.dart';
+import '../../models/Diagnosis.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});

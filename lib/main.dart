@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ortho/screens/Camera_Page.dart';
-import 'package:ortho/screens/OnBoard_Page.dart';
+import 'package:ortho/screens/UploadImage/Camera_Page.dart';
+import 'package:ortho/screens/OnBoard/OnBoard_Page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Pie_Chart.dart';
 import 'package:ortho/models/dataOfScan.dart';
-import 'package:ortho/screens/Account_Details_Page.dart';
-import 'package:ortho/screens/Login_page.dart';
+import 'package:ortho/screens/AccountDetails/Account_Details_Page.dart';
+import 'package:ortho/screens/Login/Login_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

@@ -9,9 +9,9 @@ import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/InputField.dart';
 import 'package:ortho/components/PasswordField.dart';
 import 'package:ortho/components/Social_BTN.dart';
-import 'package:ortho/screens/Forgot_Password_Page.dart';
-import 'package:ortho/screens/SignUp_Page.dart';
-import 'package:ortho/screens/User_Home_Page.dart';
+import 'package:ortho/screens/ResetPassword/Forgot_Password_Email_Page.dart';
+import 'package:ortho/screens/SignUp/SignUp_Page.dart';
+import 'package:ortho/screens/UserHomePage/User_Home_Page.dart';
 
 class LoginPage extends HookWidget {
   const LoginPage({Key? key});

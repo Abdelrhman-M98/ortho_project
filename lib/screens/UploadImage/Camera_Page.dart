@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_editor/image_editor.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/screens/Upload_Photo_Page.dart';
+import 'package:ortho/screens/UploadImage/Upload_Photo_Page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 late List<CameraDescription> cameras;

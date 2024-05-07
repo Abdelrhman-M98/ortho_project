@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/HowTo_Page.dart';
+import 'package:ortho/screens/UserGuid/HowTo_Page.dart';
 
 class GuidPage extends StatelessWidget {
   const GuidPage();

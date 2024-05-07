@@ -8,7 +8,7 @@ import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/InputField.dart';
 
-import 'package:ortho/screens/Verification_Reset_Pass_PageState.dart';
+import 'package:ortho/screens/ResetPassword/Verification_Reset_Pass_PageState.dart';
 
 class ForgetPassPage extends HookWidget {
   const ForgetPassPage({Key? key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/PasswordField.dart';
-import 'package:ortho/screens/Login_page.dart';
+import 'package:ortho/screens/Login/Login_page.dart';
 
 class ResetPassPage extends HookWidget {
   const ResetPassPage();

@@ -7,7 +7,7 @@ import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/HomeCard.dart';
 import 'package:ortho/components/Search_Bar.dart';
 import 'package:ortho/models/dataOfScan.dart';
-import 'package:ortho/screens/Guid_page.dart';
+import 'package:ortho/screens/UserGuid/Guid_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage();
