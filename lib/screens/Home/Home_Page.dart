@@ -116,25 +116,27 @@ class _HomePageState extends State<HomePage> {
                   height: 10.h,
                 ),
                 Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: searchBar(
-                      items: items,
-                    )),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: searchBar(
+                    items: items,
+                  ),
+                ),
                 SizedBox(
                   height: 8.h,
                 ),
                 Row(
                   children: [
                     Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Text(
-                          "Recent (${items.length})",
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )),
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Text(
+                        "Recent (${items.length})",
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 Expanded(
@@ -165,7 +167,8 @@ class _HomePageState extends State<HomePage> {
                 side: BorderSide(color: AppColors.Primary_color, width: 2.w),
               ),
               child: const Image(
-                  image: AssetImage("assets/images/icons/scan.png")),
+                image: AssetImage("assets/images/icons/Scan.png"),
+              ),
             ),
           )
         : Scaffold(

@@ -1,38 +1,36 @@
-import 'package:ortho/models/signup/signup.dart';
-import 'package:ortho/models/user/user.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:ortho/models/auth/SignUp.dart';
+import 'package:ortho/models/auth/SignUpRequest.dart';
 import 'package:ortho/shared/networking/networking.dart';
-import 'package:ortho/shared/networking/results.dart';
 
 class AuthRepository {
-  static Future<User?> login(String email, String password) async {
-    final result = await Networking.post('/login', {
+  static Future login(String email, String password) async {
+    return Networking.post('/auth/signin', {
       'email': email,
       'password': password,
     });
-
-    final value = switch (result) {
-      Success(value: final value) => User.fromJson(value.data),
-      Failure() => null,
-      Error() => null,
-    };
-
-    return value;
   }
 
-  static Future<User?> register(SignUpData signupData) async {
-    final result = await Networking.post('/register', {
-      'email': signupData.email,
-      'password': signupData.password,
-      'name': signupData.name,
-      'username': signupData.username,
+  static requestSignUp(SignUpRequest signUpRequest) async {
+    return Networking.post('/auth/request-singup', {
+      'name': signUpRequest.name,
+      'email': signUpRequest.email,
     });
-
-    final value = switch (result) {
-      Success(value: final value) => User.fromJson(value.data),
-      Failure() => null,
-      Error() => null,
-    };
-
-    return value;
   }
+
+  static signUp(SignUp signUp) async {
+    return Networking.post('/auth/singup', {
+      'continuationKey': signUp.continuationKey,
+      'password': signUp.password,
+    });
+  }
+
+  // Providers
+  static final requestSignUpProvider = FutureProvider.family(
+    (ref, SignUpRequest signUpRequest) => requestSignUp(signUpRequest),
+  );
+
+  static final signUpProvider = FutureProvider.family(
+    (ref, SignUp signUpData) => signUp(signUpData),
+  );
 }

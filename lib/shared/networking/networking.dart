@@ -13,7 +13,7 @@ class Networking {
   static Networking? _self;
 
   // ignore: constant_identifier_names
-  static const String BASE_URL = "https://api.our-server.com";
+  static const String BASE_URL = "http://13.38.118.46:3000";
 
   static BaseOptions options = BaseOptions(
     baseUrl: BASE_URL,

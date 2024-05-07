@@ -1,21 +1,30 @@
-// ignore_for_file: file_names, use_key_in_widget_constructors
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/InputField.dart';
+import 'package:ortho/models/auth/SignUp.dart';
+import 'package:ortho/models/auth/SignUpRequest.dart';
+import 'package:ortho/repository/auth/auth.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
 import 'package:ortho/screens/SignUp/Password_page.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
+import 'package:ortho/shared/networking/results.dart';
 
-class SignUpPage extends HookWidget {
-  late final emailController = useTextEditingController();
-  late final nameField = useTextEditingController();
-
-  late final formKey = useMemoized(() => GlobalKey<FormState>());
+class SignUpPage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef refs) {
+    final emailController = useTextEditingController();
+    final nameField = useTextEditingController();
+    final formKey = useMemoized(() => GlobalKey<FormState>());
+
+    final isLoading = useState(false);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -156,16 +165,68 @@ class SignUpPage extends HookWidget {
             BtnWidget(
               btnText: "Continue",
               onTap: () {
-                if (formKey.currentState!.validate()) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const PasswordPage();
-                      },
-                    ),
-                  );
+                if (!formKey.currentState!.validate()) {
+                  return;
                 }
+
+                final email = emailController.text;
+                final name = nameField.text;
+                final signUpReqData = SignUpRequest(
+                  email: email,
+                  name: name,
+                );
+
+                isLoading.value = true;
+                refs
+                    .read(AuthRepository.requestSignUpProvider(signUpReqData))
+                    .when(
+                  data: (data) {
+                    isLoading.value = false;
+                    final result = data as Result;
+                    switch (result) {
+                      case Success<dynamic, DioException, Exception>():
+                        final res = result.value as Response;
+                        final token =
+                            res.data['data']['continuationKey'] as String;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return const PasswordPage();
+                            },
+                          ),
+                        );
+                        break;
+                      case Failure<dynamic, DioException, Exception>():
+                        //validation error
+                        final f = result.failure;
+                        final failMsgs =
+                            f.response!.data['message'] as List<String>;
+                        debugPrint(failMsgs.toString());
+                        final emailErrors = failMsgs
+                            .where((element) => element.contains('email'))
+                            .toList();
+                        final nameErrors = failMsgs
+                            .where((element) => element.contains('name'))
+                            .toList();
+
+                        if (emailErrors.isNotEmpty) {}
+                        if (nameErrors.isNotEmpty) {}
+                        break;
+                      case Error<dynamic, DioException, Exception>():
+                        final e = result.exception;
+                        debugPrint(e.toString());
+                        break;
+                    }
+                  },
+                  loading: () {
+                    debugPrint("loading");
+                    isLoading.value = true;
+                  },
+                  error: (error, stackTrace) {
+                    debugPrint("ASDFGHJ");
+                  },
+                );
               },
             ),
             SizedBox(
