@@ -5,11 +5,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
+import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/screens/Report/Report_Page.dart';
+import 'package:ortho/screens/UploadImage/scan_provider.dart';
 
-class UploadPage extends StatefulWidget {
+class UploadPage extends HookConsumerWidget {
   const UploadPage({
     Key? key,
     required this.imagepath,
@@ -17,18 +20,17 @@ class UploadPage extends StatefulWidget {
   final String imagepath;
 
   @override
-  _UploadPageState createState() => _UploadPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ScanProviderNotifier = ref.watch(ScanProvider.notifier);
+    final ScanProviderState = ref.watch(ScanProvider);
 
-class _UploadPageState extends State<UploadPage> {
-  int _IsVailed = 1;
-
-  @override
-  Widget build(BuildContext context) {
+    bool _IsVailed = !ScanProviderState.hasErrors;
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(
+            left: 16.0,
+          ),
           child: Container(
             width: 32.w,
             height: 32.h,
@@ -99,8 +101,7 @@ class _UploadPageState extends State<UploadPage> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Image.file(
-                        File(widget
-                            .imagepath), // Change imaepath to widget.imagepath
+                        File(imagepath), // Change imaepath to widget.imagepath
                         fit: BoxFit.cover,
                       )),
                 ),
@@ -109,7 +110,8 @@ class _UploadPageState extends State<UploadPage> {
                 height: 30.h,
               ),
               Visibility(
-                visible: _IsVailed != 0, // Check if _IsVailed is not equal to 0
+                visible: _IsVailed = !ScanProviderState
+                    .hasErrors, // Check if _IsVailed is not equal to 0
                 child: Row(
                   children: [
                     Expanded(
@@ -173,19 +175,14 @@ class _UploadPageState extends State<UploadPage> {
               SizedBox(
                 height: 85.h,
               ),
-              BtnWidget(
-                // Add BtnWidget here
-                btnText: "Save & Continue",
+              Spinner_BTN(
+                btnText: ScanProviderState.isLoading
+                    ? "Loding.."
+                    : "Save & Continue",
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const ReportPage();
-                      },
-                    ),
-                  );
+                  ScanProviderNotifier.scan(File(imagepath));
                 },
+                isLoading: ScanProviderState.isLoading,
               ),
             ],
           ),

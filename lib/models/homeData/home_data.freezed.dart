@@ -20,7 +20,7 @@ HomeData _$HomeDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HomeData {
-  List<ScanData> get recentScans => throw _privateConstructorUsedError;
+  List<AnalysisData> get recentScans => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ abstract class $HomeDataCopyWith<$Res> {
   factory $HomeDataCopyWith(HomeData value, $Res Function(HomeData) then) =
       _$HomeDataCopyWithImpl<$Res, HomeData>;
   @useResult
-  $Res call({List<ScanData> recentScans, User user});
+  $Res call({List<AnalysisData> recentScans, User user});
 
   $UserCopyWith<$Res> get user;
 }
@@ -59,7 +59,7 @@ class _$HomeDataCopyWithImpl<$Res, $Val extends HomeData>
       recentScans: null == recentScans
           ? _value.recentScans
           : recentScans // ignore: cast_nullable_to_non_nullable
-              as List<ScanData>,
+              as List<AnalysisData>,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -84,7 +84,7 @@ abstract class _$$HomeDataImplCopyWith<$Res>
       __$$HomeDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ScanData> recentScans, User user});
+  $Res call({List<AnalysisData> recentScans, User user});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -108,7 +108,7 @@ class __$$HomeDataImplCopyWithImpl<$Res>
       recentScans: null == recentScans
           ? _value._recentScans
           : recentScans // ignore: cast_nullable_to_non_nullable
-              as List<ScanData>,
+              as List<AnalysisData>,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -121,15 +121,15 @@ class __$$HomeDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HomeDataImpl implements _HomeData {
   const _$HomeDataImpl(
-      {required final List<ScanData> recentScans, required this.user})
+      {required final List<AnalysisData> recentScans, required this.user})
       : _recentScans = recentScans;
 
   factory _$HomeDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeDataImplFromJson(json);
 
-  final List<ScanData> _recentScans;
+  final List<AnalysisData> _recentScans;
   @override
-  List<ScanData> get recentScans {
+  List<AnalysisData> get recentScans {
     if (_recentScans is EqualUnmodifiableListView) return _recentScans;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_recentScans);
@@ -174,14 +174,14 @@ class _$HomeDataImpl implements _HomeData {
 
 abstract class _HomeData implements HomeData {
   const factory _HomeData(
-      {required final List<ScanData> recentScans,
+      {required final List<AnalysisData> recentScans,
       required final User user}) = _$HomeDataImpl;
 
   factory _HomeData.fromJson(Map<String, dynamic> json) =
       _$HomeDataImpl.fromJson;
 
   @override
-  List<ScanData> get recentScans;
+  List<AnalysisData> get recentScans;
   @override
   User get user;
   @override

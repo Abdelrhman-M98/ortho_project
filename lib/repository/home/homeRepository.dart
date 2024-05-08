@@ -8,7 +8,13 @@ import 'package:ortho/shared/networking/results.dart';
 class HomeRepository {
   static Future<HomeData> home() async {
     final result = await Networking.get('/home', {});
-    debugPrint(result.toString());
+    try {
+      final v = (result as Success).value;
+      final h = HomeData.fromJson(v.data['data']);
+      debugPrint(h.toString());
+    } catch (e) {
+      debugPrint(e.toString());
+    }
     final value = switch (result) {
       Success(value: final v) => HomeData.fromJson(v.data['data']),
       Failure(failure: final f) => throw f,

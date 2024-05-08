@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/models/ScanData/scan_data.dart';
 
 class searchBar extends StatefulWidget {
   const searchBar({

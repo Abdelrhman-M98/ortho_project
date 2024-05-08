@@ -9,7 +9,7 @@ part of 'home_data.dart';
 _$HomeDataImpl _$$HomeDataImplFromJson(Map<String, dynamic> json) =>
     _$HomeDataImpl(
       recentScans: (json['recentScans'] as List<dynamic>)
-          .map((e) => ScanData.fromJson(e as Map<String, dynamic>))
+          .map((e) => AnalysisData.fromJson(e as Map<String, dynamic>))
           .toList(),
       user: User.fromJson(json['user'] as Map<String, dynamic>),
     );

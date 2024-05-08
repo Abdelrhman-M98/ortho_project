@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/models/ScanData/scan_data.dart';
+import 'package:ortho/models/sendScan/analysis_data.dart';
 import 'package:ortho/screens/Report/Report_Page.dart';
 
 class HomeCard extends StatelessWidget {
   const HomeCard({
-    required this.scanData,
+    required this.analysisData,
   });
 
-  final ScanData scanData;
+  final AnalysisData analysisData;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class HomeCard extends StatelessWidget {
               children: [
                 Container(
                   height: 253.h,
-                  //width: 187.w,
+                  width: 379.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8), // Rounded border
                     boxShadow: [
@@ -54,8 +54,8 @@ class HomeCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius:
                         const BorderRadius.only(topLeft: Radius.circular(10)),
-                    child: Image.asset(
-                      scanData.imageBefore,
+                    child: Image.network(
+                      analysisData.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -99,7 +99,7 @@ class HomeCard extends StatelessWidget {
                     horizontal: 16.0,
                   ),
                   child: Text(
-                    'Scan #${scanData.id}',
+                    'Scan #${analysisData.id}',
                     style: TextStyle(
                       fontFamily: "Nunito",
                       fontSize: 20.sp,
@@ -108,27 +108,15 @@ class HomeCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0, top: 5),
+                const Padding(
+                  padding: EdgeInsets.only(right: 16.0, top: 5),
                   child: Row(
                     children: [
-                      Visibility(
-                        visible: scanData.scanStatus ==
-                            true, // Check if _IsVailed is not equal to 0
-                        child: const Image(
-                          image: AssetImage(
-                            "assets/images/icons/staus_of_the_Scan_completed.png",
-                          ),
+                      Image(
+                        image: AssetImage(
+                          "assets/images/icons/staus_of_the_Scan_completed.png",
                         ),
                       ),
-                      Visibility(
-                        visible: scanData.scanStatus == false,
-                        child: const Image(
-                          image: AssetImage(
-                            "assets/images/icons/staus_of_the_Scan_failed.png",
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -153,7 +141,7 @@ class HomeCard extends StatelessWidget {
                   width: 3.w,
                 ),
                 Text(
-                  'Date: ${DateFormat('MMM d, y hh:mm a').format(scanData.scanTime)}',
+                  'Date: ${DateFormat('MMM d, y hh:mm a').format(analysisData.createdAt)}',
                   style: TextStyle(
                     color: AppColors.SecondaryColor,
                     fontFamily: "Nunito",
@@ -187,6 +175,9 @@ class HomeCard extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) {
+                          debugPrint(
+                            analysisData.image,
+                          );
                           return const ReportPage();
                         },
                       ),

@@ -1,39 +1,39 @@
 // ignore_for_file: non_constant_identifier_names, file_names, unused_local_variable, empty_catches
 // ignore: depend_on_referenced_packages
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ortho/models/homeData/home_data.dart';
-import 'package:ortho/repository/home/homeRepository.dart';
+import 'package:ortho/models/sendScan/analysis_data.dart';
+import 'package:ortho/repository/scan/scanRepository.dart';
 
-final HomeProvider = StateNotifierProvider<HomeStateNotifier, HomeState>(
-  (ref) => HomeStateNotifier(),
+final ScanProvider =
+    AutoDisposeStateNotifierProvider<ScanStateNotifier, ScanState>(
+  (ref) => ScanStateNotifier(),
 );
 
-class HomeStateNotifier extends StateNotifier<HomeState> {
-  HomeStateNotifier() : super(HomeState.initial());
+class ScanStateNotifier extends StateNotifier<ScanState> {
+  ScanStateNotifier() : super(ScanState.initial());
 
   // Add your state modification methods here
 
-  void home() async {
+  void scan(File file) async {
     try {
       state = state.copyWith(isLoading: true);
-      final data = await HomeRepository.home();
+      final data = await ScanRepository.scan(file);
       state = state.copyWith(
-        isLoading: false,
-        data: data,
-        authState: AuthState.authenticated,
+        authState: ResponseState.ok,
         errors: [],
         hasErrors: false,
       );
     } on DioException catch (e) {
-      debugPrint(e.toString());
       List errorList = e.response!.data['message'];
       List<String> errors = List<String>.from(errorList);
       debugPrint(errors.toString());
 
       state = state.copyWith(
-        authState: AuthState.failed,
+        authState: ResponseState.failed,
         errors: errors,
         hasErrors: true,
       );
@@ -44,14 +44,14 @@ class HomeStateNotifier extends StateNotifier<HomeState> {
   }
 }
 
-class HomeState {
-  final AuthState authState;
+class ScanState {
+  AnalysisData? data;
+  final ResponseState authState;
   final List<String> errors;
   final bool hasErrors;
   final bool isLoading;
-  HomeData? data;
 
-  HomeState({
+  ScanState({
     required this.authState,
     required this.errors,
     required this.hasErrors,
@@ -59,21 +59,21 @@ class HomeState {
     this.data,
   });
 
-  HomeState.initial()
-      : authState = AuthState.unauthenticated,
+  ScanState.initial()
+      : authState = ResponseState.unauthenticated,
         errors = [],
         hasErrors = false,
-        isLoading = true,
+        isLoading = false,
         data = null;
 
-  HomeState copyWith({
-    AuthState? authState,
+  ScanState copyWith({
+    ResponseState? authState,
     List<String>? errors,
     bool? hasErrors,
     bool? isLoading,
-    HomeData? data,
+    AnalysisData? data,
   }) {
-    return HomeState(
+    return ScanState(
       authState: authState ?? this.authState,
       errors: errors ?? this.errors,
       hasErrors: hasErrors ?? this.hasErrors,
@@ -83,9 +83,8 @@ class HomeState {
   }
 }
 
-enum AuthState {
+enum ResponseState {
   unauthenticated,
-  authenticated,
-  authenticating,
+  ok,
   failed,
 }
