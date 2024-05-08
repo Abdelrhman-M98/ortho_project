@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class SignUpRequest {
   String email;
   String name;

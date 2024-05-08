@@ -10,10 +10,10 @@ import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/InputField.dart';
 import 'package:ortho/components/PasswordField.dart';
 import 'package:ortho/components/Social_BTN.dart';
-import 'package:ortho/screens/Home/Home_Page.dart';
 import 'package:ortho/screens/Login/LoginStateNotifier.dart';
 import 'package:ortho/screens/ResetPassword/Forgot_Password_Email_Page.dart';
 import 'package:ortho/screens/SignUp/SignUp_Page.dart';
+import 'package:ortho/screens/UserHomePage/User_Home_Page.dart';
 
 class LoginPage extends HookConsumerWidget {
   const LoginPage({Key? key});
@@ -32,7 +32,7 @@ class LoginPage extends HookConsumerWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => const UserHomePage(),
         ),
       );
     });
@@ -182,6 +182,12 @@ class LoginPage extends HookConsumerWidget {
                       emailController.text,
                       passwordController.text,
                     );
+                    debugPrint(
+                      emailController.text,
+                    );
+                    debugPrint(
+                      passwordController.text,
+                    );
                   },
                 ),
                 SizedBox(
@@ -218,7 +224,7 @@ class LoginPage extends HookConsumerWidget {
                         if (formKey.currentState!.validate()) {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return SignUpPage();
+                              return const SignUpPage();
                             },
                           ));
                         }

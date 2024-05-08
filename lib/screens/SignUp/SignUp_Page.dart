@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_is_empty
+// ignore_for_file: prefer_is_empty, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,14 +14,16 @@ import 'package:ortho/screens/SignUp/SignupStateNotifier.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
 
 class SignUpPage extends HookConsumerWidget {
+  const SignUpPage({super.key});
+
   @override
-  Widget build(BuildContext context, WidgetRef refs) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final emailController = useTextEditingController();
     final nameField = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final authProviderNotifier = refs.watch(authProvider.notifier);
-    final authProviderState = refs.watch(authProvider);
-    refs.listen(authProvider, (previous, next) {
+    final authProviderNotifier = ref.watch(authProvider.notifier);
+    final authProviderState = ref.watch(authProvider);
+    ref.listen(authProvider, (previous, next) {
       if (next.token == null) {
         return;
       }

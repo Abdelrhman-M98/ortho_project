@@ -3,11 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/models/dataOfScan.dart';
+import 'package:ortho/models/ScanData/scan_data.dart';
 
 class searchBar extends StatefulWidget {
-  const searchBar({super.key, required this.items});
-  final List<ListItem> items;
+  const searchBar({
+    super.key,
+  });
 
   @override
   State<searchBar> createState() => _searchBarState();

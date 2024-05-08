@@ -1,39 +1,34 @@
-// ignore_for_file: file_names, empty_catches
-
+// ignore_for_file: non_constant_identifier_names, file_names, unused_local_variable, empty_catches
+// ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ortho/models/auth/SignUp.dart';
-import 'package:ortho/repository/auth/auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ortho/models/homeData/home_data.dart';
+import 'package:ortho/repository/home/homeRepository.dart';
 
-final signUpProvider =
-    AutoDisposeStateNotifierProvider<PasswordStateNotifier, SignUpState>(
-  (ref) => PasswordStateNotifier(),
+final HomeProvider =
+    AutoDisposeStateNotifierProvider<HomeStateNotifier, HomeState>(
+  (ref) => HomeStateNotifier(),
 );
 
-class PasswordStateNotifier extends StateNotifier<SignUpState> {
-  PasswordStateNotifier() : super(SignUpState.initial());
+class HomeStateNotifier extends StateNotifier<HomeState> {
+  HomeStateNotifier() : super(HomeState.initial());
 
   // Add your state modification methods here
 
-  void signUp(String token, String password) async {
+  void Home() async {
     try {
-      final signUp = SignUp(continuationKey: token, password: password);
-      state = state.copyWith(
-        isLoading: true,
-        authState: AuthState.authenticating,
-      );
-      await AuthRepository.signUp(signUp);
-
+      state = state.copyWith(isLoading: true);
+      final data = await HomeRepository.home();
       state = state.copyWith(
         authState: AuthState.authenticated,
         errors: [],
         hasErrors: false,
       );
     } on DioException catch (e) {
-      debugPrint(e.response.toString());
       List errorList = e.response!.data['message'];
       List<String> errors = List<String>.from(errorList);
+      debugPrint(errors.toString());
 
       state = state.copyWith(
         authState: AuthState.failed,
@@ -47,36 +42,41 @@ class PasswordStateNotifier extends StateNotifier<SignUpState> {
   }
 }
 
-class SignUpState {
+class HomeState {
   final AuthState authState;
   final List<String> errors;
   final bool hasErrors;
   final bool isLoading;
+  HomeData? data;
 
-  SignUpState({
+  HomeState({
     required this.authState,
     required this.errors,
     required this.hasErrors,
     required this.isLoading,
+    this.data,
   });
 
-  SignUpState.initial()
+  HomeState.initial()
       : authState = AuthState.unauthenticated,
         errors = [],
         hasErrors = false,
-        isLoading = false;
+        isLoading = false,
+        data = null;
 
-  SignUpState copyWith({
+  HomeState copyWith({
     AuthState? authState,
     List<String>? errors,
     bool? hasErrors,
     bool? isLoading,
+    HomeData? data,
   }) {
-    return SignUpState(
+    return HomeState(
       authState: authState ?? this.authState,
       errors: errors ?? this.errors,
       hasErrors: hasErrors ?? this.hasErrors,
       isLoading: isLoading ?? this.isLoading,
+      data: data ?? this.data,
     );
   }
 }

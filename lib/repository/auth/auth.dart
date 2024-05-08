@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:ortho/models/auth/SignUp.dart';
 import 'package:ortho/models/auth/SignUpRequest.dart';

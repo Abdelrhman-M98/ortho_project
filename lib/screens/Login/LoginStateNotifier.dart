@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, file_names
+// ignore_for_file: non_constant_identifier_names, file_names, empty_catches
 // ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,8 @@ class LoginStateNotifier extends StateNotifier<LoginState> {
       List<String> userMailErrors = [];
 
       for (final error in errors) {
-        if (error.toLowerCase().contains('password')) {
+        if (error.toLowerCase().contains('password') ||
+            error.toLowerCase().contains('credentials')) {
           userPassowrdErrors.add(error);
         }
         if (error.toLowerCase().contains('identifier')) {

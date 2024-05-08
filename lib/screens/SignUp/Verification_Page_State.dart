@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, file_names
 
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +39,6 @@ class VerificationPageState extends State<VerificationPage> {
         if (_start == 0) {
           setState(() {
             timer.cancel();
-// Set _resnd to 0 when countdown reaches zero
           });
         } else {
           setState(() {
@@ -67,7 +67,7 @@ class VerificationPageState extends State<VerificationPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(
-        titleText: 'Back', // Pass the title text here
+        titleText: 'Back',
         onTap: () {
           Navigator.of(context).pop();
           // Handle onTap action if needed
@@ -113,7 +113,7 @@ class VerificationPageState extends State<VerificationPage> {
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               length: 5,
               onCompleted: (pin) {
-                if (pin == '12345') {
+                if (pin == '23788') {
                   isPinCorrect = true;
                   return;
                 }
@@ -123,7 +123,7 @@ class VerificationPageState extends State<VerificationPage> {
                 SystemChannels.textInput.invokeMethod('TextInput.hide');
               },
               validator: (pin) {
-                if (pin == '12345') {
+                if (pin == '23788') {
                   return null;
                 } else {
                   return "error";

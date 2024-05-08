@@ -93,7 +93,8 @@ class Networking {
   }
 
   /// Makes a GET request with the specified [url] and optional [data].
-  static Future<Result<Response<T>, DioException, Exception>> get<T>(String url,
+  static Future<Result<Response<T>, DioException, Exception>> get<T>(
+      String url, Map map,
       {dynamic data}) async {
     return call(url, RequestMethod.GET, data: data);
   }

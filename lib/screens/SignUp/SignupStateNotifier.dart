@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches, file_names
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -27,6 +29,7 @@ class SignupStateNotifier extends StateNotifier<SignupState> {
         hasErrors: false,
       );
     } on DioException catch (e) {
+      debugPrint(e.response!.toString());
       List errorList = e.response!.data['message'];
       List<String> errors = List<String>.from(errorList);
 

@@ -1,58 +1,36 @@
-// ignore_for_file: file_names, library_private_types_in_public_api, use_key_in_widget_constructors
+// ignore_for_file: file_names, library_private_types_in_public_api, use_key_in_widget_constructors, non_constant_identifier_names, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/HomeCard.dart';
 import 'package:ortho/components/Search_Bar.dart';
-import 'package:ortho/models/dataOfScan.dart';
+import 'package:ortho/screens/Home/HomeStateNotifier.dart';
+import 'package:ortho/screens/Report/Report_Page.dart';
 import 'package:ortho/screens/UserGuid/Guid_page.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends HookConsumerWidget {
   const HomePage();
 
   @override
-  _HomePageState createState() => _HomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final HomeProviderNotifier = ref.watch(HomeProvider.notifier);
+    final HomeProviderState = ref.watch(HomeProvider);
+    ref.listen(HomeProvider, (previous, next) {
+      if (next.authState != AuthState.authenticated) {
+        return;
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ReportPage(),
+        ),
+      );
+    });
 
-class _HomePageState extends State<HomePage> {
-  static List<ListItem> items = [
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 1,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 0,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 0,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 1,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 0,
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return items.isNotEmpty
+    return HomeProviderState.data != null
         ? Scaffold(
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +43,9 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 16),
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                          ),
                           child: Text(
                             'Welcome, Islam',
                             textAlign: TextAlign.start,
@@ -78,7 +58,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 16),
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                          ),
                           child: Text(
                             'Let’s check your dental health',
                             textAlign: TextAlign.start,
@@ -104,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                         ),
-                        child: Image.asset(
+                        child: Image.network(
                           'assets/images/photos/onBording.png',
                           fit: BoxFit.cover,
                         ),
@@ -115,11 +97,11 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: searchBar(
-                    items: items,
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
                   ),
+                  child: searchBar(),
                 ),
                 SizedBox(
                   height: 8.h,
@@ -127,9 +109,11 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
+                      padding: const EdgeInsets.only(
+                        left: 16.0,
+                      ),
                       child: Text(
-                        "Recent (${items.length})",
+                        "Recent (${HomeProviderState.data!.recentScans.length})",
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 20.sp,
@@ -142,14 +126,11 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: items.length,
+                    itemCount: HomeProviderState.data!.recentScans.length,
                     itemBuilder: (context, index) {
-                      final item = items[index];
+                      final item = HomeProviderState.data!.recentScans[index];
                       return HomeCard(
-                        Card_item: item,
-                        List_index: index,
-                        imageVailed: item.IsimageVailed,
-                      );
+                          scanData: HomeProviderState.data!.recentScans[index]);
                     },
                   ),
                 )
@@ -164,10 +145,15 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               shape: CircleBorder(
-                side: BorderSide(color: AppColors.Primary_color, width: 2.w),
+                side: BorderSide(
+                  color: AppColors.Primary_color,
+                  width: 2.w,
+                ),
               ),
               child: const Image(
-                image: AssetImage("assets/images/icons/Scan.png"),
+                image: AssetImage(
+                  "assets/images/icons/Scan.png",
+                ),
               ),
             ),
           )
@@ -184,7 +170,9 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 16),
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                          ),
                           child: Text(
                             'Welcome, Islam',
                             textAlign: TextAlign.start,
@@ -234,11 +222,9 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: searchBar(
-                      items: items,
-                    )),
+                const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: searchBar()),
                 const Spacer(),
                 Image(
                   image: const AssetImage("assets/images/photos/Frame.png"),
