@@ -1,14 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:ortho/models/auth/SignUp.dart';
 import 'package:ortho/models/auth/SignUpRequest.dart';
 import 'package:ortho/shared/networking/networking.dart';
 import 'package:ortho/shared/networking/results.dart';
 
 class AuthRepository {
-  static Future login(String email, String password) async {
-    return Networking.post('/auth/signin', {
-      'email': email,
+  static Future<bool> login(String email, String password) async {
+    final result = await Networking.post('/auth/signin', {
+      'identifier': email,
       'password': password,
     });
+    debugPrint(result.toString());
+    final value = switch (result) {
+      Success(value: final v) => true,
+      Failure(failure: final f) => throw f,
+      Error(exception: final e) => throw e,
+    };
+    return value;
   }
 
   static Future<String> requestSignUp(SignUpRequest signUpRequest) async {

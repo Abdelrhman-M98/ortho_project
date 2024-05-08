@@ -6,13 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 
 class PasswordFeild extends HookWidget {
-  const PasswordFeild({
+  PasswordFeild({
     super.key,
     required this.titel,
     required this.controller,
     required this.validator,
     required this.showSuffixIcon,
     required this.obscureText,
+    this.setErrorSate,
   });
 
   final String titel;
@@ -20,6 +21,7 @@ class PasswordFeild extends HookWidget {
   final String? Function(String?) validator;
   final bool showSuffixIcon;
   final bool obscureText;
+  bool? setErrorSate;
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +30,9 @@ class PasswordFeild extends HookWidget {
     final obscureTextState = useState(obscureText);
 
     final inputFocusNode = useFocusNode();
-
-    useEffect(() {
-      inputFocusNode.addListener(() {
-        isFocused.value = inputFocusNode.hasFocus;
-      });
-      return () {
-        inputFocusNode.dispose();
-      };
-    }, []);
+    inputFocusNode.addListener(() {
+      isFocused.value = inputFocusNode.hasFocus;
+    });
 
     return TextFormField(
       controller: controller,
@@ -46,18 +42,20 @@ class PasswordFeild extends HookWidget {
       decoration: InputDecoration(
         labelText: titel,
         labelStyle: TextStyle(
-          color: isFocused.value
-              ? isValid.value
+          color: setErrorSate == true
+              ? AppColors.Fail_Text
+              : isValid.value && isFocused.value
                   ? AppColors.Primary_color
-                  : AppColors.Fail_Text
-              : AppColors.FormNonFouceColor,
+                  : AppColors.FormNonFouceColor,
           fontFamily: 'Nunito',
           fontSize: 17.sp,
           fontWeight: FontWeight.w500,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.FormNonFouceColor,
+            color: setErrorSate == true
+                ? AppColors.Fail_Text
+                : AppColors.FormNonFouceColor,
             width: 0.8.w,
           ),
           borderRadius: const BorderRadius.horizontal(
@@ -67,7 +65,9 @@ class PasswordFeild extends HookWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.Primary_color,
+            color: setErrorSate == true
+                ? AppColors.Fail_Text
+                : AppColors.Primary_color,
             width: 1.1.w,
           ),
           borderRadius: const BorderRadius.only(
@@ -107,20 +107,25 @@ class PasswordFeild extends HookWidget {
           fontWeight: FontWeight.w500,
           color: AppColors.Pin_error_color,
         ),
-        suffixIcon: IconButton(
-          icon: Icon(
-            showSuffixIcon
-                ? obscureTextState.value
-                    ? Icons.visibility_off
-                    : Icons.visibility
-                : null,
-            color: obscureTextState.value
-                ? AppColors.SecondaryColor
-                : AppColors.Primary_color,
+        suffixIcon: Padding(
+          padding: const EdgeInsets.only(
+            right: 10.0,
           ),
-          onPressed: () {
-            obscureTextState.value = !obscureTextState.value;
-          },
+          child: IconButton(
+            icon: Icon(
+              showSuffixIcon
+                  ? obscureTextState.value
+                      ? Icons.visibility_off
+                      : Icons.visibility
+                  : null,
+              color: obscureTextState.value
+                  ? AppColors.SecondaryColor
+                  : AppColors.Primary_color,
+            ),
+            onPressed: () {
+              obscureTextState.value = !obscureTextState.value;
+            },
+          ),
         ),
       ),
       style: TextStyle(

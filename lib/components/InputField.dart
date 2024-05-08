@@ -95,7 +95,7 @@ class InputFeild extends HookWidget {
           ),
         ),
         suffixIcon: showSuffixIcon && controller.text.isNotEmpty
-            ? isValid.value || !setErrorSate
+            ? isValid.value && !setErrorSate
                 ? Image.asset(
                     "assets/images/icons/vailedName.png",
                     width: 16.w,

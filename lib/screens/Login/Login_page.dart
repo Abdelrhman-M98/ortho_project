@@ -3,24 +3,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/InputField.dart';
 import 'package:ortho/components/PasswordField.dart';
 import 'package:ortho/components/Social_BTN.dart';
+import 'package:ortho/screens/Home/Home_Page.dart';
+import 'package:ortho/screens/Login/LoginStateNotifier.dart';
 import 'package:ortho/screens/ResetPassword/Forgot_Password_Email_Page.dart';
 import 'package:ortho/screens/SignUp/SignUp_Page.dart';
-import 'package:ortho/screens/UserHomePage/User_Home_Page.dart';
 
-class LoginPage extends HookWidget {
+class LoginPage extends HookConsumerWidget {
   const LoginPage({Key? key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
+    final loginProviderNotifier = ref.watch(loginProvider.notifier);
+    final loginProviderState = ref.watch(loginProvider);
+    ref.listen(loginProvider, (previous, next) {
+      if (next.authState != AuthState.authenticated) {
+        return;
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
+    });
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -64,7 +79,7 @@ class LoginPage extends HookWidget {
                     horizontal: 16,
                   ),
                   child: InputFeild(
-                    setErrorSate: false,
+                    setErrorSate: loginProviderState.userMailErrors.isNotEmpty,
                     showSuffixIcon: false,
                     titel: 'Eamil Adderss',
                     controller: emailController,
@@ -73,14 +88,48 @@ class LoginPage extends HookWidget {
                     },
                   ),
                 ),
+                loginProviderState.authState == AuthState.failed
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 28, vertical: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment
+                              .end, // Align items horizontally to the end (right side)
+                          children: [
+                            SizedBox(
+                              height: 15.h *
+                                  loginProviderState.userMailErrors.length,
+                              child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount:
+                                    loginProviderState.userMailErrors.length,
+                                itemBuilder: (context, index) {
+                                  return Text(
+                                    loginProviderState.userMailErrors[index],
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontFamily: "Nunito",
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.Fail_Text,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 SizedBox(
-                  height: 25.h,
+                  height: 15.h,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
                   ),
                   child: PasswordFeild(
+                    setErrorSate:
+                        loginProviderState.userPassowrdErrors.isNotEmpty,
                     controller: passwordController,
                     obscureText: true,
                     showSuffixIcon: true,
@@ -90,19 +139,49 @@ class LoginPage extends HookWidget {
                     },
                   ),
                 ),
+                loginProviderState.authState == AuthState.failed
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 28, vertical: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment
+                              .end, // Align items horizontally to the end (right side)
+                          children: [
+                            SizedBox(
+                              height: 30.0 *
+                                  loginProviderState.userPassowrdErrors.length,
+                              child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: loginProviderState
+                                    .userPassowrdErrors.length,
+                                itemBuilder: (context, index) {
+                                  return Text(
+                                    loginProviderState
+                                        .userPassowrdErrors[index],
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontFamily: "Nunito",
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.Fail_Text,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 SizedBox(
                   height: 27.h,
                 ),
                 BtnWidget(
                   btnText: "Login",
                   onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return const UserHomePage();
-                        },
-                      ));
-                    }
+                    loginProviderNotifier.login(
+                      emailController.text,
+                      passwordController.text,
+                    );
                   },
                 ),
                 SizedBox(
@@ -136,11 +215,13 @@ class LoginPage extends HookWidget {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return SignUpPage();
-                          },
-                        ));
+                        if (formKey.currentState!.validate()) {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return SignUpPage();
+                            },
+                          ));
+                        }
                       },
                     ),
                   ],

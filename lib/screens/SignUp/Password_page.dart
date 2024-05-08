@@ -9,6 +9,7 @@ import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/PasswordField.dart';
 import 'package:ortho/screens/SignUp/PasswordStateNotifier.dart';
+import 'package:ortho/screens/SignUp/Verification_Page_State.dart';
 
 class PasswordPage extends HookConsumerWidget {
   final String token;
@@ -34,7 +35,7 @@ class PasswordPage extends HookConsumerWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PasswordPage(token: token),
+          builder: (context) => const VerificationPage(),
         ),
       );
     });
@@ -131,6 +132,7 @@ class PasswordPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: PasswordFeild(
+                setErrorSate: SignUpProviderState.errors.isNotEmpty,
                 titel: "Password",
                 controller: passwordController,
                 showSuffixIcon: true,
@@ -146,6 +148,7 @@ class PasswordPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: PasswordFeild(
+                setErrorSate: SignUpProviderState.errors.isNotEmpty,
                 titel: "Confirm Password",
                 controller: confirmPasswordController,
                 showSuffixIcon: true,
