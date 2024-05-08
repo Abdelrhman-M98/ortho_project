@@ -1,20 +1,14 @@
-import 'dart:developer';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/components/Btn_widget.dart';
+import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/InputField.dart';
-import 'package:ortho/models/auth/SignUp.dart';
 import 'package:ortho/models/auth/SignUpRequest.dart';
-import 'package:ortho/repository/auth/auth.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
-import 'package:ortho/screens/SignUp/Password_page.dart';
+import 'package:ortho/screens/SignUp/SignupStateNotifier.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
-import 'package:ortho/shared/networking/results.dart';
 
 class SignUpPage extends HookConsumerWidget {
   @override
@@ -22,8 +16,8 @@ class SignUpPage extends HookConsumerWidget {
     final emailController = useTextEditingController();
     final nameField = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
-
-    final isLoading = useState(false);
+    final authProviderNotifier = refs.watch(authProvider.notifier);
+    final authProviderState = refs.watch(authProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -133,6 +127,38 @@ class SignUpPage extends HookConsumerWidget {
                 },
               ),
             ),
+            authProviderState.hasErrors
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment
+                          .end, // Align items horizontally to the end (right side)
+                      children: [
+                        SizedBox(
+                          height:
+                              30.0 * authProviderState.userNameErrors.length,
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: authProviderState.userNameErrors.length,
+                            itemBuilder: (context, index) {
+                              return Text(
+                                authProviderState.userNameErrors[index],
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontFamily: "Nunito",
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.Fail_Text,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
             SizedBox(
               height: 15.h,
             ),
@@ -145,7 +171,7 @@ class SignUpPage extends HookConsumerWidget {
                 titel: 'Eamil Adderss',
                 controller: emailController,
                 validator: (value) {
-                  return null;
+                  return;
                 },
               ),
             ),
@@ -162,9 +188,13 @@ class SignUpPage extends HookConsumerWidget {
               ),
             ),
             const Spacer(),
-            BtnWidget(
-              btnText: "Continue",
+            Spinner_BTN(
+              btnText: authProviderState.isLoading ? 'Loading...' : 'Sign Up',
               onTap: () {
+                if (authProviderState.isLoading) {
+                  return;
+                }
+
                 if (!formKey.currentState!.validate()) {
                   return;
                 }
@@ -175,59 +205,9 @@ class SignUpPage extends HookConsumerWidget {
                   email: email,
                   name: name,
                 );
-
-                isLoading.value = true;
-                refs
-                    .read(AuthRepository.requestSignUpProvider(signUpReqData))
-                    .when(
-                  data: (data) {
-                    isLoading.value = false;
-                    final result = data as Result;
-                    switch (result) {
-                      case Success<dynamic, DioException, Exception>():
-                        final res = result.value as Response;
-                        final token =
-                            res.data['data']['continuationKey'] as String;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const PasswordPage();
-                            },
-                          ),
-                        );
-                        break;
-                      case Failure<dynamic, DioException, Exception>():
-                        //validation error
-                        final f = result.failure;
-                        final failMsgs =
-                            f.response!.data['message'] as List<String>;
-                        debugPrint(failMsgs.toString());
-                        final emailErrors = failMsgs
-                            .where((element) => element.contains('email'))
-                            .toList();
-                        final nameErrors = failMsgs
-                            .where((element) => element.contains('name'))
-                            .toList();
-
-                        if (emailErrors.isNotEmpty) {}
-                        if (nameErrors.isNotEmpty) {}
-                        break;
-                      case Error<dynamic, DioException, Exception>():
-                        final e = result.exception;
-                        debugPrint(e.toString());
-                        break;
-                    }
-                  },
-                  loading: () {
-                    debugPrint("loading");
-                    isLoading.value = true;
-                  },
-                  error: (error, stackTrace) {
-                    debugPrint("ASDFGHJ");
-                  },
-                );
+                authProviderNotifier.requestRegister(signUpReqData);
               },
+              isLoading: authProviderState.isLoading,
             ),
             SizedBox(
               height: 20.h,
