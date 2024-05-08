@@ -7,7 +7,6 @@ import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/InputField.dart';
-
 import 'package:ortho/screens/ResetPassword/Verification_Reset_Pass_PageState.dart';
 
 class ForgetPassPage extends HookWidget {
@@ -69,6 +68,7 @@ class ForgetPassPage extends HookWidget {
                 horizontal: 16,
               ),
               child: InputFeild(
+                setErrorSate: false,
                 showSuffixIcon: true,
                 titel: 'Eamil Adderss',
                 controller: emailController,

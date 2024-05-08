@@ -13,6 +13,7 @@ class InputFeild extends HookWidget {
     required this.controller,
     required this.validator,
     required this.showSuffixIcon,
+    required this.setErrorSate,
   });
 
   final String titel;
@@ -20,7 +21,7 @@ class InputFeild extends HookWidget {
   final String? Function(String?) validator;
   final inputFocusNode = useMemoized(() => FocusNode());
   final bool showSuffixIcon;
-
+  final bool setErrorSate;
   @override
   Widget build(BuildContext context) {
     final isFocused = useState(false);
@@ -38,18 +39,20 @@ class InputFeild extends HookWidget {
       decoration: InputDecoration(
         labelText: titel,
         labelStyle: TextStyle(
-          color: isFocused.value
-              ? isValid.value
+          color: setErrorSate
+              ? AppColors.Fail_Text
+              : isFocused.value
                   ? AppColors.Primary_color
-                  : AppColors.Fail_Text
-              : AppColors.FormNonFouceColor,
+                  : AppColors.FormNonFouceColor,
           fontFamily: 'Nunito',
           fontSize: 17.sp,
           fontWeight: FontWeight.w500,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.FormNonFouceColor,
+            color: setErrorSate
+                ? AppColors.Fail_Text
+                : AppColors.FormNonFouceColor,
             width: 0.8.w,
           ),
           borderRadius: const BorderRadius.horizontal(
@@ -59,7 +62,7 @@ class InputFeild extends HookWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.Primary_color,
+            color: setErrorSate ? AppColors.Fail_Text : AppColors.Primary_color,
             width: 1.1.w,
           ),
           borderRadius: const BorderRadius.only(
@@ -92,7 +95,7 @@ class InputFeild extends HookWidget {
           ),
         ),
         suffixIcon: showSuffixIcon && controller.text.isNotEmpty
-            ? isValid.value
+            ? isValid.value || !setErrorSate
                 ? Image.asset(
                     "assets/images/icons/vailedName.png",
                     width: 16.w,
@@ -103,7 +106,13 @@ class InputFeild extends HookWidget {
                     width: 16.w,
                     height: 16.h,
                   )
-            : null,
+            : setErrorSate
+                ? Image.asset(
+                    "assets/images/icons/NotVailedName.png",
+                    width: 16.w,
+                    height: 16.h,
+                  )
+                : null,
       ),
       style: TextStyle(
         fontFamily: 'Nunito',

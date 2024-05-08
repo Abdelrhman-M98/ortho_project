@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ortho/models/auth/SignUpRequest.dart';
 import 'package:ortho/repository/auth/auth.dart';
 
-final authProvider = StateNotifierProvider<SignupStateNotifier, SignupState>(
+final authProvider =
+    AutoDisposeStateNotifierProvider<SignupStateNotifier, SignupState>(
   (ref) => SignupStateNotifier(),
 );
 
@@ -18,6 +19,7 @@ class SignupStateNotifier extends StateNotifier<SignupState> {
     try {
       state = state.copyWith(isLoading: true);
       final token = await AuthRepository.requestSignUp(signUpRequest);
+      debugPrint(token);
       state = state.copyWith(
         token: token,
         authState: AuthState.authenticating,

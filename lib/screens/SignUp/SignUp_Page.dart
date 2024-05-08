@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_is_empty
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +9,7 @@ import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/InputField.dart';
 import 'package:ortho/models/auth/SignUpRequest.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
+import 'package:ortho/screens/SignUp/Password_page.dart';
 import 'package:ortho/screens/SignUp/SignupStateNotifier.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
 
@@ -18,6 +21,18 @@ class SignUpPage extends HookConsumerWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final authProviderNotifier = refs.watch(authProvider.notifier);
     final authProviderState = refs.watch(authProvider);
+    refs.listen(authProvider, (previous, next) {
+      if (next.token == null) {
+        return;
+      }
+      String token = next.token!;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PasswordPage(token: token),
+        ),
+      );
+    });
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -119,8 +134,9 @@ class SignUpPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: InputFeild(
+                setErrorSate: authProviderState.userNameErrors.length > 0,
                 showSuffixIcon: true,
-                titel: 'User Name',
+                titel: 'Name',
                 controller: nameField,
                 validator: (value) {
                   return null;
@@ -167,6 +183,7 @@ class SignUpPage extends HookConsumerWidget {
                 horizontal: 10,
               ),
               child: InputFeild(
+                setErrorSate: authProviderState.userMailErrors.length > 0,
                 showSuffixIcon: true,
                 titel: 'Eamil Adderss',
                 controller: emailController,
@@ -175,6 +192,38 @@ class SignUpPage extends HookConsumerWidget {
                 },
               ),
             ),
+            authProviderState.hasErrors
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment
+                          .end, // Align items horizontally to the end (right side)
+                      children: [
+                        SizedBox(
+                          height:
+                              30.0 * authProviderState.userMailErrors.length,
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: authProviderState.userMailErrors.length,
+                            itemBuilder: (context, index) {
+                              return Text(
+                                authProviderState.userMailErrors[index],
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontFamily: "Nunito",
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.Fail_Text,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
             const Spacer(
               flex: 50,
             ),
@@ -195,7 +244,8 @@ class SignUpPage extends HookConsumerWidget {
                   return;
                 }
 
-                if (!formKey.currentState!.validate()) {
+                if (!authProviderState.hasErrors &&
+                    authProviderState.token != null) {
                   return;
                 }
 

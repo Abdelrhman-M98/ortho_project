@@ -26,10 +26,16 @@ class AuthRepository {
     return value;
   }
 
-  static signUp(SignUp signUp) async {
-    return Networking.post('/auth/singup', {
+  static Future<bool> signUp(SignUp signUp) async {
+    final result = await Networking.post('/auth/signup', {
       'continuationKey': signUp.continuationKey,
       'password': signUp.password,
     });
+    final value = switch (result) {
+      Success(value: final v) => true,
+      Failure(failure: final f) => throw f,
+      Error(exception: final e) => throw e,
+    };
+    return value;
   }
 }

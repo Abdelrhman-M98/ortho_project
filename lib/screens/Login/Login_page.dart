@@ -64,6 +64,7 @@ class LoginPage extends HookWidget {
                     horizontal: 16,
                   ),
                   child: InputFeild(
+                    setErrorSate: false,
                     showSuffixIcon: false,
                     titel: 'Eamil Adderss',
                     controller: emailController,

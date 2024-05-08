@@ -99,6 +99,14 @@ class PasswordFeild extends HookWidget {
             topRight: Radius.circular(80),
           ),
         ),
+        errorMaxLines: 2,
+        errorStyle: TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontFamily: 'Nunito',
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w500,
+          color: AppColors.Pin_error_color,
+        ),
         suffixIcon: IconButton(
           icon: Icon(
             showSuffixIcon
