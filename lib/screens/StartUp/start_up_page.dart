@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/screens/Home/Home_Page.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
 import 'package:ortho/screens/StartUp/startUpNotifier.dart';
+import 'package:ortho/screens/UserHomePage/User_Home_Page.dart';
 
 class StartUpPage extends HookConsumerWidget {
   const StartUpPage({super.key});
@@ -28,7 +28,7 @@ class StartUpPage extends HookConsumerWidget {
       }
       if (next.authState == AuthState.authenticated) {
         Route route = MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => const UserHomePage(),
         );
         Navigator.pushReplacement(context, route);
         return;

@@ -176,7 +176,7 @@ class HomePage extends HookConsumerWidget {
                                 left: 16,
                               ),
                               child: Text(
-                                'Welcome, Islam',
+                                'Welcome, ${HomeProviderState.data!.user.name}',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   color: AppColors.dark_text,

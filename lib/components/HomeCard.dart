@@ -34,60 +34,30 @@ class HomeCard extends StatelessWidget {
         children: [
           SizedBox(
             height: 253.h, // Specify the height of the images
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 253.h,
-                  width: 379.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8), // Rounded border
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.0),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 0),
-                      ),
-                    ],
+            child: Container(
+              height: 253.h,
+              width: 377.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8), // Rounded border
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.0),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 0),
                   ),
-                  child: ClipRRect(
-                    borderRadius:
-                        const BorderRadius.only(topLeft: Radius.circular(10)),
-                    child: Image.network(
-                      analysisData.image,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
                 ),
-                // SizedBox(
-                //   width: 0.5.w,
-                // ),
-                // Container(
-                //   height: 253.h,
-                //   width: 188.5.w,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(10), // Rounded border
-                //     boxShadow: [
-                //       BoxShadow(
-                //         color: Colors.grey.withOpacity(0.0),
-                //         spreadRadius: 5,
-                //         blurRadius: 7,
-                //         offset: const Offset(0, 0),
-                //       ),
-                //     ],
-                //   ),
-                //   child: ClipRRect(
-                //     borderRadius: const BorderRadius.only(
-                //       topRight: Radius.circular(10),
-                //     ),
-                //     child: Image.asset(
-                //       scanData.imageAfter,
-                //       fit: BoxFit.cover,
-                //     ),
-                //   ),
-                // ),
-              ],
+                child: Image.network(
+                  analysisData.image,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
           Padding(

@@ -119,6 +119,7 @@ class ReportPage extends HookConsumerWidget {
             //   modelResult: analysisData.modelResult,
             // ),
             ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: analysisData.data.length,
               itemBuilder: (context, index) {
@@ -143,14 +144,10 @@ class ReportPage extends HookConsumerWidget {
               },
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const UserHomePage();
-                      },
-                    ),
+                  Route route = MaterialPageRoute(
+                    builder: (context) => const UserHomePage(),
                   );
+                  Navigator.pushReplacement(context, route);
                 },
                 child: Text(
                   "Back to the home",

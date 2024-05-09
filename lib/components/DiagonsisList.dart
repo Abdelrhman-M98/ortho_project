@@ -55,7 +55,9 @@ class DiagonsisList extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: modelResult.classes!.length,
           itemBuilder: (context, index) {
-            final isChosen = index == biggestIndex;
+            final isChosen = isBinaryClassification
+                ? modelResult.classes![index] >= 0.5
+                : index == biggestIndex;
             return Row(
               children: [
                 Padding(

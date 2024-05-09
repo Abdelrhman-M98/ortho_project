@@ -1,35 +1,32 @@
-// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, file_names
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, file_names, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, unused_local_variable
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
+import 'package:ortho/screens/SignUp/OtpNotifier.dart';
 import 'package:pinput/pinput.dart'; // Import PinCodeTextField
 
-class VerificationPage extends StatefulWidget {
-  const VerificationPage();
+class VerificationPage extends HookConsumerWidget {
+  VerificationPage({
+    super.key,
+    required this.otpId,
+  });
+  final String otpId;
 
-  @override
-  VerificationPageState createState() => VerificationPageState();
-}
-
-class VerificationPageState extends State<VerificationPage> {
+  final TextEditingController pinController = TextEditingController();
   bool isLoading = false;
   late Timer _timer;
   int _start = 60;
   bool isPinCorrect = false;
   final FocusNode _pinFocusNode = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    startTimer();
-  }
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
@@ -37,11 +34,11 @@ class VerificationPageState extends State<VerificationPage> {
       oneSec,
       (Timer timer) {
         if (_start == 0) {
-          setState(() {
+          useEffect(() {
             timer.cancel();
           });
         } else {
-          setState(() {
+          useEffect(() {
             _start--;
           });
         }
@@ -50,20 +47,36 @@ class VerificationPageState extends State<VerificationPage> {
   }
 
   void restartTimer() {
-    setState(() {
+    useEffect(() {
       _start = 60;
       startTimer();
     });
   }
 
-  @override
   void dispose() {
     _timer.cancel();
-    super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final otpProviderNotifier = ref.watch(otpProvider.notifier);
+    final otpProviderState = ref.watch(otpProvider);
+
+    ref.listen(otpProvider, (previous, next) {
+      if (next.isLoading) {
+        return;
+      }
+      if (next.authState == AuthState.authenticated) {
+        Route route = MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        );
+        Navigator.pushReplacement(context, route);
+      }
+      if (next.authState == AuthState.failed) {
+        isPinCorrect = false;
+      }
+    });
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(
@@ -113,22 +126,14 @@ class VerificationPageState extends State<VerificationPage> {
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               length: 5,
               onCompleted: (pin) {
-                if (pin == '23788') {
-                  isPinCorrect = true;
-                  return;
-                }
+                debugPrint(pin);
+                otpProviderNotifier.otpVerify(otpId, pin);
                 // Unfocus the pin input field after completion
                 _pinFocusNode.unfocus();
                 // Hide the keyboard
                 SystemChannels.textInput.invokeMethod('TextInput.hide');
               },
-              validator: (pin) {
-                if (pin == '23788') {
-                  return null;
-                } else {
-                  return "error";
-                }
-              },
+              validator: (pin) {},
               submittedPinTheme: PinTheme(
                 width: 50.w,
                 height: 67.h,
@@ -227,9 +232,7 @@ class VerificationPageState extends State<VerificationPage> {
                       ),
                     )
                   : InkWell(
-                      onTap: () {
-                        restartTimer(); // Call restartTimer function
-                      },
+                      onTap: () {},
                       child: Text(
                         "Resend",
                         style: TextStyle(
@@ -250,24 +253,9 @@ class VerificationPageState extends State<VerificationPage> {
               child: Spinner_BTN(
                 btnText: "Verify OTP",
                 onTap: () {
-                  setState(() {
-                    isLoading = true;
-                  });
-                  // Simulate verification process (you should replace this with your actual verification logic)
-                  Future.delayed(const Duration(seconds: 3), () {
-                    if (isPinCorrect) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                      );
-                    }
-                    setState(() {
-                      isLoading = false;
-                    });
-                  });
+                  otpProviderNotifier.otpVerify(otpId, pinController.text);
                 },
-                isLoading: isLoading,
+                isLoading: otpProviderNotifier.state.isLoading,
               ),
             ),
           ),

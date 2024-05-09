@@ -35,7 +35,9 @@ class PasswordPage extends HookConsumerWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const VerificationPage(),
+          builder: (context) => VerificationPage(
+            otpId: next.otpId!,
+          ),
         ),
       );
     });

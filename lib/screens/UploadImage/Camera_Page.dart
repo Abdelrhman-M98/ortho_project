@@ -34,6 +34,14 @@ class _CameraScreenState extends State<CameraScreen> {
     initializeCamera();
   }
 
+  @override
+  void dispose() {
+    // Turn off flash before disposing the camera controller
+    cameraController.setFlashMode(FlashMode.off);
+    cameraController.dispose();
+    super.dispose();
+  }
+
   Future<void> initializeCamera() async {
     try {
       cameras = await availableCameras();
@@ -208,12 +216,6 @@ class _CameraScreenState extends State<CameraScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    cameraController.dispose();
-    super.dispose();
   }
 
   void switchCamera() async {

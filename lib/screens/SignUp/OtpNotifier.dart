@@ -1,38 +1,35 @@
-// ignore_for_file: file_names, empty_catches
+// ignore_for_file: empty_catches, file_names
 
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ortho/models/auth/SignUp.dart';
-import 'package:ortho/repository/auth/auth.dart';
+import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ortho/repository/otp/otpRepository.dart';
 
-final signUpProvider =
-    AutoDisposeStateNotifierProvider<PasswordStateNotifier, SignUpState>(
-  (ref) => PasswordStateNotifier(),
+final otpProvider = AutoDisposeStateNotifierProvider<OtpProviderStateNotifier,
+    OtpProviderState>(
+  (ref) => OtpProviderStateNotifier(),
 );
 
-class PasswordStateNotifier extends StateNotifier<SignUpState> {
-  PasswordStateNotifier() : super(SignUpState.initial());
+class OtpProviderStateNotifier extends StateNotifier<OtpProviderState> {
+  OtpProviderStateNotifier() : super(OtpProviderState.initial());
 
   // Add your state modification methods here
 
-  void signUp(String token, String password) async {
+  void otpVerify(String id, String code) async {
     try {
-      final signUp = SignUp(continuationKey: token, password: password);
       state = state.copyWith(
         isLoading: true,
         authState: AuthState.authenticating,
       );
-      final otpId = await AuthRepository.signUp(signUp);
-
+      await OtpRepository.verify(id, code);
       state = state.copyWith(
-        otpId: otpId,
         authState: AuthState.authenticated,
         errors: [],
         hasErrors: false,
       );
     } on DioException catch (e) {
-      debugPrint(e.response.toString());
+      debugPrint(e.response!.toString());
       List errorList = e.response!.data['message'];
       List<String> errors = List<String>.from(errorList);
 
@@ -48,41 +45,36 @@ class PasswordStateNotifier extends StateNotifier<SignUpState> {
   }
 }
 
-class SignUpState {
+class OtpProviderState {
   final AuthState authState;
   final List<String> errors;
   final bool hasErrors;
   final bool isLoading;
-  String? otpId;
 
-  SignUpState({
+  OtpProviderState({
     required this.authState,
     required this.errors,
     required this.hasErrors,
     required this.isLoading,
-    this.otpId,
   });
 
-  SignUpState.initial()
+  OtpProviderState.initial()
       : authState = AuthState.unauthenticated,
         errors = [],
         hasErrors = false,
-        isLoading = false,
-        otpId = null;
+        isLoading = false;
 
-  SignUpState copyWith({
+  OtpProviderState copyWith({
     AuthState? authState,
     List<String>? errors,
     bool? hasErrors,
     bool? isLoading,
-    String? otpId,
   }) {
-    return SignUpState(
+    return OtpProviderState(
       authState: authState ?? this.authState,
       errors: errors ?? this.errors,
       hasErrors: hasErrors ?? this.hasErrors,
       isLoading: isLoading ?? this.isLoading,
-      otpId: otpId ?? this.otpId,
     );
   }
 }

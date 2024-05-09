@@ -23,65 +23,70 @@ class GuidPage extends StatelessWidget {
           color: AppColors.Primary_color,
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 100.h,
-          ),
-          const Center(
-            child: Image(
-              image: AssetImage(
-                "assets/images/photos/Guide_photo.png",
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 100.h,
+            ),
+            const Center(
+              child: Image(
+                image: AssetImage(
+                  "assets/images/photos/Guide_photo.png",
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 30.h,
-          ),
-          Text(
-            "Get Started Right with Ortho AI",
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w600,
-              fontSize: 22.sp,
+            SizedBox(
+              height: 30.h,
             ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: Text(
-              "Before we start analyzing smiles, let's quickly guide you through a tutorial to help you capture the perfect image for precise results. Follow these steps for the best experience. ",
-              textAlign: TextAlign.center,
+            Text(
+              "Get Started Right with Ortho AI",
               style: TextStyle(
                 fontFamily: 'Nunito',
-                fontWeight: FontWeight.w500,
-                fontSize: 16.sp,
-                color: AppColors.SecondaryColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 22.sp,
               ),
             ),
-          ),
-          SizedBox(
-            height: 50.h,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const GuidHowTo()),
-              );
-            },
-            child: const Image(
-              image: AssetImage(
-                "assets/images/icons/Guide_screen_icon.png",
+            SizedBox(
+              height: 10.h,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Text(
+                "Before we start analyzing smiles, let's quickly guide you through a tutorial to help you capture the perfect image for precise results. Follow these steps for the best experience. ",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                  color: AppColors.SecondaryColor,
+                ),
               ),
             ),
-          )
-        ],
+            SizedBox(
+              height: 50.h,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GuidHowTo()),
+                );
+              },
+              child: const Image(
+                image: AssetImage(
+                  "assets/images/icons/Guide_screen_icon.png",
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            )
+          ],
+        ),
       ),
       // Added a comma here
     );

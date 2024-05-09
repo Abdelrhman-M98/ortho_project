@@ -36,13 +36,13 @@ class AuthRepository {
     return value;
   }
 
-  static Future<bool> signUp(SignUp signUp) async {
+  static Future<String> signUp(SignUp signUp) async {
     final result = await Networking.post('/auth/signup', {
       'continuationKey': signUp.continuationKey,
       'password': signUp.password,
     });
     final value = switch (result) {
-      Success(value: final v) => true,
+      Success(value: final v) => v.data['data'],
       Failure(failure: final f) => throw f,
       Error(exception: final e) => throw e,
     };
