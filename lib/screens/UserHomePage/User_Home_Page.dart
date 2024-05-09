@@ -32,9 +32,9 @@ class _UserHomePageState extends State<UserHomePage> {
             _selectedIndex = index; // Update _selectedIndex when page changes
           });
         },
-        children: const [
+        children: [
           HomePage(),
-          ProfilePage(),
+          const ProfilePage(),
         ],
       ),
       bottomNavigationBar: navBar(

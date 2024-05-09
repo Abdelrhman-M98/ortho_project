@@ -10,6 +10,7 @@ import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/screens/Report/Report_Page.dart';
+import 'package:ortho/screens/UploadImage/Camera_Page.dart';
 import 'package:ortho/screens/UploadImage/scan_provider.dart';
 
 class UploadPage extends HookConsumerWidget {
@@ -24,7 +25,7 @@ class UploadPage extends HookConsumerWidget {
     final ScanProviderNotifier = ref.watch(ScanProvider.notifier);
     final ScanProviderState = ref.watch(ScanProvider);
 
-    bool _IsVailed = !ScanProviderState.hasErrors;
+    bool IsOk = ScanProviderState.resState == ResponseState.ok;
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -110,8 +111,7 @@ class UploadPage extends HookConsumerWidget {
                 height: 30.h,
               ),
               Visibility(
-                visible: _IsVailed = !ScanProviderState
-                    .hasErrors, // Check if _IsVailed is not equal to 0
+                visible: IsOk,
                 child: Row(
                   children: [
                     Expanded(
@@ -143,7 +143,7 @@ class UploadPage extends HookConsumerWidget {
                 ),
               ),
               Visibility(
-                visible: _IsVailed == 0, // Check if _IsVailed is not equal to 0
+                visible: ScanProviderState.resState == ResponseState.failed,
                 child: Row(
                   children: [
                     Expanded(
@@ -178,9 +178,37 @@ class UploadPage extends HookConsumerWidget {
               Spinner_BTN(
                 btnText: ScanProviderState.isLoading
                     ? "Loding.."
-                    : "Save & Continue",
+                    : ScanProviderState.resState == ResponseState.failed
+                        ? "Retack Photo"
+                        : ScanProviderState.resState == ResponseState.ok
+                            ? "Show Result"
+                            : "Scan",
                 onTap: () {
-                  ScanProviderNotifier.scan(File(imagepath));
+                  if (ScanProviderState.resState == ResponseState.failed) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const CameraScreen();
+                        },
+                      ),
+                    );
+                  }
+
+                  if (ScanProviderState.resState == ResponseState.ok) {
+                    Route route = MaterialPageRoute(
+                        builder: (context) =>
+                            ReportPage(analysisData: ScanProviderState.data!));
+                    Navigator.pushReplacement(context, route);
+
+                    return;
+                  }
+
+                  ScanProviderNotifier.scan(
+                    File(
+                      imagepath,
+                    ),
+                  );
                 },
                 isLoading: ScanProviderState.isLoading,
               ),

@@ -48,4 +48,14 @@ class AuthRepository {
     };
     return value;
   }
+
+  static Future<bool> tookenInfo() async {
+    final result = await Networking.get('/auth/token-info', {});
+    final value = switch (result) {
+      Success(value: final v) => true,
+      Failure(failure: final f) => throw f,
+      Error(exception: final e) => throw e,
+    };
+    return value;
+  }
 }

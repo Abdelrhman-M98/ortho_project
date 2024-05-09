@@ -4,9 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
 import 'package:ortho/screens/SignUp/SignUp_Page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoarding extends StatelessWidget {
-  const OnBoarding({super.key}); // Use 'Key?' instead of 'super.key'
+  const OnBoarding({
+    super.key,
+  }); // Use 'Key?' instead of 'super.key'
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +79,10 @@ class OnBoarding extends StatelessWidget {
                 ),
                 BtnWidget(
                   btnText: "Get started",
-                  onTap: () {
+                  onTap: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.setBool('firstTime', false);
                     Navigator.push(context, MaterialPageRoute(
                       builder: (BuildContext context) {
                         return const SignUpPage();

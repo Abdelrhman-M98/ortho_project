@@ -12,8 +12,6 @@ import 'package:ortho/screens/Home/HomeStateNotifier.dart';
 import 'package:ortho/screens/UserGuid/Guid_page.dart';
 
 class HomePage extends HookConsumerWidget {
-  const HomePage();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final HomeProviderNotifier = ref.read(HomeProvider.notifier);
@@ -28,8 +26,9 @@ class HomePage extends HookConsumerWidget {
     return HomeProviderState.isLoading
         ? const Center(
             child: CircularProgressIndicator(
-            color: AppColors.Primary_color,
-          ))
+              color: AppColors.Primary_color,
+            ),
+          )
         : HomeProviderState.data != null
             ? Scaffold(
                 body: Column(
@@ -47,8 +46,9 @@ class HomePage extends HookConsumerWidget {
                                 left: 16,
                               ),
                               child: Text(
-                                'Welcome, Islam',
+                                'Welcome, ${HomeProviderState.data!.user.name}',
                                 textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: AppColors.dark_text,
                                   fontFamily: 'Montserrat',

@@ -23,7 +23,8 @@ class ScanStateNotifier extends StateNotifier<ScanState> {
       state = state.copyWith(isLoading: true);
       final data = await ScanRepository.scan(file);
       state = state.copyWith(
-        authState: ResponseState.ok,
+        data: data,
+        resState: ResponseState.ok,
         errors: [],
         hasErrors: false,
       );
@@ -33,7 +34,7 @@ class ScanStateNotifier extends StateNotifier<ScanState> {
       debugPrint(errors.toString());
 
       state = state.copyWith(
-        authState: ResponseState.failed,
+        resState: ResponseState.failed,
         errors: errors,
         hasErrors: true,
       );
@@ -46,13 +47,13 @@ class ScanStateNotifier extends StateNotifier<ScanState> {
 
 class ScanState {
   AnalysisData? data;
-  final ResponseState authState;
+  final ResponseState resState;
   final List<String> errors;
   final bool hasErrors;
   final bool isLoading;
 
   ScanState({
-    required this.authState,
+    required this.resState,
     required this.errors,
     required this.hasErrors,
     required this.isLoading,
@@ -60,21 +61,21 @@ class ScanState {
   });
 
   ScanState.initial()
-      : authState = ResponseState.unauthenticated,
+      : resState = ResponseState.nothing,
         errors = [],
         hasErrors = false,
         isLoading = false,
         data = null;
 
   ScanState copyWith({
-    ResponseState? authState,
+    ResponseState? resState,
     List<String>? errors,
     bool? hasErrors,
     bool? isLoading,
     AnalysisData? data,
   }) {
     return ScanState(
-      authState: authState ?? this.authState,
+      resState: resState ?? this.resState,
       errors: errors ?? this.errors,
       hasErrors: hasErrors ?? this.hasErrors,
       isLoading: isLoading ?? this.isLoading,
@@ -87,4 +88,5 @@ enum ResponseState {
   unauthenticated,
   ok,
   failed,
+  nothing,
 }

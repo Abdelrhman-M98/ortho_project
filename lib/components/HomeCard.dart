@@ -178,7 +178,7 @@ class HomeCard extends StatelessWidget {
                           debugPrint(
                             analysisData.image,
                           );
-                          return const ReportPage();
+                          return ReportPage(analysisData: analysisData);
                         },
                       ),
                     );
@@ -195,7 +195,7 @@ class HomeCard extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return const ReportPage();
+                          return ReportPage(analysisData: analysisData);
                         },
                       ),
                     );

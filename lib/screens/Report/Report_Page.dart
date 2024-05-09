@@ -1,41 +1,26 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/DiagonsisList.dart';
+import 'package:ortho/models/sendScan/analysis_data.dart';
 import 'package:ortho/screens/UserHomePage/User_Home_Page.dart';
 
 import '../../components/ReportCard.dart';
-import '../../models/Diagnosis.dart';
 
-class ReportPage extends StatefulWidget {
-  const ReportPage({super.key});
+class ReportPage extends HookConsumerWidget {
+  const ReportPage({super.key, required this.analysisData});
 
-  @override
-  _ReportPageState createState() => _ReportPageState();
-}
-
-class _ReportPageState extends State<ReportPage> {
-  List<Diagnosis> diagnosisList = [
-    Diagnosis('Tooth Type', ['Tapering', 'Ovoid', 'Square']),
-    Diagnosis('Smile Curve', ['Convex', 'Reverse']),
-    Diagnosis('White Tooth Color', ['B1', 'B2', 'B3']),
-    Diagnosis('Destima', ['Has Destima', 'Not Has Destima']),
-  ];
-  List<Diagnosis> realDiagnosisList = [
-    Diagnosis('Tooth Type', ['Ovoid']),
-    Diagnosis('Smile Curve', ['Reverse']),
-    Diagnosis('White Tooth Color', ['B1']),
-    Diagnosis('Destima', ['Has Destima']),
-  ];
+  final AnalysisData analysisData;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Scan#1 Report",
+          "Scan#${analysisData.id} Report",
           style: TextStyle(
             fontFamily: 'Nunito',
             fontWeight: FontWeight.w400,
@@ -91,8 +76,10 @@ class _ReportPageState extends State<ReportPage> {
               height: 20.h,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Spacer(),
+                //
+
                 Text(
                   'Before ',
                   style: TextStyle(
@@ -102,50 +89,50 @@ class _ReportPageState extends State<ReportPage> {
                     fontSize: 16.sp,
                   ),
                 ),
-                const Spacer(
-                  flex: 3,
-                ),
-                Text(
-                  'After ',
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.dark_text,
-                    fontSize: 16.sp,
-                  ),
-                ),
-                const Spacer(),
+                // const Spacer(
+                //   flex: 3,
+                // ),
+                // Text(
+                //   'After ',
+                //   style: TextStyle(
+                //     fontFamily: 'Nunito',
+                //     fontWeight: FontWeight.w400,
+                //     color: AppColors.dark_text,
+                //     fontSize: 16.sp,
+                //   ),
+                // ),
+                // const Spacer(),
               ],
             ),
             SizedBox(
               height: 1.h,
             ),
-            const ReportCard(
-              beforeImage: 'assets/images/photos/uploaded.jpg',
-              afterImage: 'assets/images/photos/uploaded.jpg',
+            ReportCard(
+              beforeImage: analysisData.image,
+
+              //afterImage: 'assets/images/photos/uploaded.jpg',
             ),
             SizedBox(
               height: 20.h,
             ),
-            DiagonsisList(
-              categories: diagnosisList,
-              diagnosis: realDiagnosisList,
+            // DiagonsisList(
+            //   modelResult: analysisData.modelResult,
+            // ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: analysisData.data.length,
+              itemBuilder: (context, index) {
+                return DiagonsisList(
+                  modelResult: analysisData.data[index],
+                );
+              },
             ),
             SizedBox(
               height: 20.h,
             ),
             BtnWidget(
               btnText: "Download full report",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const ReportPage();
-                    },
-                  ),
-                );
-              },
+              onTap: () {},
             ),
             SizedBox(
               height: 10.h,
