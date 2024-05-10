@@ -1,7 +1,6 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, use_key_in_widget_constructors, non_constant_identifier_names, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
@@ -14,14 +13,9 @@ import 'package:ortho/screens/UserGuid/Guid_page.dart';
 class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final HomeProviderNotifier = ref.read(HomeProvider.notifier);
+    final HomeProviderNotifier = ref.watch(HomeProvider.notifier);
     final HomeProviderState = ref.watch(HomeProvider);
-    final isHomeTriggred = useState(false);
-    Future(() {
-      if (isHomeTriggred.value) return null;
-      HomeProviderNotifier.home();
-      isHomeTriggred.value = true;
-    });
+    // final isHomeTriggred = useState(false);
 
     return HomeProviderState.isLoading
         ? const Center(
@@ -29,8 +23,10 @@ class HomePage extends HookConsumerWidget {
               color: AppColors.Primary_color,
             ),
           )
-        : HomeProviderState.data != null
+        : HomeProviderState.data != null &&
+                HomeProviderState.data!.recentScans.isNotEmpty
             ? Scaffold(
+                //full
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -141,10 +137,10 @@ class HomePage extends HookConsumerWidget {
                 floatingActionButton: FloatingActionButton(
                   backgroundColor: AppColors.Primary_color,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const GuidPage()),
+                    Route route = MaterialPageRoute(
+                      builder: (context) => const GuidPage(),
                     );
+                    Navigator.pushReplacement(context, route);
                   },
                   shape: CircleBorder(
                     side: BorderSide(

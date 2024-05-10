@@ -182,12 +182,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const AccDetailsPage(),
-                              ),
+                            Route route = MaterialPageRoute(
+                              builder: (context) => const AccDetailsPage(),
                             );
+                            Navigator.pushReplacement(context, route);
                           },
                           child: Text(
                             "Edit",
@@ -416,12 +414,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ),
+                  Route route = MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
                   );
+                  Navigator.pushReplacement(context, route);
                 },
                 child: Row(
                   children: [

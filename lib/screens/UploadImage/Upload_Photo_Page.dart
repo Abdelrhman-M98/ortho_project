@@ -124,7 +124,7 @@ class UploadPage extends HookConsumerWidget {
                           },
                           child: Container(
                             child: Text(
-                              "Image uploaded successfully. Please click on \nSave & Continue",
+                              "Image uploaded successfully. Please click on \nShow Result",
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 fontFamily: 'Nunito',
@@ -188,14 +188,9 @@ class UploadPage extends HookConsumerWidget {
                               : "Scan",
                   onTap: () {
                     if (ScanProviderState.resState == ResponseState.failed) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return const CameraScreen();
-                          },
-                        ),
-                      );
+                      Route route = MaterialPageRoute(
+                          builder: (context) => const CameraScreen());
+                      Navigator.pushReplacement(context, route);
                     }
 
                     if (ScanProviderState.resState == ResponseState.ok) {

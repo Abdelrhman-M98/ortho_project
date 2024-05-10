@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/CustomAppBar.dart';
+import 'package:ortho/screens/Home/Home_Page.dart';
 import 'package:ortho/screens/UserGuid/HowTo_Page.dart';
 
 class GuidPage extends StatelessWidget {
@@ -15,7 +16,8 @@ class GuidPage extends StatelessWidget {
       appBar: CustomAppBar(
         titleText: 'Back', // Pass the title text here
         onTap: () {
-          Navigator.of(context).pop();
+          Route route = MaterialPageRoute(builder: (context) => HomePage());
+          Navigator.pushReplacement(context, route);
           // Handle onTap action if needed
         },
         barIcon: const Icon(
@@ -71,10 +73,9 @@ class GuidPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const GuidHowTo()),
-                );
+                Route route =
+                    MaterialPageRoute(builder: (context) => const GuidHowTo());
+                Navigator.pushReplacement(context, route);
               },
               child: const Image(
                 image: AssetImage(

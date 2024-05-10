@@ -208,14 +208,13 @@ class _CameraScreenState extends State<CameraScreen> {
       await file.delete();
       await file.writeAsBytes(imageBytes!);
     }
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => UploadPage(
-          imagepath: file.path,
-        ),
+
+    Route route = MaterialPageRoute(
+      builder: (context) => UploadPage(
+        imagepath: file.path,
       ),
     );
+    Navigator.pushReplacement(context, route);
   }
 
   void switchCamera() async {

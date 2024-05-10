@@ -45,7 +45,10 @@ class ReportPage extends HookConsumerWidget {
               ),
               color: AppColors.Primary_color,
               onPressed: () {
-                Navigator.of(context).pop();
+                Route route = MaterialPageRoute(
+                  builder: (context) => const UserHomePage(),
+                );
+                Navigator.pushReplacement(context, route);
               },
             ),
           ),
@@ -159,6 +162,9 @@ class ReportPage extends HookConsumerWidget {
                   ),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 20.h,
             ),
           ],
         ),

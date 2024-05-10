@@ -22,18 +22,18 @@ class SignUpPage extends HookConsumerWidget {
     final nameField = useTextEditingController();
     final authProviderNotifier = ref.watch(authProvider.notifier);
     final authProviderState = ref.watch(authProvider);
-    ref.listen(authProvider, (previous, next) {
-      if (next.token == null) {
-        return;
-      }
-      String token = next.token!;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PasswordPage(token: token),
-        ),
-      );
-    });
+    ref.listen(
+      authProvider,
+      (previous, next) {
+        if (next.token == null) {
+          return;
+        }
+        String token = next.token!;
+        Route route =
+            MaterialPageRoute(builder: (context) => PasswordPage(token: token));
+        Navigator.pushReplacement(context, route);
+      },
+    );
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -58,14 +58,9 @@ class SignUpPage extends HookConsumerWidget {
             ),
             child: TextButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const LoginPage();
-                    },
-                  ),
-                );
+                Route route =
+                    MaterialPageRoute(builder: (context) => const LoginPage());
+                Navigator.pushReplacement(context, route);
               },
               child: Text(
                 'Login',

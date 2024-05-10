@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, file_names, unused_local_variable, empty_catches
+// ignore_for_file: non_constant_identifier_names, file_names, unused_local_variable, empty_catches, unused_catch_clause
 // ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +10,9 @@ final StartUpProvider =
 );
 
 class StartUpStateNotifier extends StateNotifier<StartUpState> {
-  StartUpStateNotifier() : super(StartUpState.initial());
+  StartUpStateNotifier() : super(StartUpState.initial()) {
+    startUp();
+  }
 
   // Add your state modification methods here
 

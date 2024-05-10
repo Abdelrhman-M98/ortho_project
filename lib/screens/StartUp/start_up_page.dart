@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
@@ -15,13 +14,6 @@ class StartUpPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final StartUpProviderNotifier = ref.watch(StartUpProvider.notifier);
     final StartUpProviderState = ref.watch(StartUpProvider);
-
-    final isTriggred = useState(false);
-    Future(() {
-      if (isTriggred.value) return null;
-      StartUpProviderNotifier.startUp();
-      isTriggred.value = true;
-    });
     ref.listen(StartUpProvider, (previous, next) {
       if (next.isLoading) {
         return;

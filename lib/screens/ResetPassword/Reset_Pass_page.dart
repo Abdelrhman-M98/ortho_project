@@ -100,14 +100,10 @@ class ResetPassPage extends HookWidget {
                 btnText: "Reset password",
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return const LoginPage();
-                        },
-                      ),
+                    Route route = MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
                     );
+                    Navigator.pushReplacement(context, route);
                   }
                 },
               ),

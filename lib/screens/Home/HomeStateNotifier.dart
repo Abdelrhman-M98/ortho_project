@@ -6,12 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ortho/models/homeData/home_data.dart';
 import 'package:ortho/repository/home/homeRepository.dart';
 
-final HomeProvider = StateNotifierProvider<HomeStateNotifier, HomeState>(
+final HomeProvider =
+    AutoDisposeStateNotifierProvider<HomeStateNotifier, HomeState>(
   (ref) => HomeStateNotifier(),
 );
 
 class HomeStateNotifier extends StateNotifier<HomeState> {
-  HomeStateNotifier() : super(HomeState.initial());
+  HomeStateNotifier() : super(HomeState.initial()) {
+    home();
+  }
 
   // Add your state modification methods here
 

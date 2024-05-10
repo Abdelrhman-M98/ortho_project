@@ -29,12 +29,10 @@ class LoginPage extends HookConsumerWidget {
       if (next.authState != AuthState.authenticated) {
         return;
       }
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const UserHomePage(),
-        ),
+      Route route = MaterialPageRoute(
+        builder: (context) => const UserHomePage(),
       );
+      Navigator.pushReplacement(context, route);
     });
 
     return Scaffold(
@@ -222,11 +220,10 @@ class LoginPage extends HookConsumerWidget {
                       ),
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const SignUpPage();
-                            },
-                          ));
+                          Route route = MaterialPageRoute(
+                            builder: (context) => const SignUpPage(),
+                          );
+                          Navigator.pushReplacement(context, route);
                         }
                       },
                     ),
@@ -263,11 +260,10 @@ class LoginPage extends HookConsumerWidget {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return const ForgetPassPage();
-                          },
-                        ));
+                        Route route = MaterialPageRoute(
+                          builder: (context) => const ForgetPassPage(),
+                        );
+                        Navigator.pushReplacement(context, route);
                       },
                     ),
                   ],

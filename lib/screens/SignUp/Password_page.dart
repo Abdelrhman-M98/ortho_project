@@ -32,14 +32,12 @@ class PasswordPage extends HookConsumerWidget {
       if (next.authState != AuthState.authenticated) {
         return;
       }
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VerificationPage(
-            otpId: next.otpId!,
-          ),
+      Route route = MaterialPageRoute(
+        builder: (context) => VerificationPage(
+          otpId: next.otpId!,
         ),
       );
+      Navigator.pushReplacement(context, route);
     });
 // Validator for password field
     String? passwordValidator(String? value) {

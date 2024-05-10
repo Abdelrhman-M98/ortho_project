@@ -141,17 +141,11 @@ class HomeCard extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          debugPrint(
-                            analysisData.image,
-                          );
-                          return ReportPage(analysisData: analysisData);
-                        },
-                      ),
+                    Route route = MaterialPageRoute(
+                      builder: (context) =>
+                          ReportPage(analysisData: analysisData),
                     );
+                    Navigator.pushReplacement(context, route);
                   },
                 ),
                 GestureDetector(
@@ -161,14 +155,11 @@ class HomeCard extends StatelessWidget {
                     color: AppColors.Primary_color,
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return ReportPage(analysisData: analysisData);
-                        },
-                      ),
+                    Route route = MaterialPageRoute(
+                      builder: (context) =>
+                          ReportPage(analysisData: analysisData),
                     );
+                    Navigator.pushReplacement(context, route);
                   },
                 )
               ],

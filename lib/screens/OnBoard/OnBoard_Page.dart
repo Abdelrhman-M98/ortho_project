@@ -1,4 +1,4 @@
-// ignore_for_file: implementation_imports, unnecessary_import, file_names
+// ignore_for_file: implementation_imports, unnecessary_import, file_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/Btn_widget.dart';
@@ -83,11 +83,10 @@ class OnBoarding extends StatelessWidget {
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     await prefs.setBool('firstTime', false);
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const SignUpPage();
-                      },
-                    ));
+                    Route route = MaterialPageRoute(
+                      builder: (context) => const SignUpPage(),
+                    );
+                    Navigator.pushReplacement(context, route);
                   },
                 ),
                 SizedBox(

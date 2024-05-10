@@ -6,6 +6,7 @@ import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/screens/UploadImage/Camera_Page.dart';
+import 'package:ortho/screens/UserGuid/Guid_page.dart';
 
 class GuidHowTo extends StatefulWidget {
   const GuidHowTo();
@@ -22,7 +23,9 @@ class _GuidHowToState extends State<GuidHowTo> {
       appBar: CustomAppBar(
         titleText: 'Back',
         onTap: () {
-          Navigator.of(context).pop();
+          Route route =
+              MaterialPageRoute(builder: (context) => const GuidPage());
+          Navigator.pushReplacement(context, route);
         },
         barIcon: const Icon(
           Icons.arrow_back_ios_new_rounded,
@@ -309,12 +312,9 @@ class _GuidHowToState extends State<GuidHowTo> {
             BtnWidget(
               btnText: "Start Scan",
               onTap: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CameraScreen(),
-                  ),
-                );
+                Route route = MaterialPageRoute(
+                    builder: (context) => const CameraScreen());
+                Navigator.pushReplacement(context, route);
               },
             ),
             SizedBox(

@@ -83,14 +83,10 @@ class ForgetPassPage extends HookWidget {
               btnText: "Submit",
               onTap: () {
                 if (formKey.currentState!.validate()) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const VerificationForgetPass();
-                      },
-                    ),
+                  Route route = MaterialPageRoute(
+                    builder: (context) => const VerificationForgetPass(),
                   );
+                  Navigator.pushReplacement(context, route);
                 }
               },
             ),
