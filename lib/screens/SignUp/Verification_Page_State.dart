@@ -1,7 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, file_names, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, unused_local_variable, must_be_immutable
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -12,7 +10,10 @@ import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
 import 'package:ortho/screens/SignUp/OtpNotifier.dart';
-import 'package:pinput/pinput.dart'; // Import PinCodeTextField
+import 'package:pinput/pinput.dart';
+import 'package:timer_count_down/timer_controller.dart';
+import 'package:timer_count_down/timer_count_down.dart';
+// Import PinCodeTextField
 
 class VerificationPage extends HookConsumerWidget {
   VerificationPage({
@@ -23,40 +24,19 @@ class VerificationPage extends HookConsumerWidget {
 
   final TextEditingController pinController = TextEditingController();
   final focusNode = FocusNode();
-  late final formKey = useMemoized(() => GlobalKey<FormState>());
   bool isLoading = false;
   bool isPinCorrect = false;
   final FocusNode _pinFocusNode = FocusNode();
 
+  late final formKey = useMemoized(() => GlobalKey<FormState>());
+  final countDownCtrl = CountdownController(autoStart: true);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final timerController = useStreamController<int>();
-    int countdown = 60;
-    useEffect(() {
-      final timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        // Emit the current countdown value
-        timerController.add(countdown);
+    final otpProviderNotifier = ref.read(otpProvider(otpId).notifier);
+    final otpProviderState = ref.watch(otpProvider(otpId));
+    final ctnEnded = useState(false);
 
-        // Decrement countdown
-        countdown--;
-
-        // If countdown reaches 0, cancel the timer
-        if (countdown < 0) {
-          timer.cancel();
-          timerController.close();
-        }
-      });
-
-      return () {
-        timer.cancel();
-        timerController.close();
-      };
-    }, []);
-
-    final otpProviderNotifier = ref.watch(otpProvider.notifier);
-    final otpProviderState = ref.watch(otpProvider);
-
-    ref.listen(otpProvider, (previous, next) {
+    ref.listen(otpProvider(otpId), (previous, next) {
       if (next.isLoading) {
         return;
       }
@@ -77,7 +57,6 @@ class VerificationPage extends HookConsumerWidget {
         titleText: 'Back',
         onTap: () {
           Navigator.of(context).pop();
-          // Handle onTap action if needed
         },
         barIcon: const Icon(
           Icons.arrow_back_ios_new_rounded,
@@ -129,7 +108,7 @@ class VerificationPage extends HookConsumerWidget {
                 length: 5,
                 onCompleted: (pin) {
                   debugPrint(pin);
-                  otpProviderNotifier.otpVerify(otpId, pin);
+                  otpProviderNotifier.otpVerify(pin);
                   _pinFocusNode.unfocus();
                   SystemChannels.textInput.invokeMethod('TextInput.hide');
                 },
@@ -233,33 +212,46 @@ class VerificationPage extends HookConsumerWidget {
               SizedBox(
                 width: 8.w,
               ),
-              countdown != 0
-                  ? StreamBuilder<int>(
-                      stream: timerController.stream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Text(
-                            '(0:${snapshot.data})',
-                            style: TextStyle(
-                              fontFamily: "Nunito",
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    )
-                  : Text(
-                      "Resend",
+              Visibility(
+                visible: !ctnEnded.value,
+                child: Countdown(
+                  controller: countDownCtrl,
+                  seconds: 60,
+                  build: (BuildContext context, double time) {
+                    return Text(
+                      time.toInt().toString(),
                       style: TextStyle(
                         fontFamily: "Nunito",
                         fontSize: 16.sp,
-                        color: AppColors.Primary_color,
+                        color: AppColors.FormNonFouceColor,
                         fontWeight: FontWeight.w600,
                       ),
+                    );
+                  },
+                  onFinished: () {
+                    ctnEnded.value = true;
+                  },
+                ),
+              ),
+              Visibility(
+                visible: ctnEnded.value,
+                child: GestureDetector(
+                  onTap: () {
+                    otpProviderNotifier.resendOtp();
+                    ctnEnded.value = false;
+                    countDownCtrl.restart();
+                  },
+                  child: Text(
+                    "Resend",
+                    style: TextStyle(
+                      fontFamily: "Nunito",
+                      fontSize: 16.sp,
+                      color: AppColors.Primary_color,
+                      fontWeight: FontWeight.w600,
                     ),
+                  ),
+                ),
+              )
             ],
           ),
           const Spacer(),
@@ -270,7 +262,7 @@ class VerificationPage extends HookConsumerWidget {
               child: Spinner_BTN(
                 btnText: "Verify OTP",
                 onTap: () {
-                  otpProviderNotifier.otpVerify(otpId, pinController.text);
+                  otpProviderNotifier.otpVerify(pinController.text);
                   focusNode.unfocus();
                   formKey.currentState!.validate();
                 },

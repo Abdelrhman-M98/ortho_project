@@ -3,5 +3,10 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "cSpell.words": [
         "Feild"
-    ]
+    ],
+    "liveshare.allowGuestDebugControl": true,
+    "liveshare.allowGuestTaskControl": true,
+    "liveshare.languages.allowGuestCommandControl": true,
+    "liveshare.openSharedServers": false,
+    "liveshare.publishWorkspaceInfo": true,
 }

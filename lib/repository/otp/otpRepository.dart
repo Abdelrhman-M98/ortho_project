@@ -15,4 +15,14 @@ class OtpRepository {
     };
     return value;
   }
+
+  static Future<String> resend(String id) async {
+    final result = await Networking.post('/otp/$id/resend', {});
+    final value = switch (result) {
+      Success(value: final v) => v.data['data'],
+      Failure(failure: final f) => throw f,
+      Error(exception: final e) => throw e,
+    };
+    return value;
+  }
 }
