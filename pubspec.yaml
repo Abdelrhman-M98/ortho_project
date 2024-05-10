@@ -60,7 +60,7 @@ dependencies:
   flutter_riverpod: ^2.5.1
   shared_preferences: ^2.2.3
   timer_count_down: ^2.2.2
-
+  image_picker: ^1.1.1
   
 
 dev_dependencies:

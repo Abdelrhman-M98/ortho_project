@@ -3,8 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
-import 'package:ortho/components/Pie_Chart.dart';
-import 'package:ortho/models/dataOfScan.dart';
+import 'package:ortho/components/imageProfile.dart';
 import 'package:ortho/screens/AccountDetails/Account_Details_Page.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
 
@@ -16,48 +15,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  int validScans = items.where((item) => item.IsimageVailed == 1).length;
-  int UnvalidScans = items.where((item) => item.IsimageVailed == 0).length;
-  int Scans = items.length;
-  static List<ListItem> items = [
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 0,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 0,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 0,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 1,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 1,
-    ),
-    ListItem(
-      date_of_scan: DateTime.now(),
-      beforeImage: 'assets/images/photos/uploaded.jpg',
-      afterImage: 'assets/images/photos/uploaded.jpg',
-      IsimageVailed: 1,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,17 +42,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Row(
               children: [
-                Container(
-                  width: 71.w,
-                  height: 71.h,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                    'assets/images/photos/onBording.png',
-                    fit: BoxFit.cover,
-                  ),
+                UploadImage(
+                  radius: 50.sp,
+                  isVisiable: false,
                 ),
                 SizedBox(
                   width: 20.w,
@@ -109,24 +58,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontWeight: FontWeight.w600,
                         color: AppColors.dark_text,
                         fontSize: 24.sp,
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border:
-                            Border.all(color: AppColors.Type_container_color),
-                      ),
-                      //color: AppColors.White,
-                      width: 74.w,
-                      height: 27.h,
-                      child: Center(
-                        child: Text("Dintist",
-                            style: TextStyle(
-                                fontFamily: "Nunito",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15.sp,
-                                color: AppColors.Type_container_color)),
                       ),
                     ),
                   ],
@@ -155,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Container(
               width: 351.w,
-              height: 125.h,
+              height: 100.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.Primary_color),
@@ -182,10 +113,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Route route = MaterialPageRoute(
-                              builder: (context) => const AccDetailsPage(),
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AccDetailsPage(),
+                              ),
                             );
-                            Navigator.pushReplacement(context, route);
                           },
                           child: Text(
                             "Edit",
@@ -257,7 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Container(
               width: 351.w,
-              height: 136.h,
+              height: 90.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.Primary_color),
@@ -267,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                      top: 16,
+                      top: 10,
                       right: 16,
                       left: 16,
                     ),
@@ -276,21 +209,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          "($Scans) Scans",
+                          "(Scans",
                           style: TextStyle(
                             fontFamily: "Nunito",
                             fontWeight: FontWeight.w700,
                             color: AppColors.Primary_color,
                             fontSize: 19.sp,
-                          ),
-                        ),
-                        Text(
-                          "$validScans Completed , $UnvalidScans Draft",
-                          style: TextStyle(
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.Primary_color,
-                            fontSize: 13.sp,
                           ),
                         ),
                         Row(
@@ -323,17 +247,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0,
-                    ),
-                    child: CircularProgress(items: items),
-                  ),
                 ],
               ),
             ),
             SizedBox(
-              height: 24.h,
+              height: 20.h,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -414,10 +332,12 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  Route route = MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
                   );
-                  Navigator.pushReplacement(context, route);
                 },
                 child: Row(
                   children: [

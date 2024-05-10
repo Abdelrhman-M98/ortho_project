@@ -7,6 +7,7 @@ import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/HomeCard.dart';
 import 'package:ortho/components/Search_Bar.dart';
+import 'package:ortho/components/imageProfile.dart';
 import 'package:ortho/screens/Home/HomeStateNotifier.dart';
 import 'package:ortho/screens/UserGuid/Guid_page.dart';
 
@@ -25,132 +26,127 @@ class HomePage extends HookConsumerWidget {
           )
         : HomeProviderState.data != null &&
                 HomeProviderState.data!.recentScans.isNotEmpty
-            ? Scaffold(
-                //full
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 45.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 16,
-                              ),
-                              child: Text(
-                                'Welcome, ${HomeProviderState.data!.user.name}',
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: AppColors.dark_text,
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w600,
+            ? PopScope(
+                canPop: false,
+                onPopInvoked: (didPop) {
+                  if (didPop) {
+                    return;
+                  }
+                },
+                child: Scaffold(
+                  //full
+                  body: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 45.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 16,
+                                ),
+                                child: Text(
+                                  'Welcome, ${HomeProviderState.data!.user.name}',
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: AppColors.dark_text,
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 16,
-                              ),
-                              child: Text(
-                                'Let’s check your dental health',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  color: AppColors.SecondaryColor,
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 16,
+                                ),
+                                child: Text(
+                                  'Let’s check your dental health',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: AppColors.SecondaryColor,
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 16.0,
+                            ],
                           ),
-                          child: Container(
-                            width: 40.w,
-                            height: 40.h,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: Image.asset(
-                              'assets/images/photos/onBording.png',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.0,
+                          const Spacer(),
+                          UploadImage(
+                            radius: 50.sp,
+                            isVisiable: false,
+                          )
+                        ],
                       ),
-                      child: searchBar(),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 16.0,
-                          ),
-                          child: Text(
-                            "Recent (${HomeProviderState.data!.recentScans.length})",
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w600,
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                        ),
+                        child: searchBar(),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 16.0,
+                            ),
+                            child: Text(
+                              "Recent (${HomeProviderState.data!.recentScans.length})",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: HomeProviderState.data!.recentScans.length,
-                        itemBuilder: (context, index) {
-                          final item =
-                              HomeProviderState.data!.recentScans[index];
-                          return HomeCard(
-                              analysisData:
-                                  HomeProviderState.data!.recentScans[index]);
-                        },
+                        ],
                       ),
-                    )
-                  ],
-                ),
-                floatingActionButton: FloatingActionButton(
-                  backgroundColor: AppColors.Primary_color,
-                  onPressed: () {
-                    Route route = MaterialPageRoute(
-                      builder: (context) => const GuidPage(),
-                    );
-                    Navigator.pushReplacement(context, route);
-                  },
-                  shape: CircleBorder(
-                    side: BorderSide(
-                      color: AppColors.Primary_color,
-                      width: 2.w,
-                    ),
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: HomeProviderState.data!.recentScans.length,
+                          itemBuilder: (context, index) {
+                            final item =
+                                HomeProviderState.data!.recentScans[index];
+                            return HomeCard(
+                                analysisData:
+                                    HomeProviderState.data!.recentScans[index]);
+                          },
+                        ),
+                      )
+                    ],
                   ),
-                  child: const Image(
-                    image: AssetImage(
-                      "assets/images/icons/Scan.png",
+                  floatingActionButton: FloatingActionButton(
+                    backgroundColor: AppColors.Primary_color,
+                    onPressed: () {
+                      Route route = MaterialPageRoute(
+                        builder: (context) => const GuidPage(),
+                      );
+                      Navigator.push(context, route);
+                    },
+                    shape: CircleBorder(
+                      side: BorderSide(
+                        color: AppColors.Primary_color,
+                        width: 2.w,
+                      ),
+                    ),
+                    child: const Image(
+                      image: AssetImage(
+                        "assets/images/icons/Scan.png",
+                      ),
                     ),
                   ),
                 ),
