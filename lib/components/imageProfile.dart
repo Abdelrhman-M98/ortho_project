@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously, file_names
+
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UploadImage extends StatelessWidget {
-  UploadImage({
+class UploadImage extends StatefulWidget {
+  const UploadImage({
     super.key,
     required this.radius,
     required this.isVisiable,
@@ -11,25 +16,38 @@ class UploadImage extends StatelessWidget {
 
   final double radius;
   final bool isVisiable;
-  final ImagePicker picker = ImagePicker(); // Initialize picker here
+
+  @override
+  State<UploadImage> createState() => _UploadImageState();
+}
+
+class _UploadImageState extends State<UploadImage> {
+  final ImagePicker picker = ImagePicker();
+
+  Uint8List? _image;
+
+  File? selectedIMage;
 
   @override
   Widget build(BuildContext context) {
-    PickedFile imageFile; // Define imageFile here
-
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Stack(
             children: [
-              CircleAvatar(
-                radius: radius,
-                backgroundImage:
-                    AssetImage('assets/images/photos/onBording.png'),
-              ),
+              _image != null
+                  ? CircleAvatar(
+                      radius: widget.radius,
+                      backgroundImage: MemoryImage(_image!),
+                    )
+                  : CircleAvatar(
+                      radius: widget.radius,
+                      backgroundImage: const NetworkImage(
+                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
+                    ),
               Visibility(
-                visible: isVisiable,
+                visible: widget.isVisiable,
                 child: Positioned(
                   bottom: 0,
                   right: 0,
@@ -40,8 +58,8 @@ class UploadImage extends StatelessWidget {
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
-                          builder: (builder) => bottomSheet(
-                              context, picker), // Pass context and picker here
+                          builder: (builder) => bottomSheet(context,
+                              _pickImageFromGallery), // Pass context and picker here
                         );
                       },
                       child: const Icon(
@@ -59,9 +77,20 @@ class UploadImage extends StatelessWidget {
       ],
     );
   }
+
+  Future _pickImageFromGallery() async {
+    final returnImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (returnImage == null) return;
+    setState(() {
+      selectedIMage = File(returnImage.path);
+      _image = File(returnImage.path).readAsBytesSync();
+    });
+    Navigator.of(context).pop(); //close the model sheet
+  }
 }
 
-Widget bottomSheet(BuildContext context, ImagePicker picker) {
+Widget bottomSheet(BuildContext context, Function picker) {
   // Pass picker here
   return Container(
     height: 120.0.h,
@@ -87,7 +116,7 @@ Widget bottomSheet(BuildContext context, ImagePicker picker) {
             )),
         IconButton(
           onPressed: () {
-            // Pass picker here
+            picker();
           },
           icon: Icon(
             Icons.image,
@@ -95,6 +124,6 @@ Widget bottomSheet(BuildContext context, ImagePicker picker) {
           ),
         ),
       ],
-),
-);
+    ),
+  );
 }

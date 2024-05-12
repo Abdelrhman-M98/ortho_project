@@ -27,6 +27,7 @@ class PasswordPage extends HookConsumerWidget {
     final passwordController = useTextEditingController();
     final confirmPasswordController = useTextEditingController();
     final formKey = useMemoized(() => GlobalKey<FormState>());
+    final not_Valid = useState(false);
 
     ref.listen(signUpProvider, (previous, next) {
       if (next.authState != AuthState.authenticated) {
@@ -42,10 +43,12 @@ class PasswordPage extends HookConsumerWidget {
 // Validator for password field
     String? passwordValidator(String? value) {
       if (value == null || value.isEmpty) {
+        not_Valid.value = true;
         return 'Password is required';
       }
 
       if (value.length < 8) {
+        not_Valid.value = true;
         return 'Password must be at least 8 characters long';
       }
 
@@ -54,20 +57,23 @@ class PasswordPage extends HookConsumerWidget {
           r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+{}|:"<>?~`\-=[\]\\;\,./]).{8,}$');
 
       if (!regex.hasMatch(value)) {
+        not_Valid.value = true;
         return 'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character';
       }
-
+      not_Valid.value = true;
       return null;
     }
 
 // Validator for confirm password field
     String? confirmPasswordValidator(String? value) {
       if (value == null || value.isEmpty) {
+        not_Valid.value = true;
         return 'Confirm Password is required';
-      }
-
-      if (value != passwordController.text) {
+      } else if (value != passwordController.text) {
+        not_Valid.value = true;
         return 'Passwords do not match';
+      } else {
+        not_Valid.value = false;
       }
 
       return null;
@@ -132,7 +138,8 @@ class PasswordPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: PasswordFeild(
-                setErrorSate: SignUpProviderState.errors.isNotEmpty,
+                setErrorSate: SignUpProviderState.errors.isNotEmpty ||
+                    not_Valid.value == true,
                 titel: "Password",
                 controller: passwordController,
                 showSuffixIcon: true,
@@ -148,7 +155,8 @@ class PasswordPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: PasswordFeild(
-                setErrorSate: SignUpProviderState.errors.isNotEmpty,
+                setErrorSate: SignUpProviderState.errors.isNotEmpty ||
+                    not_Valid.value == true,
                 titel: "Confirm Password",
                 controller: confirmPasswordController,
                 showSuffixIcon: true,
@@ -198,7 +206,10 @@ class PasswordPage extends HookConsumerWidget {
                   return;
                 }
                 if (!formKey.currentState!.validate()) {
+                  not_Valid.value = true;
                   return;
+                } else {
+                  not_Valid.value = false;
                 }
 
                 debugPrint(token);

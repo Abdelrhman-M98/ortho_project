@@ -1,32 +1,29 @@
 // ignore_for_file: empty_catches, file_names
-
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ortho/repository/otp/otpRepository.dart';
 
-final otpProvider = StateNotifierProviderFamily<OtpProviderStateNotifier,
-    OtpProviderState, String>((ref, String otpId) {
-  return OtpProviderStateNotifier(otpId);
-});
+final resetOtpProvider = AutoDisposeStateNotifierProviderFamily<
+    ResetStateNotifier, ResetState, String>(
+  (ref, otpId) => ResetStateNotifier(otpId),
+);
 
-class OtpProviderStateNotifier extends StateNotifier<OtpProviderState> {
-  OtpProviderStateNotifier(String otpId)
-      : super(OtpProviderState.initial(otpId));
-
-  // Add your state modification methods here
+class ResetStateNotifier extends StateNotifier<ResetState> {
+  ResetStateNotifier(String otpId) : super(ResetState.initial(otpId));
 
   Future<bool> otpVerify(String code) async {
     try {
       state = state.copyWith(
         isLoading: true,
-        authState: AuthState.authenticating,
+        authState: ResetOtpPassState.loading,
+        token: null,
       );
-      await OtpRepository.verify(state.otpId, code);
+      final token = await OtpRepository.verify(state.otpId, code);
       state = state.copyWith(
-        isLoading: false,
-        authState: AuthState.authenticated,
+        token: token,
+        authState: ResetOtpPassState.ok,
         errors: [],
         hasErrors: false,
       );
@@ -36,7 +33,7 @@ class OtpProviderStateNotifier extends StateNotifier<OtpProviderState> {
       List<String> errors = List<String>.from(errorList);
 
       state = state.copyWith(
-        authState: AuthState.failed,
+        authState: ResetOtpPassState.failed,
         errors: errors,
         hasErrors: true,
       );
@@ -51,11 +48,13 @@ class OtpProviderStateNotifier extends StateNotifier<OtpProviderState> {
     try {
       state = state.copyWith(
         isLoading: true,
-        authState: AuthState.unauthenticated,
+        authState: ResetOtpPassState.loading,
+        token: null,
       );
       final newOtpId = await OtpRepository.resend(state.otpId);
       state = state.copyWith(
         otpId: newOtpId,
+        authState: ResetOtpPassState.ok,
         hasErrors: false,
         errors: [],
       );
@@ -65,6 +64,7 @@ class OtpProviderStateNotifier extends StateNotifier<OtpProviderState> {
       List<String> errors = List<String>.from(errorList);
 
       state = state.copyWith(
+        authState: ResetOtpPassState.failed,
         errors: errors,
         hasErrors: true,
       );
@@ -75,46 +75,52 @@ class OtpProviderStateNotifier extends StateNotifier<OtpProviderState> {
   }
 }
 
-class OtpProviderState {
-  final AuthState authState;
+class ResetState {
+  final ResetOtpPassState authState;
   final List<String> errors;
   final bool hasErrors;
   final bool isLoading;
   final String otpId;
+  final String? token;
 
-  OtpProviderState({
+  ResetState({
     required this.authState,
     required this.errors,
     required this.hasErrors,
     required this.isLoading,
     required this.otpId,
+    required this.token,
   });
 
-  OtpProviderState.initial(this.otpId)
-      : authState = AuthState.unauthenticated,
+  ResetState.initial(this.otpId)
+      : authState = ResetOtpPassState.noThing,
         errors = [],
         hasErrors = false,
-        isLoading = false;
+        isLoading = false,
+        token = null;
 
-  OtpProviderState copyWith(
-      {AuthState? authState,
-      List<String>? errors,
-      bool? hasErrors,
-      bool? isLoading,
-      String? otpId}) {
-    return OtpProviderState(
+  ResetState copyWith({
+    ResetOtpPassState? authState,
+    List<String>? errors,
+    bool? hasErrors,
+    bool? isLoading,
+    String? otpId,
+    String? token,
+  }) {
+    return ResetState(
       authState: authState ?? this.authState,
       errors: errors ?? this.errors,
       hasErrors: hasErrors ?? this.hasErrors,
       isLoading: isLoading ?? this.isLoading,
       otpId: otpId ?? this.otpId,
+      token: token ?? this.token,
     );
   }
 }
 
-enum AuthState {
-  unauthenticated,
-  authenticated,
-  authenticating,
+enum ResetOtpPassState {
+  ok,
+  loading,
   failed,
+  noThing,
 }

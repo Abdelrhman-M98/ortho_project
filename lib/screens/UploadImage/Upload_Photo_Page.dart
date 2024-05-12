@@ -182,7 +182,7 @@ class UploadPage extends HookConsumerWidget {
                   btnText: ScanProviderState.isLoading
                       ? "Loding.."
                       : ScanProviderState.resState == ResponseState.failed
-                          ? "Retack Photo"
+                          ? "Retacke Photo"
                           : ScanProviderState.resState == ResponseState.ok
                               ? "Show Result"
                               : "Scan",

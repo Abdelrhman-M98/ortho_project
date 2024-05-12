@@ -23,7 +23,7 @@ mixin _$User {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
+  bool get emailVerified => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String id, String name, String email, DateTime? deletedAt});
+  $Res call({String id, String name, String email, bool emailVerified});
 }
 
 /// @nodoc
@@ -54,7 +54,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? id = null,
     Object? name = null,
     Object? email = null,
-    Object? deletedAt = freezed,
+    Object? emailVerified = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,10 +69,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      emailVerified: null == emailVerified
+          ? _value.emailVerified
+          : emailVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -84,7 +84,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String email, DateTime? deletedAt});
+  $Res call({String id, String name, String email, bool emailVerified});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? email = null,
-    Object? deletedAt = freezed,
+    Object? emailVerified = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -115,10 +115,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      emailVerified: null == emailVerified
+          ? _value.emailVerified
+          : emailVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -130,7 +130,7 @@ class _$UserImpl implements _User {
       {required this.id,
       required this.name,
       required this.email,
-      required this.deletedAt});
+      required this.emailVerified});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -142,11 +142,11 @@ class _$UserImpl implements _User {
   @override
   final String email;
   @override
-  final DateTime? deletedAt;
+  final bool emailVerified;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, deletedAt: $deletedAt)';
+    return 'User(id: $id, name: $name, email: $email, emailVerified: $emailVerified)';
   }
 
   @override
@@ -157,13 +157,13 @@ class _$UserImpl implements _User {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt));
+            (identical(other.emailVerified, emailVerified) ||
+                other.emailVerified == emailVerified));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email, deletedAt);
+  int get hashCode => Object.hash(runtimeType, id, name, email, emailVerified);
 
   @JsonKey(ignore: true)
   @override
@@ -184,7 +184,7 @@ abstract class _User implements User {
       {required final String id,
       required final String name,
       required final String email,
-      required final DateTime? deletedAt}) = _$UserImpl;
+      required final bool emailVerified}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -195,7 +195,7 @@ abstract class _User implements User {
   @override
   String get email;
   @override
-  DateTime? get deletedAt;
+  bool get emailVerified;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

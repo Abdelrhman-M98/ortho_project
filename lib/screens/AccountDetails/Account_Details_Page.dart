@@ -1,15 +1,18 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/imageProfile.dart';
+import 'package:ortho/screens/Profile/ProfileNotifier.dart';
 
-class AccDetailsPage extends StatelessWidget {
+class AccDetailsPage extends HookConsumerWidget {
   const AccDetailsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final UserProviderState = ref.watch(UserProvider);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 70.sp,
@@ -52,7 +55,7 @@ class AccDetailsPage extends StatelessWidget {
             ),
             Center(
               child: Text(
-                "Name",
+                "${UserProviderState.user?.name}",
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontFamily: "Nunito",
@@ -95,7 +98,7 @@ class AccDetailsPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          "Abood",
+                          "${UserProviderState.user?.name}",
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 18.sp,
@@ -153,14 +156,17 @@ class AccDetailsPage extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Text(
-                          "example@g.com",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.dark_text,
+                        Flexible(
+                          child: Text(
+                            "${UserProviderState.user?.email}",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontFamily: "Nunito",
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.dark_text,
+                            ),
                           ),
                         ),
                         const Spacer(),

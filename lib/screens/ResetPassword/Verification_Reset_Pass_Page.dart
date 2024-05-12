@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, file_names, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, unused_local_variable, must_be_immutable
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, file_names, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, unused_local_variable, must_be_immutable, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,15 +7,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/Login/Login_page.dart';
-import 'package:ortho/screens/SignUp/OtpNotifier.dart';
+import 'package:ortho/screens/ResetPassword/Forgot_Password_Email_Page.dart';
+import 'package:ortho/screens/ResetPassword/ResetOtpNotifier.dart';
+import 'package:ortho/screens/ResetPassword/Reset_Pass_page.dart';
 import 'package:pinput/pinput.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
-class VerificationPage extends HookConsumerWidget {
-  VerificationPage({
-    super.key,
+class VerificationForgetPass extends HookConsumerWidget {
+  VerificationForgetPass({
     required this.otpId,
   });
   final String otpId;
@@ -29,22 +29,23 @@ class VerificationPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final TextEditingController pinController = useTextEditingController();
-    final otpProviderNotifier = ref.watch(otpProvider(otpId).notifier);
-    final otpProviderState = ref.watch(otpProvider(otpId));
+    final otpProviderNotifier = ref.watch(resetOtpProvider(otpId).notifier);
+    final otpProviderState = ref.watch(resetOtpProvider(otpId));
     final ctnEnded = useState(false);
 
-    ref.listen(otpProvider(otpId), (previous, next) {
-      debugPrint(next.authState.toString());
+    ref.listen(resetOtpProvider(otpId), (previous, next) {
       if (next.isLoading) {
         return;
       }
-      if (next.authState == AuthState.authenticated) {
+      if (next.authState == ResetOtpPassState.ok && next.token != null) {
         Route route = MaterialPageRoute(
-          builder: (context) => const LoginPage(),
+          builder: (context) => ResetPassPage(
+            token: next.token!,
+          ),
         );
         Navigator.pushReplacement(context, route);
       }
-      if (next.authState == AuthState.failed) {
+      if (next.authState == ResetOtpPassState.failed) {
         isPinCorrect = false;
       }
     });
@@ -54,7 +55,10 @@ class VerificationPage extends HookConsumerWidget {
       appBar: CustomAppBar(
         titleText: 'Back',
         onTap: () {
-          Navigator.of(context).pop();
+          Route route = MaterialPageRoute(
+            builder: (context) => const ForgetPassPage(),
+          );
+          Navigator.pushReplacement(context, route);
         },
         barIcon: const Icon(
           Icons.arrow_back_ios_new_rounded,
@@ -107,7 +111,10 @@ class VerificationPage extends HookConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   length: 5,
-                  onCompleted: (pin) async {},
+                  onCompleted: (pin) async {
+                    // debugPrint(pin);
+                    // await otpProviderNotifier.otpVerify(pin);
+                  },
                   validator: (pin) {
                     if (pin == null || pin.isEmpty) {
                       return "Enter Your OTP";
@@ -259,7 +266,7 @@ class VerificationPage extends HookConsumerWidget {
                 onTap: () {
                   otpProviderNotifier.otpVerify(pinController.text);
                   focusNode.unfocus();
-                  // formKey.currentState!.validate();
+                  formKey.currentState!.validate();
                 },
                 isLoading: otpProviderNotifier.state.isLoading,
               ),

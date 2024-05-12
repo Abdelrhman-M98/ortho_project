@@ -10,6 +10,7 @@ import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/InputField.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
 import 'package:ortho/screens/ResetPassword/ResetStateNotifier.dart';
+import 'package:ortho/screens/ResetPassword/Verification_Reset_Pass_Page.dart';
 
 class ForgetPassPage extends HookConsumerWidget {
   const ForgetPassPage({super.key});
@@ -20,6 +21,20 @@ class ForgetPassPage extends HookConsumerWidget {
     late final formKey = useMemoized(() => GlobalKey<FormState>());
     final resetProviderNotifier = ref.watch(resetProvider.notifier);
     final resetProviderState = ref.watch(resetProvider);
+    ref.listen(resetProvider, (previous, next) {
+      if (next.authState != ResetPassState.ok) {
+        return;
+      }
+
+      if (next.otpId != null) {
+        Route route = MaterialPageRoute(
+          builder: (context) => VerificationForgetPass(
+            otpId: next.otpId!,
+          ),
+        );
+        Navigator.push(context, route);
+      }
+    });
 
     return PopScope(
       canPop: true,

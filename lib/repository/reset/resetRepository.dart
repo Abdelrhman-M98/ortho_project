@@ -1,26 +1,25 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_local_variable
 
 import 'package:ortho/shared/networking/networking.dart';
 import 'package:ortho/shared/networking/results.dart';
 
 class ResetRepository {
-  static Future<String> reset(String token, String password) async {
-    final result = await Networking.post('/reset', {
+  static reset(String token, String password) async {
+    final result = await Networking.post('/auth/reset', {
       'token': token,
       'password': password,
     });
 
     final value = switch (result) {
-      Success(value: final v) => v.data['data'],
+      Success(value: final v) => true,
       Failure(failure: final f) => throw f,
       Error(exception: final e) => throw e,
     };
-    return value;
   }
 
-  static Future<String> tookenInfo(String mail) async {
-    final result = await Networking.get('/reset/request-reset', {
-      'mail': mail,
+  static Future<String> requestReset(String mail) async {
+    final result = await Networking.post('/auth/request-reset', {
+      'email': mail,
     });
     final value = switch (result) {
       Success(value: final v) => v.data['data'],

@@ -9,7 +9,6 @@ import 'package:ortho/components/Btn_With_loading_Sppiner.dart';
 import 'package:ortho/components/InputField.dart';
 import 'package:ortho/models/auth/SignUpRequest.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
-import 'package:ortho/screens/OnBoard/OnBoard_Page.dart';
 import 'package:ortho/screens/SignUp/Password_page.dart';
 import 'package:ortho/screens/SignUp/SignupStateNotifier.dart';
 import 'package:ortho/screens/TermOfPolicy/terms_of_use.dart';
@@ -39,27 +38,27 @@ class SignUpPage extends HookConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(
-            top: 15,
-          ),
-          child: IconButton(
-            icon: const Icon(
-              Icons.close,
-            ),
-            onPressed: () {
-              if (authProviderState.authState == AuthState.unauthenticated) {
-                Route route =
-                    MaterialPageRoute(builder: (context) => const LoginPage());
-                Navigator.pushReplacement(context, route);
-              } else {
-                Route route =
-                    MaterialPageRoute(builder: (context) => const OnBoarding());
-                Navigator.pushReplacement(context, route);
-              }
-            },
-          ),
-        ),
+        // leading: Padding(
+        //   padding: const EdgeInsets.only(
+        //     top: 15,
+        //   ),
+        //   child: IconButton(
+        //     icon: const Icon(
+        //       Icons.close,
+        //     ),
+        //     onPressed: () {
+        //       if (authProviderState.authState == AuthState.unauthenticated) {
+        //         Route route =
+        //             MaterialPageRoute(builder: (context) => const LoginPage());
+        //         Navigator.pushReplacement(context, route);
+        //       } else {
+        //         Route route =
+        //             MaterialPageRoute(builder: (context) => const OnBoarding());
+        //         Navigator.pushReplacement(context, route);
+        //       }
+        //     },
+        //   ),
+        // ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(

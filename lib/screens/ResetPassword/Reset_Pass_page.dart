@@ -3,19 +3,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/Btn_widget.dart';
 import 'package:ortho/components/CustomAppBar.dart';
 import 'package:ortho/components/PasswordField.dart';
 import 'package:ortho/screens/Login/Login_page.dart';
+import 'package:ortho/screens/ResetPassword/ResetPassNotifier.dart';
 
-class ResetPassPage extends HookWidget {
-  const ResetPassPage();
+class ResetPassPage extends HookConsumerWidget {
+  const ResetPassPage({
+    required this.token,
+  });
+  final String token;
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final passwordController = useTextEditingController();
     final confirmPasswordController = useTextEditingController();
+
+    final resetProviderNotifier = ref.watch(resetPassProvider(token).notifier);
+    final resetProviderState = ref.watch(resetPassProvider(token));
+
     late final formKey = useMemoized(() => GlobalKey<FormState>());
+
+    ref.listen(resetPassProvider(token), (previous, next) {
+      if (next.isLoading) {
+        return;
+      }
+      if (next.authState == ResetPassState.ok) {
+        Route route = MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        );
+        Navigator.pushReplacement(context, route);
+      }
+      if (next.authState == ResetPassState.failed) {}
+    });
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -95,16 +117,42 @@ class ResetPassPage extends HookWidget {
                   },
                 ),
               ),
+              resetProviderState.hasErrors
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 28,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment
+                            .end, // Align items horizontally to the end (right side)
+                        children: [
+                          SizedBox(
+                            height: 30.0 * resetProviderState.errors.length,
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: resetProviderState.errors.length,
+                              itemBuilder: (context, index) {
+                                return Text(
+                                  resetProviderState.errors[index],
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontFamily: "Nunito",
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.Fail_Text,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(),
               const Spacer(),
               BtnWidget(
                 btnText: "Reset password",
                 onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    Route route = MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    );
-                    Navigator.pushReplacement(context, route);
-                  }
+                  resetProviderNotifier.reset(passwordController.text);
                 },
               ),
               SizedBox(

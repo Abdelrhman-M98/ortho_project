@@ -25,21 +25,31 @@ class CameraScreen extends StatefulWidget {
 bool isCameraInitialized = false;
 bool isMicrophoneGranted = false;
 bool isFlashOn = false;
-late CameraController cameraController;
+late CameraController? cameraController;
 
-class _CameraScreenState extends State<CameraScreen> {
+class _CameraScreenState extends State<CameraScreen>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     initializeCamera();
   }
 
   @override
   void dispose() {
     // Turn off flash before disposing the camera controller
-    cameraController.setFlashMode(FlashMode.off);
-    cameraController.dispose();
+    if (mounted) {
+      cameraController?.dispose();
+    }
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive) {
+      cameraController?.dispose();
+    }
   }
 
   Future<void> initializeCamera() async {
@@ -49,7 +59,7 @@ class _CameraScreenState extends State<CameraScreen> {
         cameras[currentCameraIndex],
         ResolutionPreset.max,
       );
-      await cameraController.initialize();
+      await cameraController!.initialize();
       setState(() {
         isCameraInitialized = true;
       });
@@ -93,9 +103,9 @@ class _CameraScreenState extends State<CameraScreen> {
   void updateFlash() async {
     try {
       if (isFlashOn) {
-        await cameraController.setFlashMode(FlashMode.torch);
+        await cameraController?.setFlashMode(FlashMode.auto);
       } else {
-        await cameraController.setFlashMode(FlashMode.off);
+        await cameraController?.setFlashMode(FlashMode.off);
       }
     } catch (e) {}
   }
@@ -124,7 +134,7 @@ class _CameraScreenState extends State<CameraScreen> {
           if (isCameraInitialized)
             SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: CameraPreview(cameraController),
+              child: CameraPreview(cameraController!),
             )
           else
             const Center(
@@ -190,7 +200,7 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void takePic(BuildContext context) async {
-    final imageFile = await cameraController.takePicture();
+    final imageFile = await cameraController!.takePicture();
     var file = File(imageFile.path);
     if (cameras[currentCameraIndex].lensDirection ==
         CameraLensDirection.front) {
@@ -208,7 +218,7 @@ class _CameraScreenState extends State<CameraScreen> {
       await file.delete();
       await file.writeAsBytes(imageBytes!);
     }
-
+    cameraController?.setFlashMode(FlashMode.off);
     Route route = MaterialPageRoute(
       builder: (context) => UploadPage(
         imagepath: file.path,
@@ -220,12 +230,12 @@ class _CameraScreenState extends State<CameraScreen> {
   void switchCamera() async {
     currentCameraIndex = (currentCameraIndex + 1) % cameras.length;
     try {
-      await cameraController.dispose();
+      await cameraController?.dispose();
       cameraController = CameraController(
         cameras[currentCameraIndex],
         ResolutionPreset.max,
       );
-      await cameraController.initialize();
+      await cameraController!.initialize();
     } catch (e) {}
     setState(() {});
   }

@@ -1,96 +1,90 @@
-// ignore_for_file: non_constant_identifier_names, file_names, unused_local_variable, empty_catches
+// ignore_for_file: non_constant_identifier_names, file_names, empty_catches
 // ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ortho/models/homeData/home_data.dart';
-import 'package:ortho/repository/home/homeRepository.dart';
+import 'package:ortho/models/user/user.dart';
+import 'package:ortho/repository/user/user.dart';
 
-final HomeProvider =
-    AutoDisposeStateNotifierProvider<HomeStateNotifier, HomeState>(
-  (ref) => HomeStateNotifier(),
+final UserProvider =
+    AutoDisposeStateNotifierProvider<UserStateNotifier, UserState>(
+  (ref) => UserStateNotifier(),
 );
 
-class HomeStateNotifier extends StateNotifier<HomeState> {
-  HomeStateNotifier() : super(HomeState.initial()) {
-    home();
+class UserStateNotifier extends StateNotifier<UserState> {
+  UserStateNotifier() : super(UserState.initial()) {
+    user();
   }
 
   // Add your state modification methods here
 
-  Future<bool> home() async {
+  void user() async {
     try {
       state = state.copyWith(isLoading: true);
-      final data = await HomeRepository.home();
-      debugPrint(data.toString());
+      final User user = await UserRepository.user();
       state = state.copyWith(
-        isLoading: false,
-        data: data,
-        authState: AuthState.authenticated,
+        user: user,
+        authState: ResponseState.authenticated,
         errors: [],
         hasErrors: false,
       );
-      return true;
     } on DioException catch (e) {
-      debugPrint(e.toString());
       List errorList = e.response!.data['message'];
       List<String> errors = List<String>.from(errorList);
       debugPrint(errors.toString());
 
       state = state.copyWith(
-        authState: AuthState.failed,
+        authState: ResponseState.failed,
         errors: errors,
         hasErrors: true,
       );
-      return false;
     } catch (e) {
-      return false;
     } finally {
-      state = state.copyWith(isLoading: false);
+      if (mounted) state = state.copyWith(isLoading: false);
     }
   }
 }
 
-class HomeState {
-  final AuthState authState;
+class UserState {
+  final User? user;
+  final ResponseState authState;
   final List<String> errors;
   final bool hasErrors;
   final bool isLoading;
-  HomeData? data;
 
-  HomeState({
+  UserState({
+    required this.user,
     required this.authState,
     required this.errors,
     required this.hasErrors,
     required this.isLoading,
-    this.data,
   });
 
-  HomeState.initial()
-      : authState = AuthState.unauthenticated,
+  UserState.initial()
+      : authState = ResponseState.unauthenticated,
         errors = [],
         hasErrors = false,
-        isLoading = true,
-        data = null;
+        isLoading = false,
+        user = null;
 
-  HomeState copyWith({
-    AuthState? authState,
+  UserState copyWith({
+    ResponseState? authState,
     List<String>? errors,
     bool? hasErrors,
     bool? isLoading,
-    HomeData? data,
+    User? user,
   }) {
-    return HomeState(
+    return UserState(
       authState: authState ?? this.authState,
       errors: errors ?? this.errors,
       hasErrors: hasErrors ?? this.hasErrors,
       isLoading: isLoading ?? this.isLoading,
-      data: data ?? this.data,
+      user: user ?? this.user,
     );
   }
 }
 
-enum AuthState {
+enum ResponseState {
   unauthenticated,
   authenticated,
   authenticating,
