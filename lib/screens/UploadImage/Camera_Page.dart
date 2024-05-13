@@ -137,9 +137,32 @@ class _CameraScreenState extends State<CameraScreen>
               child: CameraPreview(cameraController!),
             )
           else
-            const Center(
-              child: CircularProgressIndicator(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.Primary_color,
+                ),
+              ),
             ),
+          isCameraInitialized
+              ? Positioned.fill(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 16,
+                    ),
+                    child: Image.asset(
+                      'assets/images/photos/Vector.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                )
+              : const SizedBox(
+                  width: 0,
+                  height: 0,
+                ),
           Positioned(
             bottom: 0.0,
             child: SizedBox(
@@ -150,7 +173,7 @@ class _CameraScreenState extends State<CameraScreen>
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 60.0),
+                    padding: const EdgeInsets.only(bottom: 30.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -206,13 +229,22 @@ class _CameraScreenState extends State<CameraScreen>
         CameraLensDirection.front) {
       Uint8List? imageBytes = await file.readAsBytes();
 
-      // 2. flip image on the X axis
-      final ImageEditorOption option = ImageEditorOption();
-      option.addOption(
-        const FlipOption(horizontal: true),
-      );
-      imageBytes = await ImageEditor.editImage(
-          image: imageBytes, imageEditorOption: option);
+      if (cameras[currentCameraIndex].lensDirection ==
+          CameraLensDirection.front) {
+        final ImageEditorOption option = ImageEditorOption();
+        option.addOption(
+          const FlipOption(horizontal: true),
+        );
+        imageBytes = await ImageEditor.editImage(
+            image: imageBytes, imageEditorOption: option);
+      } else {
+        final ImageEditorOption option = ImageEditorOption();
+        option.addOption(
+          const FlipOption(horizontal: false),
+        );
+        imageBytes = await ImageEditor.editImage(
+            image: imageBytes, imageEditorOption: option);
+      }
 
       // 3. write the image back to disk
       await file.delete();

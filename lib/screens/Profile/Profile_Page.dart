@@ -57,24 +57,22 @@ class ProfilePage extends HookConsumerWidget {
                   ),
                   Center(
                     child: IntrinsicWidth(
-                      child: Expanded(
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minWidth: 150.w,
-                            maxWidth: 300.w,
-                            minHeight: 50.h,
-                            maxHeight: 150.h,
-                          ),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              "${UserProviderState.user?.name}",
-                              style: TextStyle(
-                                fontFamily: "Montesrrat",
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.dark_text,
-                                fontSize: 24.sp,
-                              ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: 150.w,
+                          maxWidth: 300.w,
+                          minHeight: 50.h,
+                          maxHeight: 150.h,
+                        ),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            "${UserProviderState.user?.name}",
+                            style: TextStyle(
+                              fontFamily: "Montesrrat",
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.dark_text,
+                              fontSize: 24.sp,
                             ),
                           ),
                         ),
