@@ -52,27 +52,29 @@ class ProfilePage extends HookConsumerWidget {
                       isVisiable: false,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Center(
                     child: IntrinsicWidth(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minWidth: 150.w,
-                          maxWidth: 300.w,
-                          minHeight: 50.w,
-                          maxHeight: 150.w,
-                        ),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            "${UserProviderState.user?.name}",
-                            style: TextStyle(
-                              fontFamily: "Montesrrat",
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.dark_text,
-                              fontSize: 24.sp,
+                      child: Expanded(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minWidth: 150.w,
+                            maxWidth: 300.w,
+                            minHeight: 50.h,
+                            maxHeight: 150.h,
+                          ),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              "${UserProviderState.user?.name}",
+                              style: TextStyle(
+                                fontFamily: "Montesrrat",
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.dark_text,
+                                fontSize: 24.sp,
+                              ),
                             ),
                           ),
                         ),
@@ -84,7 +86,7 @@ class ProfilePage extends HookConsumerWidget {
                   ),
                   Container(
                     width: 351.w,
-                    height: 108.h,
+                    height: 111.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.Primary_color),

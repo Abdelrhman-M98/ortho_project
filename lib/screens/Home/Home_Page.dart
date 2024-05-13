@@ -45,19 +45,30 @@ class HomePage extends HookConsumerWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 16,
-                                  ),
-                                  child: Text(
-                                    'Welcome, ${HomeProviderState.data!.user.name}',
-                                    textAlign: TextAlign.start,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: AppColors.dark_text,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w600,
+                                IntrinsicWidth(
+                                  child: ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      minWidth: 150.w,
+                                      maxWidth: 270.w,
+                                      minHeight: 30.h,
+                                      maxHeight: 35.h,
+                                    ),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 16.0,
+                                        ),
+                                        child: Text(
+                                          "Welcome,${HomeProviderState.data?.user.name}",
+                                          style: TextStyle(
+                                            fontFamily: "Montesrrat",
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.dark_text,
+                                            fontSize: 24.sp,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -58,7 +58,7 @@ class AccDetailsPage extends HookConsumerWidget {
                 "${UserProviderState.user?.name}",
                 style: TextStyle(
                   fontSize: 24.sp,
-                  fontFamily: "Nunito",
+                  fontFamily: "Montserrat",
                   fontWeight: FontWeight.w600,
                   color: AppColors.dark_text,
                 ),
