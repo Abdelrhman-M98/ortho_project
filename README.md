@@ -8,9 +8,11 @@ Before using the Ortho AI , please ensure that you meet the following prerequisi
 1. install [Flutter version](https://docs.flutter.dev/release/archive?tab=windows) `3.3.4`
 2. insall [Dart Version](https://dart.dev/get-dart)`3.19.6`
 3. make Sure your mini Sdk is `21`
-4. install [Ortho backend](https://github.com/9init/ortho-backend?tab=readme-ov-file) and make sure the port is exposed.`
+4. install [Ortho backend](https://github.com/9init/ortho-backend?tab=readme-ov-file) and make sure the port is exposed.
 
 ## Set Environment Variables
+**(SUPER IMPORTANT!)** Make sure that you installed [Ortho backend](https://github.com/9init/ortho-backend?tab=readme-ov-file). 
+
 To customize the base URL used in network requests and replace the default IP address with your own, follow these steps:
 
 1. Open the `lib/shared/networking/networking.dart` file in your project.
