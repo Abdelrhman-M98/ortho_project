@@ -1,6 +1,20 @@
 # Ortho AI
 
 Ortho AI is a revolutionary app that utilizes artificial intelligence models to analyze your dental health based on your selfie. Simply take a selfie, and let Ortho AI identify your teeth and any associated issues according to the standards of the perfect smile. Get instant feedback on your dental health right at your fingertips
+
+## Installation
+If you'd prefer to skip the build process and download a pre-built version, then this information will be helpful: Preteeth apk supports the following architectures
+
+- 🛠 [armeabi-v7a](https://github.com/Abdelrhman-M98/ortho_project/releases/latest/download/app-armeabi-v7a-release.apk)
+- 📦 [arm64-v8a](https://github.com/Abdelrhman-M98/ortho_project/releases/latest/download/app-arm64-v8a-release.apk)
+- 🐳 [armeabi-v7a/arm64-v8a](https://github.com/Abdelrhman-M98/ortho_project/releases/latest/download/app-release.apk)
+
+<div align="center">
+
+  # [Download](https://github.com/Abdelrhman-M98/ortho_project/releases/latest/download/app-release.apk)
+  <br />
+</div>
+
 ## Prerequisites
 
 Before using the Ortho AI , please ensure that you meet the following prerequisites:
@@ -26,6 +40,17 @@ To customize the base URL used in network requests and replace the default IP ad
     static const String BASE_URL = "http://your_ip_address:port";
     ```
 3. Save the file.
+
+## Building
+1. Run this builder script to generate the Data Classes:
+    ```bash
+    flutter pub run build_runner build
+    ```
+2. Build the APKs using this command:
+    ```bash
+    flutter build apk
+    ```
+3. locate the generated apk and enjoy our product.
 
 ## Features
 
