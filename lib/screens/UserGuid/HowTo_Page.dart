@@ -19,7 +19,6 @@ class _GuidHowToState extends State<GuidHowTo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(
         titleText: 'Back',
         onTap: () {
@@ -32,295 +31,299 @@ class _GuidHowToState extends State<GuidHowTo> {
           color: AppColors.Primary_color,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 18,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              "Taking the perfect picture",
-              style: TextStyle(
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w700,
-                fontSize: 22.sp,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 18,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 10.h,
               ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            Text(
-              "Follow these tips for capturing a great image:",
-              style: TextStyle(
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w500,
-                fontSize: 16.sp,
-                color: AppColors.SecondaryColor,
+              Text(
+                "Taking the perfect picture",
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 22.sp,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 31.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
+              SizedBox(
+                height: 15.h,
               ),
-              child: Row(
+              Text(
+                "Follow these tips for capturing a great image:",
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                  color: AppColors.SecondaryColor,
+                ),
+              ),
+              SizedBox(
+                height: 31.h,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
+                child: Row(
+                  children: [
+                    const Image(
+                      image: AssetImage(
+                        "assets/images/icons/Do_icon.png",
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Text(
+                      "Do's",
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24.sp,
+                        color: AppColors.Primary_color,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Image(
-                    image: AssetImage(
-                      "assets/images/icons/Do_icon.png",
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                    ),
+                    child: Image(
+                      width: 48.w,
+                      height: 48.h,
+                      image: const AssetImage(
+                        "assets/images/icons/Positioning.png",
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  Text(
-                    "Do's",
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w800,
-                      fontSize: 24.sp,
-                      color: AppColors.Primary_color,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Positioning",
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.sp,
+                            color: AppColors.dark_text,
+                          ),
+                        ),
+                        Text(
+                          softWrap: true,
+                          "Make sure you're centered Capture from the collarbone up",
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15.sp,
+                            color: AppColors.SecondaryColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                  ),
-                  child: Image(
-                    width: 48.w,
-                    height: 48.h,
-                    image: const AssetImage(
-                      "assets/images/icons/Positioning.png",
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Positioning",
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
-                          color: AppColors.dark_text,
-                        ),
-                      ),
-                      Text(
-                        softWrap: true,
-                        "Make sure you're centered Capture from the collarbone up",
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15.sp,
-                          color: AppColors.SecondaryColor,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                  ),
-                  child: Image(
-                    width: 48.w,
-                    height: 48.h,
-                    image: const AssetImage(
-                      "assets/images/icons/Lighting.png",
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Lighting",
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
-                          color: AppColors.dark_text,
-                        ),
-                      ),
-                      Text(
-                        softWrap: true,
-                        "Avoid overhead or direct light Natural lighting is best",
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15.sp,
-                          color: AppColors.SecondaryColor,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10.0,
-              ),
-              child: Row(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Image(
-                    image: AssetImage(
-                      "assets/images/icons/Doesn't_icon.png",
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                    ),
+                    child: Image(
+                      width: 48.w,
+                      height: 48.h,
+                      image: const AssetImage(
+                        "assets/images/icons/Lighting.png",
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  Text(
-                    "Don'ts",
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w800,
-                      fontSize: 24.sp,
-                      color: AppColors.Primary_color,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Lighting",
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.sp,
+                            color: AppColors.dark_text,
+                          ),
+                        ),
+                        Text(
+                          softWrap: true,
+                          "Avoid overhead or direct light Natural lighting is best",
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15.sp,
+                            color: AppColors.SecondaryColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                  ),
-                  child: Image(
-                    width: 48.w,
-                    height: 48.h,
-                    image: const AssetImage(
-                      "assets/images/icons/Accessories.png",
+              SizedBox(
+                height: 30.h,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                ),
+                child: Row(
+                  children: [
+                    const Image(
+                      image: AssetImage(
+                        "assets/images/icons/Doesn't_icon.png",
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Text(
+                      "Don'ts",
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24.sp,
+                        color: AppColors.Primary_color,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                    ),
+                    child: Image(
+                      width: 48.w,
+                      height: 48.h,
+                      image: const AssetImage(
+                        "assets/images/icons/Accessories.png",
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Accessories",
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
-                          color: AppColors.dark_text,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Accessories",
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.sp,
+                            color: AppColors.dark_text,
+                          ),
                         ),
-                      ),
-                      Text(
-                        softWrap: true,
-                        "Glasses are not allowed Wear sunglasses or hats",
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15.sp,
-                          color: AppColors.SecondaryColor,
+                        Text(
+                          softWrap: true,
+                          "Glasses are not allowed Wear sunglasses or hats",
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15.sp,
+                            color: AppColors.SecondaryColor,
+                          ),
                         ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                    ),
+                    child: Image(
+                      width: 48.w,
+                      height: 48.h,
+                      image: const AssetImage(
+                        "assets/images/icons/Expression.png",
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                  ),
-                  child: Image(
-                    width: 48.w,
-                    height: 48.h,
-                    image: const AssetImage(
-                      "assets/images/icons/Expression.png",
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Expression",
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
-                          color: AppColors.dark_text,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Expression",
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.sp,
+                            color: AppColors.dark_text,
+                          ),
                         ),
-                      ),
-                      Text(
-                        softWrap: true,
-                        "Show your best smile – natural and relaxed! and Keep your teeth gently closed, don't force it.",
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15.sp,
-                          color: AppColors.SecondaryColor,
+                        Text(
+                          softWrap: true,
+                          "Show your best smile – natural and relaxed! and Keep your teeth gently closed, don't force it.",
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15.sp,
+                            color: AppColors.SecondaryColor,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            const Spacer(),
-            BtnWidget(
-              btnText: "Start Scan",
-              onTap: () async {
-                Route route = MaterialPageRoute(
-                    builder: (context) => const CameraScreen());
-                Navigator.pushReplacement(context, route);
-              },
-            ),
-            SizedBox(
-              height: 20.h,
-            )
-          ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 100.h,
+              ),
+              BtnWidget(
+                btnText: "Start Scan",
+                onTap: () async {
+                  Route route = MaterialPageRoute(
+                      builder: (context) => const CameraScreen());
+                  Navigator.pushReplacement(context, route);
+                },
+              ),
+              SizedBox(
+                height: 20.h,
+              )
+            ],
+          ),
         ),
       ),
     );

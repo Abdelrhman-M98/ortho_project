@@ -1,8 +1,7 @@
-// ignore_for_file: file_names, use_build_context_synchronously, empty_catches
+// ignore_for_file: file_names, use_build_context_synchronously
 
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,6 +37,7 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     // Turn off flash before disposing the camera controller
     if (mounted) {
       cameraController?.dispose();
@@ -49,6 +49,10 @@ class _CameraScreenState extends State<CameraScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.inactive) {
       cameraController?.dispose();
+    }
+    if (state == AppLifecycleState.resumed) {
+      // When app is resumed, reinitialize the camera
+      initializeCamera();
     }
   }
 
@@ -66,7 +70,9 @@ class _CameraScreenState extends State<CameraScreen>
 
       // Check microphone permission after camera is initialized
       await checkMicrophonePermission();
-    } catch (e) {}
+    } catch (e) {
+      return;
+    }
   }
 
   Future<void> checkMicrophonePermission() async {
@@ -76,30 +82,6 @@ class _CameraScreenState extends State<CameraScreen>
     });
   }
 
-  Future<void> checkPermission(
-      Permission permission, BuildContext context) async {
-    final status = await permission.request();
-
-    if (status.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Permission is Granted"),
-        ),
-      );
-
-      if (permission == Permission.camera) {
-        // Check microphone permission if camera permission is granted
-        await checkMicrophonePermission();
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Permission is not Granted"),
-        ),
-      );
-    }
-  }
-
   void updateFlash() async {
     try {
       if (isFlashOn) {
@@ -107,7 +89,9 @@ class _CameraScreenState extends State<CameraScreen>
       } else {
         await cameraController?.setFlashMode(FlashMode.off);
       }
-    } catch (e) {}
+    } catch (e) {
+      return;
+    }
   }
 
   late Future<void> cameraValue = Future.value(); // Provide a default value
@@ -129,94 +113,99 @@ class _CameraScreenState extends State<CameraScreen>
           ),
         ),
       ),
-      body: Stack(
+      body: Column(
         children: [
-          if (isCameraInitialized)
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: CameraPreview(cameraController!),
-            )
-          else
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.Primary_color,
-                ),
-              ),
-            ),
-          isCameraInitialized
-              ? Positioned.fill(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 16,
-                    ),
-                    child: Image.asset(
-                      'assets/images/photos/Vector.png',
-                      fit: BoxFit.contain,
+          Expanded(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (isCameraInitialized)
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: CameraPreview(cameraController!),
+                  )
+                else
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.Primary_color,
+                      ),
                     ),
                   ),
-                )
-              : const SizedBox(
-                  width: 0,
-                  height: 0,
-                ),
-          Positioned(
-            bottom: 0.0,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                color: const Color.fromARGB(181, 0, 0, 0),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 30.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isFlashOn = !isFlashOn;
-                            });
-                            updateFlash();
-                          },
-                          icon: Icon(
-                            isFlashOn ? Icons.flash_on : Icons.flash_off,
-                            color: AppColors.White,
-                            size: 30.sp,
+                Visibility(
+                  visible: isCameraInitialized,
+                  child: Positioned.fill(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                      ),
+                      child: Center(
+                        child: SizedBox(
+                          width: 300.w,
+                          height: 390.h,
+                          child: Image.asset(
+                            'assets/images/photos/Vector.png',
+                            fit: BoxFit.contain,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            takePic(context);
-                          },
-                          icon: Icon(
-                            Icons.panorama_fish_eye,
-                            color: AppColors.White,
-                            size: 60.sp,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            switchCamera();
-                          },
-                          icon: Icon(
-                            Icons.flip_camera_android_outlined,
-                            color: AppColors.White,
-                            size: 30.sp,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            color: const Color.fromARGB(181, 0, 0, 0),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isFlashOn = !isFlashOn;
+                        });
+                        updateFlash();
+                      },
+                      icon: Icon(
+                        isFlashOn ? Icons.flash_on : Icons.flash_off,
+                        color: AppColors.White,
+                        size: 30.sp,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        takePic(context);
+                      },
+                      icon: Icon(
+                        Icons.panorama_fish_eye,
+                        color: AppColors.White,
+                        size: 60.sp,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        switchCamera();
+                      },
+                      icon: Icon(
+                        Icons.flip_camera_android_outlined,
+                        color: AppColors.White,
+                        size: 30.sp,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -268,7 +257,9 @@ class _CameraScreenState extends State<CameraScreen>
         ResolutionPreset.max,
       );
       await cameraController!.initialize();
-    } catch (e) {}
+    } catch (e) {
+      return;
+    }
     setState(() {});
   }
 }

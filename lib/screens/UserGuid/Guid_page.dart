@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ortho/components/AppColors.dart';
 import 'package:ortho/components/CustomAppBar.dart';
-import 'package:ortho/screens/Home/Home_Page.dart';
 import 'package:ortho/screens/UserGuid/HowTo_Page.dart';
+import 'package:ortho/screens/UserHomePage/User_Home_Page.dart';
 
 class GuidPage extends StatelessWidget {
   const GuidPage();
@@ -16,7 +16,8 @@ class GuidPage extends StatelessWidget {
       appBar: CustomAppBar(
         titleText: 'Back', // Pass the title text here
         onTap: () {
-          Route route = MaterialPageRoute(builder: (context) => HomePage());
+          Route route =
+              MaterialPageRoute(builder: (context) => const UserHomePage());
           Navigator.pushReplacement(context, route);
           // Handle onTap action if needed
         },
