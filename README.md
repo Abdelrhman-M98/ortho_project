@@ -42,15 +42,19 @@ To customize the base URL used in network requests and replace the default IP ad
 3. Save the file.
 
 ## Building
-1. Run this builder script to generate the Data Classes:
+1. Run this to get the dependencies:
+    ```bash
+    flutter pub get
+    ```
+2. Run this builder script to generate the Data Classes:
     ```bash
     flutter pub run build_runner build
     ```
-2. Build the APKs using this command:
+3. Build the APKs using this command:
     ```bash
     flutter build apk
     ```
-3. locate the generated apk and enjoy our product.
+4. locate the generated apk and enjoy our product.
 
 ## Features
 
